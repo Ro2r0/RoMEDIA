@@ -3,220 +3,475 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoMEDIA | Services de Photographie, Design Graphique & Sites Web</title>
-    
-    <!-- Tailwind CSS CDN -->
+    <title>RoMEDIA | Design, Photo & Web</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Alpine.js pour l'effet Morph / Gestion de l'affichage dynamique -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <!-- Configuration Custom de Tailwind pour tes couleurs de marque -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        romedia: {
-                            darkblue: '#0A1128',
-                            blue: '#1C3144',
-                            electric: '#007EA7',
-                            orange: '#FF6B35',
-                            brightorange: '#FF8811',
-                            white: '#F4F4F9',
-                        }
+                        brandPrimary: '#e26137',   // Orange vibrant
+                        brandSecondary: '#0f3066', // Bleu profond
+                        brandDark: '#0a0a0c',      // Fond sombre premium
+                        brandLight: '#f4f0eb'     // Fond clair éditorial (style image)
+                    },
+                    fontFamily: {
+                        editorial: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
     <style>
-        .selection-glow::selection {
-            background-color: #FF6B35;
-            color: #ffffff;
+        body {
+            background-color: #0a0a0c;
+            color: #f4f0eb;
+            overflow-x: hidden;
+        }
+        /* Custom Cursor unique et amusant */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e26137;
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        }
+        .custom-cursor-dot {
+            width: 4px;
+            height: 4px;
+            background-color: #e26137;
+            border-radius: 50%;
+            position: fixed;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+        }
+        /* Style pour les onglets actifs du portfolio */
+        .tab-btn.active {
+            background-color: #e26137;
+            color: white;
         }
     </style>
 </head>
-<body class="bg-romedia-darkblue text-romedia-white min-h-screen overflow-x-hidden selection-glow relative" x-data="{ activeService: null }">
+<body class="font-sans antialiased">
 
-    <!-- Effets d'ambiance en arrière-plan (Gradients flous) -->
-    <div class="absolute top-0 left-1/4 w-96 h-96 bg-romedia-orange/10 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-romedia-electric/20 rounded-full blur-[150px] pointer-events-none"></div>
+    <div class="custom-cursor hidden md:block" id="customCursor"></div>
+    <div class="custom-cursor-dot hidden md:block" id="customCursorDot"></div>
 
-    <!-- En-tête de navigation -->
-    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10">
-        <div class="flex items-center gap-2">
-            <span class="text-2xl font-black tracking-tighter">
-                Ro<span class="text-romedia-orange">MEDIA</span>
-            </span>
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5 dynamic-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#accueil" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
+                Ro<span class="text-brandPrimary">MEDIA</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
+                <a href="#accueil" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
+                <a href="#services" class="hover:text-brandPrimary transition-colors text-sm uppercase">Services</a>
+                <a href="#portfolio" class="hover:text-brandPrimary transition-colors text-sm uppercase">Portfolio</a>
+            </nav>
+
+            <div>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-brandPrimary/20">
+                    Collaborons <i class="fab fa-instagram ml-2 text-base"></i>
+                </a>
+            </div>
         </div>
-        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide">
-            <a href="#services" class="hover:text-romedia-orange transition-colors">Services</a>
-            <a href="#about" class="hover:text-romedia-orange transition-colors">À Propos</a>
-            <a href="https://instagram.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange transition-colors">Instagram</a>
-            <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange transition-colors">Facebook</a>
-        </nav>
-        <a href="https://instagram.com/romedia.mtl" target="_blank" class="bg-romedia-orange hover:bg-romedia-brightorange text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md shadow-romedia-orange/20 transition-all">
-            Collaborons
-        </a>
     </header>
 
-    <!-- Section Hero -->
-    <section class="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center relative z-10 flex flex-col items-center">
-        <span class="text-xs font-bold uppercase tracking-[0.3em] bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-romedia-orange mb-6">
-            Agence Numérique • Montréal
-        </span>
-        <h1 class="text-5xl md:text-7xl font-black tracking-tight max-w-4xl leading-[1.1] mb-6">
-            Visuels Percutants. Identité Forte. <br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-romedia-orange via-romedia-brightorange to-romedia-electric">
-                Performance Absolue.
-            </span>
-        </h1>
-        <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-normal leading-relaxed mb-10">
-            Fondée par Roldens Julien (Ro2r0). Nous concevons des banques d'images premium, du design graphique de haute précision et des sites web statiques impeccables pour propulser votre entreprise.
-        </p>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
-            <a href="#services" class="bg-romedia-orange hover:bg-romedia-brightorange text-white text-center font-bold px-8 py-4 rounded-2xl shadow-xl shadow-romedia-orange/20 transition-all">
-                Découvrir nos Services
-            </a>
-            <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="bg-white/5 hover:bg-white/10 text-center text-white border border-white/10 font-bold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all">
-                Rejoindre le Groupe Facebook
-            </a>
-        </div>
-    </section>
-
-    <!-- Section Services Bento Grid (Effet Morph via Alpine.js) -->
-    <section id="services" class="bg-slate-900/40 border-y border-white/5 backdrop-blur-sm relative z-10 py-20 px-4">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-12">
-                <h2 class="text-4xl font-extrabold text-romedia-white tracking-tight">
-                    Le Savoir-Faire <span class="text-romedia-orange">RoMEDIA</span>
-                </h2>
-                <p class="text-slate-400 mt-2">Cliquez sur un service pour explorer nos compétences en détail</p>
+    <section id="accueil" class="min-h-screen pt-28 flex flex-col lg:flex-row items-stretch relative overflow-hidden">
+        <div class="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center bg-brandDark relative z-10">
+            <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-sm mb-4 block reveal-text">STRATÉGIE, DESIGN & VISION</span>
+            <h1 class="text-4xl md:text-6xl font-editorial font-light leading-tight mb-6 text-white reveal-text">
+                Un studio créatif <br>
+                <span class="font-bold italic text-brandLight">qui pense en systèmes.</span>
+            </h1>
+            
+            <div class="mt-4 max-w-lg text-gray-400 space-y-4 text-base md:text-lg border-l-2 border-brandSecondary pl-4 reveal-text">
+                <p>
+                    Bienvenue chez <strong>RoMEDIA</strong>. Dirigé par un designer stratégique basé à Montréal, nous fusionnons l'art visuel pur et l'ingénierie numérique. 
+                </p>
+                <p>
+                    Que ce soit pour capturer l'essence d'une marque à travers la photographie, bâtir une infographie complète ou déployer des sites web statiques ultra-performants, nous créons des expériences mémorables et sur mesure.
+                </p>
             </div>
-
-            <!-- Grille des cartes -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                <!-- Carte 1: Photographie -->
-                <div @click="activeService = 'photography'" class="cursor-pointer overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-romedia-orange to-romedia-brightorange border border-white/10 shadow-xl flex flex-col justify-between h-80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
-                    <div class="text-4xl bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md">📸</div>
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/5 px-3 py-1 rounded-full">Visuels</span>
-                        <h3 class="text-2xl font-bold text-romedia-white mt-3">Services de Photographie</h3>
-                        <p class="text-sm text-romedia-white/80 mt-2 line-clamp-2">Immortalisation de moments, image de marque haut de gamme et récits urbains.</p>
-                    </div>
-                </div>
-
-                <!-- Carte 2: Design Graphique -->
-                <div @click="activeService = 'design'" class="cursor-pointer overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-romedia-electric to-romedia-blue border border-white/10 shadow-xl flex flex-col justify-between h-80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
-                    <div class="text-4xl bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md">🎨</div>
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/5 px-3 py-1 rounded-full">Identité</span>
-                        <h3 class="text-2xl font-bold text-romedia-white mt-3">Design Graphique & Branding</h3>
-                        <p class="text-sm text-romedia-white/80 mt-2 line-clamp-2">Création d'identités visuelles, logos sur mesure et outils marketing unifiés.</p>
-                    </div>
-                </div>
-
-                <!-- Carte 3: Technologie Web -->
-                <div @click="activeService = 'web'" class="cursor-pointer overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-romedia-blue to-romedia-darkblue border border-white/10 shadow-xl flex flex-col justify-between h-80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
-                    <div class="text-4xl bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md">💻</div>
-                    <div>
-                        <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/5 px-3 py-1 rounded-full">Web Tech</span>
-                        <h3 class="text-2xl font-bold text-romedia-white mt-3">Sites Web Statiques & Modernes</h3>
-                        <p class="text-sm text-romedia-white/80 mt-2 line-clamp-2">Expériences web percutantes, ultra-rapides et conçues avec précision.</p>
-                    </div>
-                </div>
-
+            
+            <div class="mt-8 flex gap-4 reveal-text">
+                <a href="#services" class="px-6 py-3 border border-white/20 rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all text-sm uppercase tracking-wider">Explorer nos services</a>
+                <a href="#reservation" class="px-6 py-3 bg-brandSecondary text-white rounded-full hover:bg-brandPrimary transition-all text-sm uppercase tracking-wider">Réserver un créneau</a>
             </div>
         </div>
 
-        <!-- Fenêtre Modale Dynamique (Effet Morph) -->
-        <template x-if="activeService">
-            <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
-                <!-- Arrière-plan flou -->
-                <div class="fixed inset-0 bg-black/70 backdrop-blur-md" @click="activeService = null"></div>
-                
-                <!-- Boîte de dialogue avec changement dynamique de couleur de fond -->
-                <div class="relative w-full max-w-2xl p-8 md:p-12 rounded-3xl shadow-2xl border border-white/20 pointer-events-auto transition-all"
-                     :class="{
-                        'bg-gradient-to-br from-romedia-orange to-romedia-brightorange': activeService === 'photography',
-                        'bg-gradient-to-br from-romedia-electric to-romedia-blue': activeService === 'design',
-                        'bg-gradient-to-br from-romedia-blue to-romedia-darkblue': activeService === 'web'
-                     }">
-                    
-                    <button @click="activeService = null" class="absolute top-6 right-6 text-romedia-white bg-black/20 hover:bg-black/40 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold transition-colors">✕</button>
-
-                    <div class="flex items-start gap-4 mb-6">
-                        <div class="text-5xl bg-white/10 p-4 rounded-2xl backdrop-blur-md shrink-0" x-text="activeService === 'photography' ? '📸' : (activeService === 'design' ? '🎨' : '💻')"></div>
-                        <div>
-                            <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/10 px-3 py-1 rounded-full" x-text="activeService === 'photography' ? 'Visuels' : (activeService === 'design' ? 'Identité' : 'Web Tech')"></span>
-                            <h3 class="text-3xl font-extrabold text-romedia-white mt-2" x-text="activeService === 'photography' ? 'Services de Photographie' : (activeService === 'design' ? 'Design Graphique & Branding' : 'Sites Web Statiques & Modernes')"></h3>
-                        </div>
-                    </div>
-
-                    <div class="space-y-4 text-romedia-white">
-                        <p class="text-lg font-medium border-l-4 border-romedia-white/40 pl-4 py-1" x-text="activeService === 'photography' ? 'Immortalisation de moments, image de marque haut de gamme et récits urbains.' : (activeService === 'design' ? 'Création d\'identités visuelles, logos sur mesure et outils marketing unifiés.' : 'Expériences web percutantes, ultra-rapides et conçues avec précision.')"></p>
-                        <p class="text-base leading-relaxed opacity-90" x-text="activeService === 'photography' ? 'Des lookbooks de marque professionnels aux visuels de produits percutants, en passant par du contenu dynamique pour les réseaux sociaux, des capsules TikTok et de la photographie urbaine. Nous livrons des images nettes et à fort impact, adaptées aussi bien aux petites entreprises locales qu\'aux structures d\'envergure.' : (activeService === 'design' ? 'Nous bâtissons des systèmes visuels complets : logos sur mesure, bannières pour réseaux sociaux, matériel publicitaire et chartes graphiques d\'entreprise complètes pour rendre votre marque instantanément reconnaissable.' : 'Spécialisation dans les sites statiques hyper-propres et les configurations Squarespace avancées enrichies de CSS personnalisé, d\'éléments interactifs et de structures UX modernes. Conçus pour la vitesse, l\'optimisation SEO et la conversion fluide des utilisateurs.')"></p>
-                        
-                        <div class="pt-6">
-                            <a href="https://instagram.com/romedia.mtl" target="_blank" class="inline-block bg-romedia-white text-romedia-darkblue px-6 py-3 rounded-full font-bold shadow-lg hover:bg-opacity-90 transition-all">S'informer sur ce service</a>
-                        </div>
+        <div class="w-full lg:w-1/2 relative bg-brandSecondary/30 min-h-[500px] lg:min-h-screen flex items-center justify-center p-8 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-tr from-brandSecondary/50 to-brandDark mix-blend-multiply opacity-80"></div>
+            
+            <div class="relative z-10 bg-brandLight text-brandDark p-6 rounded-3xl shadow-2xl w-full max-w-sm transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 float-card">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-brandSecondary/10 px-3 py-1 rounded-full text-brandSecondary">RoMEDIA Studio</span>
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 rounded-full bg-brandPrimary"></div>
+                        <div class="w-2 h-2 rounded-full bg-brandSecondary"></div>
                     </div>
                 </div>
+                <div class="aspect-[4/3] bg-gray-300 rounded-2xl mb-4 overflow-hidden relative group">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
+                        <p class="text-white text-xs uppercase tracking-widest font-bold">Créativité Montréalaise</p>
+                    </div>
+                    <div class="w-full h-full bg-cover bg-center flex items-center justify-center text-brandSecondary" style="background-image: url('https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=1000')">
+                        <i class="fas fa-camera text-4xl text-white/80 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                    </div>
+                </div>
+                <h3 class="font-editorial text-xl font-bold mb-2 text-brandSecondary">Deux visions, une action.</h3>
+                <p class="text-sm text-gray-600">Nous façonnons des identités visuelles uniques adaptées aux petites et grandes entreprises.</p>
             </div>
-        </template>
+
+            <div class="absolute bottom-12 right-6 lg:right-12 z-20 bg-brandDark/90 border border-white/10 text-white p-5 rounded-2xl shadow-2xl max-w-xs hidden sm:block transform rotate-[4deg] float-card-delayed">
+                <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-8 h-8 rounded-full bg-brandPrimary flex items-center justify-center">
+                        <i class="fas fa-bolt text-xs text-white"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-wider">Infographie & Web</h4>
+                        <p class="text-[10px] text-gray-400">100% sur mesure</p>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-300">Des designs statiques percutants, codés pour briller sur tous les écrans.</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Section À Propos / Zoom Fondateur -->
-    <section id="about" class="max-w-5xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-        <div class="relative group">
-            <div class="absolute inset-0 bg-gradient-to-tr from-romedia-orange to-romedia-electric rounded-3xl blur-xl opacity-30 group-hover:opacity-40 transition-opacity"></div>
-            <div class="relative bg-romedia-blue border border-white/10 p-8 rounded-3xl h-80 flex flex-col justify-between overflow-hidden">
-                <div class="text-6xl font-bold opacity-10 absolute -right-4 -bottom-4 select-none pointer-events-none text-white">Ro2r0</div>
+    <section class="py-24 bg-brandDark border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Notre Engagement</span>
+                <h2 class="text-3xl md:text-5xl font-editorial text-white">Ce que l'on vous offre</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl hover:border-brandPrimary/40 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-brandSecondary/30 flex items-center justify-center text-brandPrimary mb-6 group-hover:bg-brandPrimary group-hover:text-white transition-colors">
+                        <i class="fas fa-gem text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Qualité Éditoriale</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Chaque pixel, chaque angle de vue et chaque ligne de code sont soignés pour offrir un rendu haut de gamme digne des plus grands studios.</p>
+                </div>
+                <div class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl hover:border-brandPrimary/40 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-brandSecondary/30 flex items-center justify-center text-brandPrimary mb-6 group-hover:bg-brandPrimary group-hover:text-white transition-colors">
+                        <i class="fas fa-sliders-h text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Flexibilité PME & Grandes Entreprises</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Nos structures tarifaires et livrables s'adaptent parfaitement à votre envergure, avec une agilité absolue et un accompagnement humain.</p>
+                </div>
+                <div class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl hover:border-brandPrimary/40 transition-all group hover:-translate-y-2 duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-brandSecondary/30 flex items-center justify-center text-brandPrimary mb-6 group-hover:bg-brandPrimary group-hover:text-white transition-colors">
+                        <i class="fas fa-rocket text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Expérience Unique & Moderne</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">Oubliez les templates préconçus vus partout. Nous apportons une touche d'audace, d'animation et de rareté qui capte l'attention immédiatement.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-24 bg-brandLight text-brandDark relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
                 <div>
-                    <span class="text-romedia-orange text-xs font-bold uppercase tracking-wider">Le Fondateur</span>
-                    <h3 class="text-3xl font-extrabold mt-1 text-white">Roldens Julien</h3>
-                    <p class="text-slate-400 text-sm mt-4 leading-relaxed">
-                        Directeur de création, designer stratégique et photographe, combinant interfaces front-end de pointe et production multimédia percutante à Montréal et ses environs.
-                    </p>
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Expertises</span>
+                    <h2 class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary">Nos Services & Solutions</h2>
                 </div>
-                <div class="flex gap-4">
-                    <a href="https://instagram.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2 rounded-xl transition-all">@romedia.mtl</a>
+                <p class="text-gray-600 max-w-md mt-4 md:mt-0"> Des services intégrés pour couvrir l'ensemble de votre écosystème de marque, du physique au numérique.</p>
+            </div>
+
+            <div class="space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                    <div class="max-w-xl">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="text-xs font-bold bg-brandPrimary/10 text-brandPrimary px-3 py-1 rounded-full">01</span>
+                            <h3 class="text-2xl font-bold text-brandSecondary">Photographie Professionnelle</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Portrait corporatif ou artistique, mise en valeur de produits e-commerce et couverture complète de vos événements. Nous captons la lumière et l'émotion brute.</p>
+                    </div>
+                    <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
+                        <span>Portrait • Produit • Événement</span>
+                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                    <div class="max-w-xl">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="text-xs font-bold bg-brandSecondary/10 text-brandSecondary px-3 py-1 rounded-full">02</span>
+                            <h3 class="text-2xl font-bold text-brandSecondary">Infographie Complète</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Création et refonte d'image de marque, logos percutants, chartes graphiques, bannières et supports publicitaires imprimés ou numériques pour affirmer votre identité.</p>
+                    </div>
+                    <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
+                        <span>Branding • Logos • Visuels</span>
+                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                    <div class="max-w-xl">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="text-xs font-bold bg-brandPrimary/10 text-brandPrimary px-3 py-1 rounded-full">03</span>
+                            <h3 class="text-2xl font-bold text-brandSecondary">Sites Web Statiques</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Développement de vitrines web légères, ultra-rapides, optimisées pour le SEO et entièrement sécurisées. Idéal pour présenter votre entreprise avec élégance et fluidité.</p>
+                    </div>
+                    <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
+                        <span>Performance • Vitrine • Responsive</span>
+                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </section>
 
-        <div class="flex flex-col justify-center space-y-6">
-            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">
-                Des solutions adaptées pour <br>
-                <span class="text-romedia-electric">toutes les échelles d'entreprise.</span>
-            </h2>
-            <p class="text-slate-400 leading-relaxed">
-                Que vous soyez un commerce de proximité ou un restaurant cherchant à étendre votre impact visuel sur TikTok et Instagram, ou une plus grande entreprise ayant besoin de pages de destination statiques ultra-rapides et optimisées, RoMEDIA conçoit des solutions sur mesure qui s'alignent sur vos ambitions.
-            </p>
-            <ul class="space-y-3 text-sm font-medium text-slate-300">
-                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-romedia-orange"></span> Ajustements de mise en page précis au pixel près</li>
-                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-romedia-orange"></span> Frameworks réactifs et chargement ultra-rapide</li>
-                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-romedia-orange"></span> Intégration de vidéos promotionnelles axées sur les réseaux</li>
-            </ul>
+    <section id="portfolio" class="py-24 bg-brandDark text-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Réalisations</span>
+                <h2 class="text-3xl md:text-5xl font-editorial mb-8">Le Portfolio</h2>
+                
+                <div class="inline-flex bg-white/5 p-1.5 rounded-full border border-white/10 space-x-2">
+                    <button onclick="filterPortfolio('photo')" id="btn-photo" class="tab-btn active px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Photographie</button>
+                    <button onclick="filterPortfolio('info')" id="btn-info" class="tab-btn px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Infographie</button>
+                    <button onclick="filterPortfolio('web')" id="btn-web" class="tab-btn px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Web Statique</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-grid">
+                
+                <div class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
+                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Portrait</span>
+                        <h4 class="text-lg font-bold text-white">Regard Urbain, Montréal</h4>
+                    </div>
+                </div>
+                <div class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
+                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Produit</span>
+                        <h4 class="text-lg font-bold text-white">Audio Premium Studio</h4>
+                    </div>
+                </div>
+
+                <div class="portfolio-item info hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
+                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Identité Visuelle</span>
+                        <h4 class="text-lg font-bold text-white">Branding Café Distinction</h4>
+                    </div>
+                </div>
+
+                <div class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
+                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Développement Front-End</span>
+                        <h4 class="text-lg font-bold text-white">Architecture Minimaliste Web</h4>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </section>
 
-    <!-- Pied de page avec lien mentions légales -->
-    <footer id="contact" class="border-t border-white/5 py-12 px-6 bg-black/20 text-center relative z-10">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <p class="text-sm text-slate-500">
-                &copy; 2026 RoMEDIA. Tous droits réservés. Conçu par Roldens Julien.
+    <section class="py-24 bg-brandSecondary/10 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Avis</span>
+                <h2 class="text-3xl md:text-5xl font-editorial text-white">Ce que nos clients disent</h2>
+            </div>
+
+            <div class="space-y-8">
+                <blockquote class="bg-white/[0.02] border border-white/5 p-8 rounded-2xl relative testimonial-card">
+                    <p class="font-editorial text-xl md:text-2xl italic text-gray-300 mb-6">"RoMEDIA a complètement transformé notre image de marque. Les photos de produits ont boosté nos ventes en ligne dès la première semaine, et le site internet statique est d'une rapidité déconcertante."</p>
+                    <cite class="not-italic flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-brandPrimary flex items-center justify-center font-bold text-sm">M</div>
+                        <div>
+                            <span class="block font-bold text-white text-sm">Maxime Tremblay</span>
+                            <span class="block text-xs text-brandPrimary">Fondateur, RestoMTL</span>
+                        </div>
+                    </cite>
+                </blockquote>
+                
+                <blockquote class="bg-white/[0.02] border border-white/5 p-8 rounded-2xl relative testimonial-card">
+                    <p class="font-editorial text-xl md:text-2xl italic text-gray-300 mb-6">"Un sens du détail rare. L'approche stratégique combinée à un design impeccable fait toute la différence pour une petite entreprise comme la nôtre."</p>
+                    <cite class="not-italic flex items-center space-x-3">
+                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center font-bold text-sm">S</div>
+                        <div>
+                            <span class="block font-bold text-white text-sm">Sophie G.</span>
+                            <span class="block text-xs text-brandPrimary">Directrice Artistique, Studio Éclat</span>
+                        </div>
+                    </cite>
+                </blockquote>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 bg-brandDark border-t border-white/5 relative">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 rounded-full bg-brandPrimary/20 text-brandPrimary flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-heart text-2xl animate-pulse"></i>
+            </div>
+            <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Soutien & Impact</span>
+            <h2 class="text-3xl md:text-4xl font-editorial text-white mb-6">Soutenir la création locale</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed">
+                Chez RoMEDIA, nous croyons à l'accessibilité à l'art et au soutien des communautés créatives émergentes de Montréal. Vos contributions et dons nous aident à financer du matériel et à offrir des sessions de mentorat et de photographie gratuites aux artistes indépendants de la relève.
             </p>
-            <div class="flex gap-6 text-sm font-semibold">
-                <a href="legal.html" class="hover:text-romedia-orange text-slate-400 transition-colors underline">Mentions Légales</a>
-                <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange text-slate-400 transition-colors">Facebook</a>
-                <a href="https://instagram.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange text-slate-400 transition-colors">Instagram</a>
+            <a href="#" class="inline-flex items-center justify-center px-8 py-4 bg-white text-brandDark font-bold rounded-full hover:bg-brandPrimary hover:text-white transition-all transform hover:scale-105">
+                Faire un don de soutien <i class="fas fa-hand-holding-heart ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <section id="reservation" class="py-24 bg-brandLight text-brandDark relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Planification</span>
+                <h2 class="text-3xl md:text-5xl font-editorial text-brandSecondary mb-4">Réserver un rendez-vous</h2>
+                <p class="text-gray-600 max-w-md mx-auto text-sm">Sélectionnez une plage horaire disponible directement dans notre calendrier pour discuter de votre projet.</p>
+            </div>
+
+            <div class="bg-white p-4 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto border border-gray-100 overflow-hidden relative min-h-[500px] flex flex-col justify-between">
+                
+                <div class="w-full h-[450px] bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center border border-dashed border-gray-200">
+                    <div class="text-center p-6">
+                        <i class="calendar-icon fas fa-calendar-alt text-5xl text-brandSecondary mb-4 block"></i>
+                        <span class="text-sm font-bold text-brandDark block mb-2">Intégration Google Agenda</span>
+                        <p class="text-xs text-gray-500 max-w-sm mx-auto mb-4">Pour afficher votre calendrier ici, insérez votre iframe d'intégration Google Calendar.</p>
+                        <iframe src="https://calendar.google.com/calendar/embed?src=fr.canadian%23holiday%40group.v.calendar.google.com&ctz=America%2FToronto" style="border: 0; width: 100%; height: 350px;" frameborder="0" scrolling="no"></iframe>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="text-xs text-gray-400">Des questions urgentes avant de réserver ? Écrivez-nous directement sur Instagram.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brandDark border-t border-white/5 py-12 text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <p>&copy; 2026 RoMEDIA. Tous droits réservés. Propulsé par la créativité et l'innovation.</p>
+            </div>
+            <div class="flex space-x-6">
+                <a href="legal.html" class="hover:text-brandPrimary transition-colors underline decoration-brandPrimary/40 underline-offset-4">Mentions Légales & Confidentialité</a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-instagram text-base"></i></a>
             </div>
         </div>
     </footer>
 
+    <script>
+        // Initialisation de GSAP & ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Amusant Custom Cursor Code
+        const cursor = document.getElementById('customCursor');
+        const cursorDot = document.getElementById('customCursorDot');
+
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
+            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.02 });
+        });
+
+        // Agrandir le curseur au survol des liens/boutons
+        document.querySelectorAll('a, button, .portfolio-item').forEach(elem => {
+            elem.addEventListener('mouseenter', () => {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+                cursor.style.backgroundColor = 'rgba(226, 97, 55, 0.1)';
+            });
+            elem.addEventListener('mouseleave', () => {
+                cursor.style.width = '20px';
+                cursor.style.height = '20px';
+                cursor.style.backgroundColor = 'transparent';
+            });
+        });
+
+        // 2. Animations Rares au Scroll (GSAP)
+        // Révélation fluide du texte de l'accueil
+        gsap.from(".reveal-text", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out"
+        });
+
+        // Effet de flottement continu et asynchrone des cartes graphiques (Amusant & Premium)
+        gsap.to(".float-card", {
+            y: -15,
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+        gsap.to(".float-card-delayed", {
+            y: 12,
+            duration: 3.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            delay: 0.5
+        });
+
+        // Animation de rotation continue de l'icône calendrier au survol
+        const calIcon = document.querySelector('.calendar-icon');
+        if(calIcon) {
+            calIcon.addEventListener('mouseenter', () => {
+                gsap.to(calIcon, { rotation: 15, repeat: 3, yoyo: true, duration: 0.1 });
+            });
+        }
+
+        // 3. Logique du Portfolio Filtrable
+        function filterPortfolio(category) {
+            // Mettre à jour l'état visuel des boutons d'onglets
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`btn-${category}`).classList.add('active');
+
+            // Animation de transition de la grille d'éléments
+            gsap.to(".portfolio-item", {
+                opacity: 0,
+                scale: 0.9,
+                duration: 0.2,
+                onComplete: () => {
+                    document.querySelectorAll('.portfolio-item').forEach(item => {
+                        if (item.classList.contains(category)) {
+                            item.classList.remove('hidden');
+                        } else {
+                            item.classList.add('hidden');
+                        }
+                    });
+                    gsap.to(`.${category}`, {
+                        opacity: 1,
+                        scale: 1,
+                        duration: 0.4,
+                        stagger: 0.1,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        }
+    </script>
 </body>
 </html>
