@@ -4,20 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoMedia | Changer pour Évoluer</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --primary: #e26137;
             --dark-blue: #0B1B3D;
             --light-bg: #f8f9fa;
-            --text-dark: #222222;
+            --text-dark: #111111;
             --text-light: #ffffff;
-            --gray: #666;
-            --transition: all 0.3s ease;
+            --gray: #555555;
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -35,17 +34,47 @@
             color: var(--text-dark);
             background-color: var(--light-bg);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Effet d'apparition magique globale (Scroll Reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Navigation Dynamique */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        /* Classe activée en JS quand on défile */
+        header.scrolled {
+            background: rgba(11, 27, 61, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header.scrolled nav a {
+            color: var(--text-light);
+        }
+
+        header.scrolled nav a:hover {
+            color: var(--primary);
         }
 
         .nav-container {
@@ -58,15 +87,22 @@
         }
 
         .logo img {
-            height: 50px;
+            height: 45px;
             width: auto;
             display: block;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 30px;
         }
 
         nav ul {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 25px;
+            align-items: center;
         }
 
         nav a {
@@ -74,24 +110,40 @@
             color: var(--dark-blue);
             font-weight: 600;
             font-size: 0.95rem;
-            transition: var(--transition);
+            transition: color 0.3s;
         }
 
         nav a:hover {
             color: var(--primary);
         }
 
+        .nav-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--text-light) !important;
+            padding: 10px 22px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition-smooth);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(226, 97, 55, 0.3);
+        }
+
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, var(--dark-blue) 0%, #050d20 100%);
+            background: linear-gradient(135deg, var(--dark-blue) 0%, #040a18 100%);
             color: var(--text-light);
-            padding: 160px 20px 100px;
+            padding: 180px 20px 120px;
             text-align: center;
-            position: relative;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: 800;
             margin-bottom: 20px;
             letter-spacing: -1px;
@@ -102,9 +154,9 @@
         }
 
         .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            font-size: 1.25rem;
+            max-width: 650px;
+            margin: 0 auto 35px;
             opacity: 0.9;
         }
 
@@ -112,94 +164,184 @@
             display: inline-block;
             background-color: var(--primary);
             color: var(--text-light);
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
             border: none;
             cursor: pointer;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(226, 97, 55, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(226, 97, 55, 0.4);
         }
 
         /* Sections Global */
         section {
-            padding: 80px 20px;
+            padding: 100px 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             color: var(--dark-blue);
-            margin-bottom: 40px;
-            position: relative;
+            margin-bottom: 50px;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 60px;
+            width: 50px;
             height: 4px;
             background-color: var(--primary);
-            margin: 10px auto 0;
+            margin: 12px auto 0;
             border-radius: 2px;
         }
 
-        /* À Propos */
-        .about-content {
-            display: flex;
+        /* À Propos avec Stack de Photos Interactif */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
             align-items: center;
-            gap: 50px;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
 
         .about-text h3 {
-            font-size: 1.8rem;
-            color: var(--primary);
-            margin-bottom: 15px;
+            font-size: 2rem;
+            color: var(--dark-blue);
+            margin-bottom: 20px;
         }
 
         .about-text p {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             color: var(--gray);
+            font-size: 1.05rem;
         }
 
-        /* Écosystème / Communautés */
-        .partners-section {
-            background-color: #f0f3f8;
-            border-radius: 12px;
-            padding: 40px;
-            margin-top: 40px;
-            text-align: center;
-        }
-
-        .partners-grid {
+        /* Zone de la pile de photos (Stack) */
+        .image-stack-wrapper {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 30px;
-            margin-top: 20px;
+            align-items: center;
+            height: 400px;
+            position: relative;
         }
 
-        .partner-card {
-            background: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            font-weight: 600;
+        .image-stack {
+            position: relative;
+            width: 280px;
+            height: 380px;
+            cursor: pointer;
+        }
+
+        .stack-card {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s, z-index 0.5s;
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        /* Positionnement initial en mode "pile" 3D */
+        .stack-card:nth-child(1) { transform: translate3d(0, 0, 0) rotate(0deg); z-index: 5; }
+        .stack-card:nth-child(2) { transform: translate3d(10px, 10px, 0) rotate(2deg); z-index: 4; }
+        .stack-card:nth-child(3) { transform: translate3d(20px, 20px, 0) rotate(-3deg); z-index: 3; }
+        .stack-card:nth-child(4) { transform: translate3d(30px, 30px, 0) rotate(4deg); z-index: 2; }
+        .stack-card:nth-child(5) { transform: translate3d(40px, 40px, 0) rotate(-1deg); z-index: 1; }
+
+        /* Effet d'envoi vers l'arrière lors du clic */
+        .stack-card.displaced {
+            transform: translate3d(-200px, -20px, 0) rotate(-15deg) !important;
+            opacity: 0;
+            z-index: 0;
+        }
+
+        /* Section Machine à sous (Casino Scrolling Logos) */
+        .casino-partners {
+            background-color: #f0f3f8;
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .casino-info h4 {
+            font-size: 1.6rem;
             color: var(--dark-blue);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
         }
 
-        /* Services Grid */
+        .casino-window {
+            height: 180px;
+            background: var(--dark-blue);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 8px 25px rgba(11,27,61,0.2);
+            border: 4px solid var(--primary);
+        }
+
+        /* Ligne de flou haut et bas pour l'effet miroir machine à sous */
+        .casino-window::before, .casino-window::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .casino-window::before { top: 0; background: linear-gradient(to bottom, rgba(11,27,61,0.9), transparent); }
+        .casino-window::after { bottom: 0; background: linear-gradient(to top, rgba(11,27,61,0.9), transparent); }
+
+        .casino-reel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            animation: slotMachine 12s linear infinite;
+        }
+
+        .slot-logo {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            width: 85%;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: 1px solid rgba(255,255,255,0.1);
+            flex-shrink: 0;
+        }
+
+        @keyframes slotMachine {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); } /* Doit boucler sur la moitié pour un effet fluide infini */
+        }
+
+        /* Services Section avec cascade et couleurs distinctes */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -208,34 +350,53 @@
 
         .service-card {
             background: white;
-            padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary);
-            transition: var(--transition);
+            padding: 45px 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.04);
+            border-top: 5px solid var(--primary);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .service-card:hover {
-            transform: translateY(-5px);
+        /* Animation d'apparition par classe déclenchée en JS */
+        .service-card.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Style unique pour la carte Création de sites Web */
+        .service-card.featured-card {
+            background: var(--dark-blue);
+            color: var(--text-light);
+            border-top: 5px solid var(--primary);
+            box-shadow: 0 15px 35px rgba(11, 27, 61, 0.25);
+        }
+
+        .service-card.featured-card h3 {
+            color: var(--primary);
+        }
+
+        .service-card.featured-card ul li {
+            color: #b0c2de;
         }
 
         .service-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--dark-blue);
             margin-bottom: 15px;
         }
 
         .service-card ul {
             list-style: none;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .service-card ul li {
             position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
+            padding-left: 22px;
+            margin-bottom: 10px;
             color: var(--gray);
-            font-size: 0.95rem;
         }
 
         .service-card ul li::before {
@@ -246,23 +407,23 @@
             font-weight: bold;
         }
 
-        /* Portfolios */
+        /* Portfolios distincts */
         .portfolio-tabs {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .tab-btn {
             background: white;
             border: 2px solid var(--dark-blue);
             color: var(--dark-blue);
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 25px;
             cursor: pointer;
             font-weight: 600;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
         }
 
         .tab-btn.active, .tab-btn:hover {
@@ -272,9 +433,9 @@
 
         .portfolio-container {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.04);
         }
 
         .portfolio-section {
@@ -283,63 +444,63 @@
 
         .portfolio-section.active {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .gallery-item {
             background: var(--light-bg);
-            height: 200px;
-            border-radius: 8px;
+            height: 220px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--gray);
+            color: #888;
             font-weight: 600;
-            border: 1px dashed #ccc;
+            border: 2px dashed #ddd;
         }
 
-        /* Formulaire Intuitif (Click & Go) */
+        /* Formulaire de Consultation Interactif (Zéro Écriture) */
         .booking-container {
             background: white;
             max-width: 700px;
             margin: 0 auto;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            padding: 45px;
+            border-radius: 16px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.04);
         }
 
         .click-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .click-group label {
             display: block;
-            font-weight: 600;
-            margin-bottom: 10px;
+            font-weight: 700;
+            margin-bottom: 12px;
             color: var(--dark-blue);
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
 
         .option-card {
             background: var(--light-bg);
             border: 2px solid transparent;
-            padding: 15px;
-            border-radius: 8px;
+            padding: 18px 10px;
+            border-radius: 10px;
             text-align: center;
             cursor: pointer;
             font-weight: 600;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
             user-select: none;
         }
 
         .option-card:hover {
-            border-color: #ccc;
+            border-color: #ddd;
         }
 
         .option-card.selected {
@@ -350,53 +511,53 @@
 
         .input-field {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
             font-family: inherit;
             margin-top: 5px;
+            font-size: 1rem;
         }
 
         .price-summary {
             background: #f0f3f8;
-            padding: 20px;
-            border-radius: 8px;
-            margin-top: 25px;
+            padding: 22px;
+            border-radius: 10px;
+            margin-top: 30px;
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             color: var(--dark-blue);
         }
 
         .price-summary strong {
             color: var(--primary);
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
 
         /* Footer */
         footer {
             background: var(--dark-blue);
             color: var(--text-light);
-            padding: 50px 20px;
+            padding: 60px 20px;
             text-align: center;
-            margin-top: 80px;
         }
 
         .footer-logo img {
-            height: 60px;
-            margin-bottom: 20px;
+            height: 55px;
+            margin-bottom: 25px;
         }
 
         .footer-socials {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            gap: 25px;
+            margin: 25px 0;
         }
 
         .footer-socials a {
             color: var(--text-light);
             text-decoration: none;
-            transition: var(--transition);
+            transition: color 0.3s;
             font-weight: 600;
         }
 
@@ -406,130 +567,140 @@
 
         .footer-email {
             font-size: 1.1rem;
-            margin-bottom: 15px;
         }
 
         .footer-email a {
             color: var(--primary);
             text-decoration: none;
+            font-weight: 600;
         }
 
-        /* Responsive Mobile */
+        /* Adaptabilité Mobile */
+        @media (max-width: 900px) {
+            .about-container, .casino-partners {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .image-stack-wrapper {
+                height: 420px;
+            }
+        }
+
         @media (max-width: 768px) {
             .nav-container {
                 flex-direction: column;
                 gap: 15px;
             }
             nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 12px;
+                gap: 15px;
             }
             .hero h1 {
-                font-size: 2.2rem;
-            }
-            .about-content {
-                flex-direction: column;
-                text-align: center;
+                font-size: 2.5rem;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Navigation -->
-    <header>
+    <header id="mainHeader">
         <div class="nav-container">
             <div class="logo">
-                <!-- Référence directe à ton fichier image -->
                 <img src="RoMedia-Changer.png" alt="RoMedia Logo">
             </div>
             <nav>
                 <ul>
                     <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#a-propos">À Propos</a></li>
                     <li><a href="#services">Services</a></li>
                     <li><a href="#portfolios">Portfolios</a></li>
-                    <li><a href="#contact">Démarrer un projet</a></li>
                 </ul>
+                <a href="#consultation" class="nav-btn">Consultation</a>
             </nav>
         </div>
     </header>
 
-    <!-- Section Accueil / Hero -->
     <section id="accueil" class="hero">
         <h1>Changer pour <span>Évoluer</span></h1>
-        <p>Design stratégique, infographie et création visuelle sur mesure pour propulser votre entreprise.</p>
-        <a href="#contact" class="btn">Réserver ma consultation (60$)</a>
+        <p>Design stratégique, infographie et création visuelle brute pour propulser l'écosystème de votre marque.</p>
+        <a href="#consultation" class="btn">Réserver ma session (60$)</a>
     </section>
 
-    <!-- Section À Propos & Communautés -->
-    <section id="a-propos">
-        <h2 class="section-title">À Propos</h2>
-        <div class="about-content">
+    <section id="a-propos" class="reveal">
+        <div class="about-container">
             <div class="about-text">
+                <h2 style="font-size: 2.4rem; color: var(--dark-blue); margin-bottom: 20px;">À Propos</h2>
                 <h3>Roldens Julien</h3>
-                <p>Enfant de Montréal-Nord, mon parcours s'est forgé au cœur de la musique et des arts visuels. Ce background créatif brut et authentique m'a permis de développer une vision artistique aiguisée et stratégique.</p>
-                <p>Aujourd'hui, à travers <strong>RoMedia</strong>, je mets cette expertise pluridisciplinaire au service des entreprises et créatifs pour transformer leurs idées en identités visuelles percutantes.</p>
+                <p>Enfant de Montréal-Nord, mon parcours s'est entièrement forgé au cœur de la culture urbaine, de la musique et des arts visuels. Ce background créatif pur et sans filtre m'a donné les codes pour bâtir des univers visuels authentiques qui marquent les esprits.</p>
+                <p>Passer de l'expression artistique brute à la direction stratégique d'image de marque m'a permis de comprendre un principe fondamental : pour grandir, il faut savoir briser les codes.</p>
+                <p>Aujourd'hui, à travers <strong>RoMedia</strong>, j'accompagne les entrepreneurs, les créatifs et les collectifs à structurer leur communication et à passer au niveau supérieur. Pas de blabla, juste du design stratégique d'impact.</p>
+            </div>
+            
+            <div class="image-stack-wrapper">
+                <div class="image-stack" onclick="rotateStack()">
+                    <div class="stack-card" style="background-color: #e26137;">[ Cliquez pour défiler ]</div>
+                    <div class="stack-card" style="background-color: #0B1B3D;">[ Roldens - Studio ]</div>
+                    <div class="stack-card" style="background-color: #4a5a7a;">[ Montréal Nord Art ]</div>
+                    <div class="stack-card" style="background-color: #f48c66;">[ Direction Visuelle ]</div>
+                    <div class="stack-card" style="background-color: #1c2d52;">[ Coulisses Session ]</div>
+                </div>
             </div>
         </div>
 
-        <!-- Section Entreprises & Communautés travaillées -->
-        <div class="partners-section">
-            <h3>Ils me font confiance</h3>
-            <p style="color: var(--gray); margin-bottom: 20px;">Plusieurs communautés à Montréal, entreprises locales et partenaires majeurs dans l'écosystème alimentaire et événementiel.</p>
-            <div class="partners-grid">
-                <div class="partner-card">Communautés Food Montréal</div>
-                <div class="partner-card">Artistes & Créateurs Locaux</div>
-                <div class="partner-card">Entreprises Locales</div>
-                <div class="partner-card">Événements Culturels</div>
+        <div class="casino-partners">
+            <div class="casino-info">
+                <h4>Ils me font confiance</h4>
+                <p style="color: var(--gray);">Un écosystème de marques et de communautés locales (secteur alimentaire, culturel et événementiel de Montréal) qui ont choisi de changer pour évoluer.</p>
+            </div>
+            <div class="casino-window">
+                <div class="casino-reel">
+                    <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
+                    <div class="slot-logo">ARTISTES LOCAUX</div>
+                    <div class="slot-logo">ENTREPRISES QUÉBEC</div>
+                    <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
+                    <div class="slot-logo">MARQUES URBAINES</div>
+                    <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
+                    <div class="slot-logo">ARTISTES LOCAUX</div>
+                    <div class="slot-logo">ENTREPRISES QUÉBEC</div>
+                    <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
+                    <div class="slot-logo">MARQUES URBAINES</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Section Ce que je peux offrir & Services individuels -->
-    <section id="services">
+    <section id="services" class="reveal">
         <h2 class="section-title">Ce que je peux offrir</h2>
-        <p style="text-align: center; max-width: 700px; margin: -20px auto 40px; color: var(--gray);">
-            Un accompagnement complet et une approche clé en main pour structurer et moderniser votre image de marque.
-        </p>
-        
         <div class="services-grid">
-            <!-- Service 1 -->
             <div class="service-card">
                 <h3>Infographie</h3>
-                <p>Création de logos, chartes graphiques, bannières et supports promotionnels adaptés à vos besoins.</p>
+                <p>Création de chartes graphiques percutantes, logos, bannières et identités visuelles uniques adaptées à vos supports.</p>
                 <ul>
-                    <li>Identité visuelle complète</li>
-                    <li>Supports numériques & imprimés</li>
-                    <li>Design de marque percutant</li>
+                    <li>Identité de marque complète</li>
+                    <li>Design d'imprimés & numériques</li>
+                    <li>Refonte de logos</li>
                 </ul>
             </div>
-            <!-- Service 2 -->
             <div class="service-card">
                 <h3>Photographie</h3>
-                <p>Captation visuelle professionnelle pour mettre en valeur vos produits, vos équipes ou vos événements.</p>
+                <p>Production visuelle de haute qualité pour capturer l'essence de vos projets, événements ou créations culinaires.</p>
                 <ul>
                     <li>Shootings produits & culinaires</li>
-                    <li>Portraits & Corporate</li>
-                    <li>Couverture événementielle</li>
+                    <li>Portraits de marque & Corporate</li>
+                    <li>Couverture événementielle brute</li>
                 </ul>
             </div>
-            <!-- Service 3 -->
-            <div class="service-card">
-                <h3>Création & Design de Sites Statiques</h3>
-                <p>Développement de sites web vitrines, modernes, rapides et entièrement optimisés pour le web et le mobile.</p>
+            <div class="service-card featured-card">
+                <h3>Création & Design Web</h3>
+                <p>Développement de sites web vitrines statiques ultra-rapides, épurés et pensés pour convertir vos visiteurs.</p>
                 <ul>
-                    <li>Code propre & responsive</li>
-                    <li>Expérience utilisateur fluide</li>
-                    <li>Optimisation SEO de base</li>
+                    <li>Maquettes UX/UI sur mesure</li>
+                    <li>Code moderne, fluide & responsive</li>
+                    <li>Optimisation SEO & Performance</li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- Section Portfolios (Double Espace Distinct) -->
-    <section id="portfolios">
+    <section id="portfolios" class="reveal">
         <h2 class="section-title">Mes Portfolios</h2>
         
         <div class="portfolio-tabs">
@@ -538,73 +709,64 @@
         </div>
 
         <div class="portfolio-container">
-            <!-- Portfolio Photo -->
             <div id="portfolio-photo" class="portfolio-section active">
-                <div class="gallery-item">[ Photo Pro / Événement ]</div>
-                <div class="gallery-item">[ Portrait / Direction Artistique ]</div>
-                <div class="gallery-item">[ Projet Culinaire / Produit ]</div>
+                <div class="gallery-item">[ Direction Artistique Urbaine ]</div>
+                <div class="gallery-item">[ Captation Culinaire / Food ]</div>
+                <div class="gallery-item">[ Événementiel & Scène ]</div>
             </div>
 
-            <!-- Portfolio Design -->
             <div id="portfolio-design" class="portfolio-section">
-                <div class="gallery-item">[ Création de Logo / Branding ]</div>
-                <div class="gallery-item">[ Design de Site Web / Maquette ]</div>
-                <div class="gallery-item">[ Infographie / Bannière ]</div>
+                <div class="gallery-item">[ Identité Visuelle / Logo ]</div>
+                <div class="gallery-item">[ Maquettes Web UI ]</div>
+                <div class="gallery-item">[ Design Éditorial / Bannières ]</div>
             </div>
         </div>
     </section>
 
-    <!-- Section Contact (Formulaire Click-Click moins d'écriture) -->
-    <section id="contact">
+    <section id="consultation" class="reveal">
         <h2 class="section-title">Démarrer un projet</h2>
         
         <div class="booking-container">
             <form id="projectForm" onsubmit="handleFormSubmit(event)">
                 
-                <!-- Choix du service principal (Click) -->
                 <div class="click-group">
-                    <label>Quel est votre besoin principal ? (Cliquez pour sélectionner)</label>
+                    <label>Sélectionnez votre besoin principal :</label>
                     <div class="options-grid">
-                        <div class="option-card" data-type="service" data-value="Infographie" onclick="selectOption(this, 'service')">Infographie</div>
-                        <div class="option-card" data-type="service" data-value="Photographie" onclick="selectOption(this, 'service')">Photographie</div>
-                        <div class="option-card" data-type="service" data-value="Site Statique" onclick="selectOption(this, 'service')">Site Web Statique</div>
+                        <div class="option-card" data-type="service" data-value="Infographie" onclick="selectOption(this)">Infographie</div>
+                        <div class="option-card" data-type="service" data-value="Photographie" onclick="selectOption(this)">Photographie</div>
+                        <div class="option-card" data-type="service" data-value="Création Web" onclick="selectOption(this)">Création Web</div>
                     </div>
                 </div>
 
-                <!-- Ajout d'options/Extras rapides (Click) -->
                 <div class="click-group">
-                    <label>Souhaitez-vous ajouter des extras ?</label>
+                    <label>Ajouter des options stratégiques (Optionnel) :</label>
                     <div class="options-grid">
                         <div class="option-card" data-type="extra" data-value="Contenu Réseaux Sociaux" onclick="toggleMultiOption(this)">Médias Sociaux</div>
-                        <div class="option-card" data-type="extra" data-value="Urgent (-7 jours)" onclick="toggleMultiOption(this)">Livraison Rapide</div>
+                        <div class="option-card" data-type="extra" data-value="Livraison Express" onclick="toggleMultiOption(this)">Livraison Rapide</div>
                     </div>
                 </div>
 
-                <!-- Informations Minimales Requises -->
                 <div class="click-group">
-                    <label for="clientEmail">Votre adresse courriel</label>
-                    <input type="email" id="clientEmail" class="input-field" placeholder="exemple@domaine.com" required>
+                    <label for="clientEmail">Votre courriel de contact</label>
+                    <input type="email" id="clientEmail" class="input-field" placeholder="nom@exemple.com" required>
                 </div>
 
-                <!-- Résumé des frais fixes -->
                 <div class="price-summary">
-                    Frais de consultation initiale : <strong>60 $</strong>
+                    Frais de consultation initiale obligatoires : <strong>60 $</strong>
                 </div>
 
-                <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Envoyer ma demande</button>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Envoyer ma demande en 1 clic</button>
             </form>
         </div>
     </section>
 
-    <!-- Pied de page (Footer) -->
     <footer>
         <div class="footer-logo">
-            <!-- Deuxième référence à ton logo comme demandé -->
             <img src="RoMedia-Changer.png" alt="RoMedia Logo">
         </div>
         
-        <div class="footer-email">
-            Courriel : <a href="mailto:roldensjulien@gmail.com">roldensjulien@gmail.com</a>
+        <div class="footer-email" style="margin-bottom: 20px;">
+            Des questions ? <a href="mailto:roldensjulien@gmail.com">roldensjulien@gmail.com</a>
         </div>
 
         <div class="footer-socials">
@@ -613,18 +775,73 @@
             <a href="#" target="_blank">Facebook</a>
         </div>
 
-        <p style="font-size: 0.85rem; opacity: 0.6; margin-top: 20px;">&copy; 2026 RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
+        <p style="font-size: 0.85rem; opacity: 0.5; margin-top: 25px;">&copy; 2026 RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
     </footer>
 
-    <!-- JavaScript intégré -->
     <script>
-        // Gestion des onglets du Portfolio
+        // 1. Barre de navigation transparente au scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('mainHeader');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // 2 & 5. Révélation magique au scroll + cascade des cartes de services
+        const revealElements = document.querySelectorAll('.reveal');
+        const serviceCards = document.querySelectorAll('.service-card');
+
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const pageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.target.classList.contains('reveal') && entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Si la section révélée est la section services, déclencher la cascade des cartes
+                    if (entry.target.id === 'services') {
+                        serviceCards.forEach((card, index) => {
+                            setTimeout(() => {
+                                card.classList.add('revealed');
+                            }, index * 200); // 200ms de délai entre chaque carte
+                        });
+                    }
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(el => pageObserver.observe(el));
+        // On observe la section services spécifiquement pour la cascade
+        const serviceSection = document.getElementById('services');
+        if(serviceSection) pageObserver.observe(serviceSection);
+
+        // 3. Pile de photos interactive (Stack)
+        function rotateStack() {
+            const stack = document.querySelector('.image-stack');
+            const cards = stack.querySelectorAll('.stack-card');
+            if (cards.length === 0) return;
+
+            const topCard = cards[0];
+            
+            // Déplacer visuellement la carte du dessus vers la gauche
+            topCard.classList.add('displaced');
+
+            setTimeout(() => {
+                // Envoyer la carte à la fin de l'élément HTML parent pour la mettre en dessous
+                stack.appendChild(topCard);
+                topCard.classList.remove('displaced');
+            }, 500); // Temps aligné sur la transition CSS
+        }
+
+        // 4. Commutateur d'onglets Portfolios
         function switchTab(type) {
-            // Retirer la classe active de tous les boutons et sections
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.portfolio-section').forEach(sec => sec.classList.remove('active'));
 
-            // Ajouter la classe active sur l'élément sélectionné
             if (type === 'photo') {
                 document.getElementById('portfolio-photo').classList.add('active');
                 event.currentTarget.classList.add('active');
@@ -634,43 +851,35 @@
             }
         }
 
-        // Sélection unique (pour le service principal)
-        function selectOption(element, type) {
+        // 6. Formulaire "Click-Click" interactif
+        function selectOption(element) {
             const siblings = element.parentNode.querySelectorAll('.option-card');
             siblings.forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
         }
 
-        // Sélection multiple (pour les extras)
         function toggleMultiOption(element) {
             element.classList.toggle('selected');
         }
 
-        // Gestion de la soumission du formulaire
         function handleFormSubmit(event) {
             event.preventDefault();
-            
             const email = document.getElementById('clientEmail').value;
             
-            // Récupération des choix cliqués
-            let serviceChoisi = "";
             const selectedService = document.querySelector('.option-card[data-type="service"].selected');
-            if(selectedService) {
-                serviceChoisi = selectedService.getAttribute('data-value');
-            } else {
-                alert("Veuillez sélectionner un besoin principal.");
+            if(!selectedService) {
+                alert("Veuillez sélectionner votre besoin principal en cliquant dessus.");
                 return;
             }
+            const service = selectedService.getAttribute('data-value');
 
-            let extrasChoisis = [];
+            let extras = [];
             document.querySelectorAll('.option-card[data-type="extra"].selected').forEach(card => {
-                extrasChoisis.push(card.getAttribute('data-value'));
+                extras.push(card.getAttribute('data-value'));
             });
 
-            // Construction du message de confirmation simple
-            alert(`Merci ! Votre demande a été prise en compte.\n\nService : ${serviceChoisi}\nExtras : ${extrasChoisis.join(', ') || 'Aucun'}\nCourriel : ${email}\n\nFrais de consultation : 60$ (Un courriel de suivi vous a été envoyé pour planifier le rendez-vous).`);
+            alert(`Demande reçue !\n\nBesoin : ${service}\nOptions : ${extras.join(', ') || 'Aucune'}\nContact : ${email}\n\nFrais de consultation : 60$ - Un courriel vous attend pour fixer la date.`);
             
-            // Réinitialisation rapide
             document.getElementById('projectForm').reset();
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
         }
