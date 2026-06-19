@@ -138,7 +138,7 @@
             position: relative;
             width: 100%;
             height: 100vh;
-            background-color: #000000; /* Fond noir profond derrière l'écran TV */
+            background-color: #000000;
             overflow: hidden;
             z-index: 10;
         }
@@ -200,6 +200,7 @@
             transition: var(--transition-smooth);
             border: 2px solid var(--primary);
             cursor: pointer;
+            text-align: center;
         }
 
         .btn:hover {
@@ -219,11 +220,11 @@
             box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- SECTIONS SUIVANTES (Elles passent par-dessus la TV fermée) --- */
+        /* --- SECTIONS SUIVANTES --- */
         .main-content-wrapper {
             position: relative;
             background-color: var(--light-bg);
-            z-index: 20; /* Priorité supérieure au scroll */
+            z-index: 20;
             box-shadow: 0 -20px 40px rgba(0,0,0,0.3);
         }
 
@@ -502,38 +503,55 @@
             border: 2px dashed #ddd;
         }
 
-        /* Formulaire de Consultation */
+        /* --- NOUVEAU FORMULAIRE DE CONSULTATION ÉTAPE PAR ÉTAPE (FUNNEL) --- */
         .booking-container {
             background: white;
             max-width: 700px;
             margin: 0 auto;
             padding: 45px;
             border-radius: 16px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        /* Classes d'étapes */
+        .form-step {
+            display: none; /* Caché par défaut */
+        }
+
+        .form-step.active {
+            display: block; /* Affiché si actif */
+            animation: fadeInStep 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeInStep {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .click-group {
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .click-group label {
             display: block;
             font-weight: 700;
-            margin-bottom: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
             color: var(--dark-blue);
         }
 
         .options-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
         }
 
         .option-card {
             background: var(--light-bg);
             border: 2px solid transparent;
-            padding: 18px 10px;
-            border-radius: 10px;
+            padding: 20px 15px;
+            border-radius: 12px;
             text-align: center;
             cursor: pointer;
             font-weight: 600;
@@ -543,6 +561,7 @@
 
         .option-card:hover {
             border-color: #ddd;
+            transform: translateY(-2px);
         }
 
         .option-card.selected {
@@ -554,26 +573,106 @@
         .input-field {
             width: 100%;
             padding: 14px;
-            border: 1px solid #ddd;
+            border: 2px solid #eee;
             border-radius: 10px;
             font-family: inherit;
-            margin-top: 5px;
+            margin-top: 8px;
             font-size: 1rem;
+            transition: border-color 0.3s;
         }
 
-        .price-summary {
-            background: #f0f3f8;
-            padding: 22px;
-            border-radius: 10px;
+        .input-field:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        textarea.input-field {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Barre de progression du formulaire */
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 35px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 20%;
+            background: var(--primary);
+            transition: width 0.4s ease;
+        }
+
+        /* Actions/Boutons de navigation interne */
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
             margin-top: 30px;
-            text-align: center;
-            font-size: 1.25rem;
-            color: var(--dark-blue);
+            gap: 15px;
         }
 
-        .price-summary strong {
-            color: var(--primary);
-            font-size: 1.6rem;
+        .btn-nav {
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition-smooth);
+        }
+
+        .btn-prev {
+            background: #eee;
+            color: var(--gray);
+        }
+        .btn-prev:hover { background: #ddd; }
+
+        /* Mention légale discrète demandée */
+        .legal-notice {
+            font-size: 0.75rem; /* Très petit (paragraphe 4) */
+            color: #777777;
+            line-height: 1.4;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        /* --- ZONE DE DON STRIPE --- */
+        .stripe-donation-wrapper {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .stripe-donation-wrapper p {
+            font-size: 0.95rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+
+        .btn-stripe {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #635bff; /* Couleur officielle de Stripe */
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition-smooth);
+            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.2);
+        }
+
+        .btn-stripe:hover {
+            background-color: #0a2540;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(10, 37, 64, 0.3);
         }
 
         /* Footer */
@@ -775,36 +874,102 @@
             <h2 class="section-title">Démarrer un projet</h2>
             
             <div class="booking-container">
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="formProgress"></div>
+                </div>
+
                 <form id="projectForm" onsubmit="handleFormSubmit(event)">
                     
-                    <div class="click-group">
-                        <label>Sélectionnez votre besoin principal :</label>
-                        <div class="options-grid">
-                            <div class="option-card" data-type="service" data-value="Infographie" onclick="selectOption(this)">Infographie</div>
-                            <div class="option-card" data-type="service" data-value="Photographie" onclick="selectOption(this)">Photographie</div>
-                            <div class="option-card" data-type="service" data-value="Création Web" onclick="selectOption(this)">Création Web</div>
+                    <div class="form-step active" data-step="1">
+                        <div class="click-group">
+                            <label>De quoi avez-vous besoin ?</label>
+                            <div class="options-grid">
+                                <div class="option-card" data-type="service" data-value="Photographie" onclick="selectMainService(this)">Services de Photographie</div>
+                                <div class="option-card" data-type="service" data-value="Infographie" onclick="selectMainService(this)">Services d'Infographie</div>
+                                <div class="option-card" data-type="service" data-value="Création Web" onclick="selectMainService(this)">Création & Design Web</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="click-group">
-                        <label>Ajouter des options stratégiques (Optionnel) :</label>
-                        <div class="options-grid">
-                            <div class="option-card" data-type="extra" data-value="Contenu Réseaux Sociaux" onclick="toggleMultiOption(this)">Médias Sociaux</div>
-                            <div class="option-card" data-type="extra" data-value="Livraison Express" onclick="toggleMultiOption(this)">Livraison Rapide</div>
+                    <div class="form-step" data-step="2">
+                        <div class="click-group">
+                            <label id="subOptionsTitle">Précisez votre besoin :</label>
+                            
+                            <div class="options-grid sub-options-group" id="opts-Photographie" style="display:none;">
+                                <div class="option-card" data-type="subservice" data-value="Photographies de produits" onclick="selectSubService(this)">Photographies de produits</div>
+                                <div class="option-card" data-type="subservice" data-value="Portrait magazine" onclick="selectSubService(this)">Portrait de style magazine</div>
+                                <div class="option-card" data-type="subservice" data-value="Portrait corporation" onclick="selectSubService(this)">Portrait corporation / d'affaires</div>
+                            </div>
+
+                            <div class="options-grid sub-options-group" id="opts-Infographie" style="display:none;">
+                                <div class="option-card" data-type="subservice" data-value="Identité de marque complète" onclick="selectSubService(this)">Identité de marque & Logo</div>
+                                <div class="option-card" data-type="subservice" data-value="Bannières & Visuels Réseaux" onclick="selectSubService(this)">Bannières & Kit Numérique</div>
+                                <div class="option-card" data-type="subservice" data-value="Refonte de marque" onclick="selectSubService(this)">Refonte graphique globale</div>
+                            </div>
+
+                            <div class="options-grid sub-options-group" id="opts-Création-Web" style="display:none;">
+                                <div class="option-card" data-type="subservice" data-value="Site Vitrine" onclick="selectSubService(this)">Site Vitrine Stratégique</div>
+                                <div class="option-card" data-type="subservice" data-value="Portfolio d'Artiste" onclick="selectSubService(this)">Portfolio ou Hub Créatif</div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(1)">Retour</button>
                         </div>
                     </div>
 
-                    <div class="click-group">
-                        <label for="clientEmail">Votre courriel de contact</label>
-                        <input type="email" id="clientEmail" class="input-field" placeholder="nom@exemple.com" required>
+                    <div class="form-step" data-step="3">
+                        <div class="click-group">
+                            <label for="clientComment">Que recherchez-vous exactement ? Expliquez-moi brièvement votre projet :</label>
+                            <textarea id="clientComment" class="input-field" placeholder="Décrivez votre vision, vos objectifs ou vos attentes spécifiques..."></textarea>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(2)">Retour</button>
+                            <button type="button" class="btn" onclick="goToStep(4)">Continuer</button>
+                        </div>
                     </div>
 
-                    <div class="price-summary">
-                        Frais de consultation initiale obligatoires : <strong>60 $</strong>
+                    <div class="form-step" data-step="4">
+                        <div class="click-group">
+                            <label>Souhaitez-vous ajouter des options stratégiques ?</label>
+                            <div class="options-grid">
+                                <div class="option-card" data-type="extra" data-value="Contenu Réseaux Sociaux" onclick="toggleMultiOption(this)">Contenu pour Médias Sociaux</div>
+                                <div class="option-card" data-type="extra" data-value="Livraison Express" onclick="toggleMultiOption(this)">Livraison Rapide / Prioritaire</div>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(3)">Retour</button>
+                            <button type="button" class="btn" onclick="goToStep(5)">Dernière étape</button>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Envoyer ma demande en 1 clic</button>
+                    <div class="form-step" data-step="5">
+                        <div class="click-group">
+                            <label>Vos informations de contact</label>
+                            <input type="text" id="clientName" class="input-field" placeholder="Votre nom complet" required>
+                            <input type="email" id="clientEmail" class="input-field" placeholder="Votre adresse courriel" required>
+                            <input type="tel" id="clientPhone" class="input-field" placeholder="Numéro de téléphone (Optionnel)">
+                            <input type="text" id="clientSocial" class="input-field" placeholder="Identifiant Instagram ou autre moyen (Optionnel)">
+                        </div>
+
+                        <p class="legal-notice">
+                            Note importante : Des frais de consultation initiale obligatoires de 60$ CAD sont applicables pour l'analyse stratégique de votre demande. Le montant total de cette consultation sera directement reflété et déduit sur votre première facture officielle.
+                        </p>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(4)">Retour</button>
+                            <button type="submit" class="btn">Faire une demande</button>
+                        </div>
+                    </div>
+
                 </form>
+
+                <div class="stripe-donation-wrapper">
+                    <p>Vous souhaitez simplement soutenir l'agence ou régler un acompte libre ?</p>
+                    <a href="https://donate.stripe.com/votre-lien-ici" target="_blank" class="btn-stripe">
+                        Soutenir ou Verser via Stripe
+                    </a>
+                </div>
+
             </div>
         </section>
 
@@ -831,41 +996,35 @@
         const crtScreen = document.getElementById('crtScreen');
         const header = document.getElementById('mainHeader');
 
-        // Logique Scroll : Gestion nav-bar + effet TV RGB rétro
+        // Logique Scroll : Navbar + Effet TV RGB
         window.addEventListener('scroll', () => {
             let scrollPos = window.scrollY;
             let windowHeight = window.innerHeight;
             
-            // A. Gestion Navbar
             if (scrollPos > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
 
-            // B. EFFET TV CATHODIQUE (CRT TV POWER OFF) GRAPHIC-DYNAMICS
-            // Calcule le ratio de défilement sur la hauteur de la première section (0 à 1)
             let progress = Math.min(scrollPos / windowHeight, 1);
 
             if (progress > 0) {
-                // Étape 1 : Écrasement vertical progressif (scaleY) et horizontal léger (scaleX)
                 let scaleY = Math.max(1 - (progress * 1.15), 0.005); 
                 let scaleX = 1;
                 let brightness = 1;
                 let opacity = 1 - (progress * 0.9);
 
-                // Étape 2 : Quand l'écran est très aplati, il s'écrase horizontalement d'un coup sec (le point blanc qui s'éteint)
                 if (progress > 0.6) {
                     scaleX = Math.max(1 - ((progress - 0.6) * 2.5), 0);
-                    brightness = 4; // Flash blanc intense du faisceau d'électrons
+                    brightness = 4; 
                 }
 
                 crtScreen.style.transform = `scale(${scaleX}, ${scaleY})`;
                 crtScreen.style.opacity = opacity;
                 crtScreen.style.filter = `contrast(1.5) brightness(${brightness})`;
-                crtScreen.style.borderRadius = `${progress * 80}px`; // L'écran s'arrondit pendant qu'il se ferme
+                crtScreen.style.borderRadius = `${progress * 80}px`;
             } else {
-                // Reset parfait à l'état d'origine tout en haut
                 crtScreen.style.transform = `scale(1, 1)`;
                 crtScreen.style.opacity = 1;
                 crtScreen.style.filter = `none`;
@@ -873,7 +1032,7 @@
             }
         });
 
-        // Révélation magique au scroll (Intersection Observer)
+        // Révélation au scroll
         const revealElements = document.querySelectorAll('.reveal');
         const serviceCards = document.querySelectorAll('.service-card');
 
@@ -881,12 +1040,9 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                    
                     if (entry.target.id === 'services') {
                         serviceCards.forEach((card, index) => {
-                            setTimeout(() => {
-                                card.classList.add('revealed');
-                            }, index * 200);
+                            setTimeout(() => { card.classList.add('revealed'); }, index * 200);
                         });
                     }
                 }
@@ -895,7 +1051,7 @@
 
         revealElements.forEach(el => pageObserver.observe(el));
 
-        // Pile de photos interactive (Stack)
+        // Pile de photos
         function rotateStack() {
             const stack = document.querySelector('.image-stack');
             const cards = stack.querySelectorAll('.stack-card');
@@ -924,37 +1080,96 @@
             }
         }
 
-        // Formulaire Interactif
-        function selectOption(element) {
+        // --- ENGINE DU FORMULAIRE ENTONNOIR (FUNNEL) ---
+        let currentMainService = "";
+
+        function updateProgressBar(step) {
+            const progressFill = document.getElementById('formProgress');
+            const totalSteps = 5;
+            const percentage = (step / totalSteps) * 100;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        function goToStep(stepNumber) {
+            document.querySelectorAll('.form-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            const nextStep = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
+            if(nextStep) {
+                nextStep.classList.add('active');
+                updateProgressBar(stepNumber);
+            }
+        }
+
+        function selectMainService(element) {
+            // Gérer la sélection visuelle
             const siblings = element.parentNode.querySelectorAll('.option-card');
             siblings.forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
+
+            currentMainService = element.getAttribute('data-value');
+            
+            // Configurer le titre de l'étape 2 et afficher la bonne grille de sous-options
+            document.getElementById('subOptionsTitle').innerText = `Options spécifiques pour : ${currentMainService}`;
+            
+            document.querySelectorAll('.sub-options-group').forEach(group => {
+                group.style.display = 'none';
+                group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            });
+
+            // Conversion de l'ID pour gérer les espaces ('Création Web' -> 'Création-Web')
+            const targetId = `opts-${currentMainService.replace(/\s+/g, '-')}`;
+            const targetGroup = document.getElementById(targetId);
+            if(targetGroup) targetGroup.style.display = 'grid';
+
+            // Passer automatiquement à l'étape suivante après un court instant
+            setTimeout(() => { goToStep(2); }, 350);
+        }
+
+        function selectSubService(element) {
+            const siblings = element.parentNode.querySelectorAll('.option-card');
+            siblings.forEach(card => card.classList.remove('selected'));
+            element.classList.add('selected');
+
+            // Passer automatiquement à la boîte de commentaire
+            setTimeout(() => { goToStep(3); }, 350);
         }
 
         function toggleMultiOption(element) {
             element.classList.toggle('selected');
         }
 
+        // Soumission et traitement final du Funnel
         function handleFormSubmit(event) {
             event.preventDefault();
+
+            const name = document.getElementById('clientName').value;
             const email = document.getElementById('clientEmail').value;
-            const selectedService = document.querySelector('.option-card[data-type="service"].selected');
-            
-            if(!selectedService) {
-                alert("Veuillez sélectionner votre besoin principal en cliquant dessus.");
-                return;
-            }
-            const service = selectedService.getAttribute('data-value');
+            const phone = document.getElementById('clientPhone').value || "Non spécifié";
+            const social = document.getElementById('clientSocial').value || "Non spécifié";
+            const comment = document.getElementById('clientComment').value || "Aucun commentaire";
+
+            const selectedSub = document.querySelector('.option-card[data-type="subservice"].selected');
+            const subService = selectedSub ? selectedSub.getAttribute('data-value') : "Général";
 
             let extras = [];
             document.querySelectorAll('.option-card[data-type="extra"].selected').forEach(card => {
                 extras.push(card.getAttribute('data-value'));
             });
 
-            alert(`Demande reçue !\n\nBesoin : ${service}\nOptions : ${extras.join(', ') || 'Aucune'}\nContact : ${email}\n\nFrais de consultation : 60$ - Un courriel vous attend pour fixer la date.`);
+            // Synthèse propre de la demande
+            alert(`Demande soumise avec succès !\n\n` +
+                  `Client : ${name}\n` +
+                  `Contact : ${email} | Tél : ${phone} | Réseaux : ${social}\n\n` +
+                  `Besoin : ${currentMainService} (${subService})\n` +
+                  `Détails : ${comment}\n` +
+                  `Options stratégiques : ${extras.join(', ') || 'Aucune'}\n\n` +
+                  `Frais de consultation (60$) acceptés.`);
             
+            // Reset complet et retour à l'étape 1
             document.getElementById('projectForm').reset();
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
+            goToStep(1);
         }
     </script>
 </body>
