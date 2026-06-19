@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RoMedia | Changer pour Évoluer</title>
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -503,7 +504,7 @@
             border: 2px dashed #ddd;
         }
 
-        /* --- NOUVEAU FORMULAIRE DE CONSULTATION ÉTAPE PAR ÉTAPE (FUNNEL) --- */
+        /* --- FORMULAIRE DE CONSULTATION ÉTAPE PAR ÉTAPE (FUNNEL) --- */
         .booking-container {
             background: white;
             max-width: 700px;
@@ -514,13 +515,12 @@
             position: relative;
         }
 
-        /* Classes d'étapes */
         .form-step {
-            display: none; /* Caché par défaut */
+            display: none;
         }
 
         .form-step.active {
-            display: block; /* Affiché si actif */
+            display: block;
             animation: fadeInStep 0.4s ease-out forwards;
         }
 
@@ -591,7 +591,6 @@
             min-height: 120px;
         }
 
-        /* Barre de progression du formulaire */
         .progress-bar-container {
             width: 100%;
             height: 6px;
@@ -608,7 +607,6 @@
             transition: width 0.4s ease;
         }
 
-        /* Actions/Boutons de navigation interne */
         .form-actions {
             display: flex;
             justify-content: space-between;
@@ -631,9 +629,8 @@
         }
         .btn-prev:hover { background: #ddd; }
 
-        /* Mention légale discrète demandée */
         .legal-notice {
-            font-size: 0.75rem; /* Très petit (paragraphe 4) */
+            font-size: 0.75rem;
             color: #777777;
             line-height: 1.4;
             margin-top: 20px;
@@ -658,7 +655,7 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background-color: #635bff; /* Couleur officielle de Stripe */
+            background-color: #635bff;
             color: white;
             padding: 12px 30px;
             border-radius: 25px;
@@ -675,45 +672,124 @@
             box-shadow: 0 6px 20px rgba(10, 37, 64, 0.3);
         }
 
-        /* Footer */
+        /* --- NOUVEAU FOOTER EN 3 COLONNES --- */
         footer {
             background: var(--dark-blue);
             color: var(--text-light);
-            padding: 60px 20px;
+            padding: 80px 20px 40px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            align-items: center;
+            gap: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 50px;
+        }
+
+        /* Colonne Gauche (Textes de contact) */
+        .footer-left {
+            text-align: left;
+        }
+
+        .footer-left h4 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            color: var(--text-light);
+        }
+
+        .footer-left p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .footer-left a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .footer-left a:hover {
+            opacity: 0.8;
+        }
+
+        /* Colonne Centre (Logo au milieu et en haut) */
+        .footer-center {
             text-align: center;
         }
 
-        .footer-logo img {
-            height: 55px;
-            margin-bottom: 25px;
+        .footer-center img {
+            height: 65px;
+            width: auto;
+            display: inline-block;
         }
 
-        .footer-socials {
+        /* Colonne Droite (Réseaux sociaux) */
+        .footer-right {
+            text-align: right;
+        }
+
+        .footer-right h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-social-icons {
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin: 25px 0;
+            justify-content: flex-end;
+            gap: 20px;
         }
 
-        .footer-socials a {
+        .footer-social-icons a {
             color: var(--text-light);
             text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s, transform 0.3s;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 18px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-social-icons a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+        }
+
+        /* Zone inférieure (Copyright + Mentions) */
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .footer-bottom a {
+            color: var(--text-light);
+            text-decoration: underline;
             transition: color 0.3s;
-            font-weight: 600;
         }
 
-        .footer-socials a:hover {
+        .footer-bottom a:hover {
             color: var(--primary);
-        }
-
-        .footer-email {
-            font-size: 1.1rem;
-        }
-
-        .footer-email a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
         }
 
         /* Adaptabilité Mobile */
@@ -724,6 +800,22 @@
             }
             .image-stack-wrapper {
                 height: 420px;
+            }
+            /* Adaptation du footer sur tablette/mobile */
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 35px;
+            }
+            .footer-left, .footer-right {
+                text-align: center;
+            }
+            .footer-social-icons {
+                justify-content: center;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
@@ -743,6 +835,7 @@
 </head>
 <body>
 
+    <!-- Header Navigation Épuré -->
     <header id="mainHeader">
         <div class="nav-container">
             <div class="logo">
@@ -759,6 +852,7 @@
         </div>
     </header>
 
+    <!-- Zone Block Fixe pour l'effet TV RGB -->
     <div class="hero-outer-wrapper" id="accueil">
         <div class="hero" id="crtScreen">
             <h1>Changer pour <span>Évoluer</span></h1>
@@ -770,8 +864,10 @@
         </div>
     </div>
 
+    <!-- Contenu Principal -->
     <div class="main-content-wrapper">
 
+        <!-- Section À Propos -->
         <section id="a-propos" class="reveal">
             <div class="about-container">
                 <div class="about-text">
@@ -782,6 +878,7 @@
                     <p>Aujourd'hui, à travers <strong>RoMedia</strong>, j'accompagne les entrepreneurs, les créatifs et les collectifs à structurer leur communication et à passer au niveau supérieur. Pas de blabla, juste du design stratégique d'impact.</p>
                 </div>
                 
+                <!-- Pile de photos interactive -->
                 <div class="image-stack-wrapper">
                     <div class="image-stack" onclick="rotateStack()">
                         <div class="stack-card" style="background-color: #e26137;">[ Cliquez pour défiler ]</div>
@@ -793,6 +890,7 @@
                 </div>
             </div>
 
+            <!-- Section Machine à sous (Casino Scrolling) -->
             <div class="casino-partners">
                 <div class="casino-info">
                     <h4>Ils me font confiance</h4>
@@ -815,6 +913,7 @@
             </div>
         </section>
 
+        <!-- Section Services -->
         <section id="services" class="reveal">
             <h2 class="section-title">Ce que je peux offrir</h2>
             <div class="services-grid">
@@ -848,6 +947,7 @@
             </div>
         </section>
 
+        <!-- Section Portfolios -->
         <section id="portfolios" class="reveal">
             <h2 class="section-title">Mes Portfolios</h2>
             
@@ -870,6 +970,7 @@
             </div>
         </section>
 
+        <!-- Section Consultation Funnel Interactive -->
         <section id="consultation" class="reveal">
             <h2 class="section-title">Démarrer un projet</h2>
             
@@ -880,6 +981,7 @@
 
                 <form id="projectForm" onsubmit="handleFormSubmit(event)">
                     
+                    <!-- ÉTAPE 1 : Besoin Principal -->
                     <div class="form-step active" data-step="1">
                         <div class="click-group">
                             <label>De quoi avez-vous besoin ?</label>
@@ -891,6 +993,7 @@
                         </div>
                     </div>
 
+                    <!-- ÉTAPE 2 : Sous-options dynamiques -->
                     <div class="form-step" data-step="2">
                         <div class="click-group">
                             <label id="subOptionsTitle">Précisez votre besoin :</label>
@@ -917,10 +1020,11 @@
                         </div>
                     </div>
 
+                    <!-- ÉTAPE 3 : Commentaire -->
                     <div class="form-step" data-step="3">
                         <div class="click-group">
                             <label for="clientComment">Que recherchez-vous exactement ? Expliquez-moi brièvement votre projet :</label>
-                            <textarea id="clientComment" class="input-field" placeholder="Décrivez votre vision, vos objectifs ou vos attentes spécifiques..."></textarea>
+                            <textarea id="clientComment" class="input-field" placeholder="Décrivez votre vision, vos objectifs..."></textarea>
                         </div>
                         <div class="form-actions">
                             <button type="button" class="btn-nav btn-prev" onclick="goToStep(2)">Retour</button>
@@ -928,6 +1032,7 @@
                         </div>
                     </div>
 
+                    <!-- ÉTAPE 4 : Options stratégiques -->
                     <div class="form-step" data-step="4">
                         <div class="click-group">
                             <label>Souhaitez-vous ajouter des options stratégiques ?</label>
@@ -942,6 +1047,7 @@
                         </div>
                     </div>
 
+                    <!-- ÉTAPE 5 : Contacts -->
                     <div class="form-step" data-step="5">
                         <div class="click-group">
                             <label>Vos informations de contact</label>
@@ -963,6 +1069,7 @@
 
                 </form>
 
+                <!-- Zone de support Stripe -->
                 <div class="stripe-donation-wrapper">
                     <p>Vous souhaitez simplement soutenir l'agence ou régler un acompte libre ?</p>
                     <a href="https://donate.stripe.com/votre-lien-ici" target="_blank" class="btn-stripe">
@@ -973,25 +1080,43 @@
             </div>
         </section>
 
+        <!-- --- RESTRUCTURATION DU FOOTER EN 3 COLONNES --- -->
         <footer>
-            <div class="footer-logo">
-                <img src="RoMedia-Changer.png" alt="RoMedia Logo">
+            <div class="footer-grid">
+                
+                <!-- Colonne Gauche : Nom & Courriel -->
+                <div class="footer-left">
+                    <h4>RoMEDIA</h4>
+                    <p>Contact direct & opportunités :</p>
+                    <p><a href="mailto:ro.media.renegade@gmail.com">ro.media.renegade@gmail.com</a></p>
+                </div>
+
+                <!-- Colonne Centre : Logo au milieu/haut -->
+                <div class="footer-center">
+                    <img src="RoMedia-Changer.png" alt="RoMedia Logo">
+                </div>
+
+                <!-- Colonne Droite : Icônes/Liens de Réseaux Sociaux -->
+                <div class="footer-right">
+                    <h5>Suivre le mouvement</h5>
+                    <div class="footer-social-icons">
+                        <a href="https://instagram.com/votre_compte" target="_blank">Instagram</a>
+                        <a href="https://facebook.com/votre_page" target="_blank">Facebook</a>
+                        <a href="https://wa.me/votre_numero" target="_blank">WhatsApp</a>
+                    </div>
+                </div>
+
             </div>
             
-            <div class="footer-email" style="margin-bottom: 20px;">
-                Des questions ? <a href="mailto:roldensjulien@gmail.com">roldensjulien@gmail.com</a>
+            <!-- Zone Basse : Droits & Lien Légal GitHub -->
+            <div class="footer-bottom">
+                <p>2026 &copy; RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
+                <p><a href="legal.html">Mentions Légales & Confidentialité</a></p>
             </div>
-
-            <div class="footer-socials">
-                <a href="#" target="_blank">Instagram</a>
-                <a href="#" target="_blank">LinkedIn</a>
-                <a href="#" target="_blank">Facebook</a>
-            </div>
-
-            <p style="font-size: 0.85rem; opacity: 0.5; margin-top: 25px;">&copy; 2026 RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
         </footer>
     </div>
 
+    <!-- Script GitHub Avancé -->
     <script>
         const crtScreen = document.getElementById('crtScreen');
         const header = document.getElementById('mainHeader');
@@ -1102,14 +1227,11 @@
         }
 
         function selectMainService(element) {
-            // Gérer la sélection visuelle
             const siblings = element.parentNode.querySelectorAll('.option-card');
             siblings.forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
 
             currentMainService = element.getAttribute('data-value');
-            
-            // Configurer le titre de l'étape 2 et afficher la bonne grille de sous-options
             document.getElementById('subOptionsTitle').innerText = `Options spécifiques pour : ${currentMainService}`;
             
             document.querySelectorAll('.sub-options-group').forEach(group => {
@@ -1117,12 +1239,10 @@
                 group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
             });
 
-            // Conversion de l'ID pour gérer les espaces ('Création Web' -> 'Création-Web')
             const targetId = `opts-${currentMainService.replace(/\s+/g, '-')}`;
             const targetGroup = document.getElementById(targetId);
             if(targetGroup) targetGroup.style.display = 'grid';
 
-            // Passer automatiquement à l'étape suivante après un court instant
             setTimeout(() => { goToStep(2); }, 350);
         }
 
@@ -1131,7 +1251,6 @@
             siblings.forEach(card => card.classList.remove('selected'));
             element.classList.add('selected');
 
-            // Passer automatiquement à la boîte de commentaire
             setTimeout(() => { goToStep(3); }, 350);
         }
 
@@ -1139,7 +1258,6 @@
             element.classList.toggle('selected');
         }
 
-        // Soumission et traitement final du Funnel
         function handleFormSubmit(event) {
             event.preventDefault();
 
@@ -1157,7 +1275,6 @@
                 extras.push(card.getAttribute('data-value'));
             });
 
-            // Synthèse propre de la demande
             alert(`Demande soumise avec succès !\n\n` +
                   `Client : ${name}\n` +
                   `Contact : ${email} | Tél : ${phone} | Réseaux : ${social}\n\n` +
@@ -1166,7 +1283,6 @@
                   `Options stratégiques : ${extras.join(', ') || 'Aucune'}\n\n` +
                   `Frais de consultation (60$) acceptés.`);
             
-            // Reset complet et retour à l'étape 1
             document.getElementById('projectForm').reset();
             document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
             goToStep(1);
