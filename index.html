@@ -61,7 +61,6 @@
             transition: var(--transition-smooth);
         }
 
-        /* Classe activée en JS quand on défile */
         header.scrolled {
             background: rgba(11, 27, 61, 0.4);
             backdrop-filter: blur(12px);
@@ -134,12 +133,35 @@
             box-shadow: 0 4px 12px rgba(226, 97, 55, 0.3);
         }
 
-        /* Hero Section */
+        /* --- CONTENEUR HERO FIXE POUR EFFET TV CRT --- */
+        .hero-outer-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #000000; /* Fond noir profond derrière l'écran TV */
+            overflow: hidden;
+            z-index: 10;
+        }
+
         .hero {
-            background: linear-gradient(135deg, var(--dark-blue) 0%, #040a18 100%);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(11, 27, 61, 0.85), rgba(4, 10, 24, 0.9)), url('votre-photo-de-fond.jpg');
+            background-size: cover;
+            background-position: center;
             color: var(--text-light);
-            padding: 180px 20px 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding: 0 20px;
+            transform-origin: center center;
+            will-change: transform, opacity, filter;
+            transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear, border-radius 0.2s;
         }
 
         .hero h1 {
@@ -156,8 +178,15 @@
         .hero p {
             font-size: 1.25rem;
             max-width: 650px;
-            margin: 0 auto 35px;
+            margin: 0 auto 40px;
             opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
         .btn {
@@ -169,7 +198,7 @@
             text-decoration: none;
             font-weight: 600;
             transition: var(--transition-smooth);
-            border: none;
+            border: 2px solid var(--primary);
             cursor: pointer;
         }
 
@@ -178,7 +207,26 @@
             box-shadow: 0 6px 20px rgba(226, 97, 55, 0.4);
         }
 
-        /* Sections Global */
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--text-light);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--text-light);
+            color: var(--dark-blue);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- SECTIONS SUIVANTES (Elles passent par-dessus la TV fermée) --- */
+        .main-content-wrapper {
+            position: relative;
+            background-color: var(--light-bg);
+            z-index: 20; /* Priorité supérieure au scroll */
+            box-shadow: 0 -20px 40px rgba(0,0,0,0.3);
+        }
+
         section {
             padding: 100px 20px;
             max-width: 1200px;
@@ -202,7 +250,7 @@
             border-radius: 2px;
         }
 
-        /* À Propos avec Stack de Photos Interactif */
+        /* À Propos avec Stack de Photos */
         .about-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -222,7 +270,6 @@
             font-size: 1.05rem;
         }
 
-        /* Zone de la pile de photos (Stack) */
         .image-stack-wrapper {
             display: flex;
             justify-content: center;
@@ -257,21 +304,19 @@
             border: 2px solid rgba(255,255,255,0.2);
         }
 
-        /* Positionnement initial en mode "pile" 3D */
         .stack-card:nth-child(1) { transform: translate3d(0, 0, 0) rotate(0deg); z-index: 5; }
         .stack-card:nth-child(2) { transform: translate3d(10px, 10px, 0) rotate(2deg); z-index: 4; }
         .stack-card:nth-child(3) { transform: translate3d(20px, 20px, 0) rotate(-3deg); z-index: 3; }
         .stack-card:nth-child(4) { transform: translate3d(30px, 30px, 0) rotate(4deg); z-index: 2; }
         .stack-card:nth-child(5) { transform: translate3d(40px, 40px, 0) rotate(-1deg); z-index: 1; }
 
-        /* Effet d'envoi vers l'arrière lors du clic */
         .stack-card.displaced {
             transform: translate3d(-200px, -20px, 0) rotate(-15deg) !important;
             opacity: 0;
             z-index: 0;
         }
 
-        /* Section Machine à sous (Casino Scrolling Logos) */
+        /* Machine à sous (Casino Scrolling Logos) */
         .casino-partners {
             background-color: #f0f3f8;
             border-radius: 20px;
@@ -299,7 +344,6 @@
             border: 4px solid var(--primary);
         }
 
-        /* Ligne de flou haut et bas pour l'effet miroir machine à sous */
         .casino-window::before, .casino-window::after {
             content: '';
             position: absolute;
@@ -338,10 +382,10 @@
 
         @keyframes slotMachine {
             0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); } /* Doit boucler sur la moitié pour un effet fluide infini */
+            100% { transform: translateY(-50%); }
         }
 
-        /* Services Section avec cascade et couleurs distinctes */
+        /* Services Section */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -359,13 +403,11 @@
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Animation d'apparition par classe déclenchée en JS */
         .service-card.revealed {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Style unique pour la carte Création de sites Web */
         .service-card.featured-card {
             background: var(--dark-blue);
             color: var(--text-light);
@@ -407,7 +449,7 @@
             font-weight: bold;
         }
 
-        /* Portfolios distincts */
+        /* Portfolios */
         .portfolio-tabs {
             display: flex;
             justify-content: center;
@@ -460,7 +502,7 @@
             border: 2px dashed #ddd;
         }
 
-        /* Formulaire de Consultation Interactif (Zéro Écriture) */
+        /* Formulaire de Consultation */
         .booking-container {
             background: white;
             max-width: 700px;
@@ -618,226 +660,257 @@
         </div>
     </header>
 
-    <section id="accueil" class="hero">
-        <h1>Changer pour <span>Évoluer</span></h1>
-        <p>Design stratégique, infographie et création visuelle brute pour propulser l'écosystème de votre marque.</p>
-        <a href="#consultation" class="btn">Réserver ma session (60$)</a>
-    </section>
+    <div class="hero-outer-wrapper" id="accueil">
+        <div class="hero" id="crtScreen">
+            <h1>Changer pour <span>Évoluer</span></h1>
+            <p>Design stratégique, infographie et création visuelle brute pour propulser l'écosystème de votre marque.</p>
+            <div class="hero-buttons">
+                <a href="#consultation" class="btn">Réserver ma session</a>
+                <a href="#consultation" class="btn btn-secondary">Me contacter</a>
+            </div>
+        </div>
+    </div>
 
-    <section id="a-propos" class="reveal">
-        <div class="about-container">
-            <div class="about-text">
-                <h2 style="font-size: 2.4rem; color: var(--dark-blue); margin-bottom: 20px;">À Propos</h2>
-                <h3>Roldens Julien</h3>
-                <p>Enfant de Montréal-Nord, mon parcours s'est entièrement forgé au cœur de la culture urbaine, de la musique et des arts visuels. Ce background créatif pur et sans filtre m'a donné les codes pour bâtir des univers visuels authentiques qui marquent les esprits.</p>
-                <p>Passer de l'expression artistique brute à la direction stratégique d'image de marque m'a permis de comprendre un principe fondamental : pour grandir, il faut savoir briser les codes.</p>
-                <p>Aujourd'hui, à travers <strong>RoMedia</strong>, j'accompagne les entrepreneurs, les créatifs et les collectifs à structurer leur communication et à passer au niveau supérieur. Pas de blabla, juste du design stratégique d'impact.</p>
+    <div class="main-content-wrapper">
+
+        <section id="a-propos" class="reveal">
+            <div class="about-container">
+                <div class="about-text">
+                    <h2 style="font-size: 2.4rem; color: var(--dark-blue); margin-bottom: 20px;">À Propos</h2>
+                    <h3>Roldens Julien</h3>
+                    <p>Enfant de Montréal-Nord, mon parcours s'est entièrement forgé au cœur de la culture urbaine, de la musique et des arts visuels. Ce background créatif pur et sans filtre m'a donné les codes pour bâtir des univers visuels authentiques qui marquent les esprits.</p>
+                    <p>Passer de l'expression artistique brute à la direction stratégique d'image de marque m'a permis de comprendre un principe fondamental : pour grandir, il faut savoir briser les codes.</p>
+                    <p>Aujourd'hui, à travers <strong>RoMedia</strong>, j'accompagne les entrepreneurs, les créatifs et les collectifs à structurer leur communication et à passer au niveau supérieur. Pas de blabla, juste du design stratégique d'impact.</p>
+                </div>
+                
+                <div class="image-stack-wrapper">
+                    <div class="image-stack" onclick="rotateStack()">
+                        <div class="stack-card" style="background-color: #e26137;">[ Cliquez pour défiler ]</div>
+                        <div class="stack-card" style="background-color: #0B1B3D;">[ Roldens - Studio ]</div>
+                        <div class="stack-card" style="background-color: #4a5a7a;">[ Montréal Nord Art ]</div>
+                        <div class="stack-card" style="background-color: #f48c66;">[ Direction Visuelle ]</div>
+                        <div class="stack-card" style="background-color: #1c2d52;">[ Coulisses Session ]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="casino-partners">
+                <div class="casino-info">
+                    <h4>Ils me font confiance</h4>
+                    <p style="color: var(--gray);">Un écosystème de marques et de communautés locales (secteur alimentaire, culturel et événementiel de Montréal) qui ont choisi de changer pour évoluer.</p>
+                </div>
+                <div class="casino-window">
+                    <div class="casino-reel">
+                        <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
+                        <div class="slot-logo">ARTISTES LOCAUX</div>
+                        <div class="slot-logo">ENTREPRISES QUÉBEC</div>
+                        <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
+                        <div class="slot-logo">MARQUES URBAINES</div>
+                        <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
+                        <div class="slot-logo">ARTISTES LOCAUX</div>
+                        <div class="slot-logo">ENTREPRISES QUÉBEC</div>
+                        <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
+                        <div class="slot-logo">MARQUES URBAINES</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="reveal">
+            <h2 class="section-title">Ce que je peux offrir</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Infographie</h3>
+                    <p>Création de chartes graphiques percutantes, logos, bannières et identités visuelles uniques adaptées à vos supports.</p>
+                    <ul>
+                        <li>Identité de marque complète</li>
+                        <li>Design d'imprimés & numériques</li>
+                        <li>Refonte de logos</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <h3>Photographie</h3>
+                    <p>Production visuelle de haute qualité pour capturer l'essence de vos projets, événements ou créations culinaires.</p>
+                    <ul>
+                        <li>Shootings produits & culinaires</li>
+                        <li>Portraits de marque & Corporate</li>
+                        <li>Couverture événementielle brute</li>
+                    </ul>
+                </div>
+                <div class="service-card featured-card">
+                    <h3>Création & Design Web</h3>
+                    <p>Développement de sites web vitrines statiques ultra-rapides, épurés et pensés pour convertir vos visiteurs.</p>
+                    <ul>
+                        <li>Maquettes UX/UI sur mesure</li>
+                        <li>Code moderne, fluide & responsive</li>
+                        <li>Optimisation SEO & Performance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolios" class="reveal">
+            <h2 class="section-title">Mes Portfolios</h2>
+            
+            <div class="portfolio-tabs">
+                <button class="tab-btn active" onclick="switchTab('photo')">Espace Photographie</button>
+                <button class="tab-btn" onclick="switchTab('design')">Espace Design Graphique</button>
+            </div>
+
+            <div class="portfolio-container">
+                <div id="portfolio-photo" class="portfolio-section active">
+                    <div class="gallery-item">[ Direction Artistique Urbaine ]</div>
+                    <div class="gallery-item">[ Captation Culinaire / Food ]</div>
+                    <div class="gallery-item">[ Événementiel & Scène ]</div>
+                </div>
+                <div id="portfolio-design" class="portfolio-section">
+                    <div class="gallery-item">[ Identité Visuelle / Logo ]</div>
+                    <div class="gallery-item">[ Maquettes Web UI ]</div>
+                    <div class="gallery-item">[ Design Éditorial / Bannières ]</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="consultation" class="reveal">
+            <h2 class="section-title">Démarrer un projet</h2>
+            
+            <div class="booking-container">
+                <form id="projectForm" onsubmit="handleFormSubmit(event)">
+                    
+                    <div class="click-group">
+                        <label>Sélectionnez votre besoin principal :</label>
+                        <div class="options-grid">
+                            <div class="option-card" data-type="service" data-value="Infographie" onclick="selectOption(this)">Infographie</div>
+                            <div class="option-card" data-type="service" data-value="Photographie" onclick="selectOption(this)">Photographie</div>
+                            <div class="option-card" data-type="service" data-value="Création Web" onclick="selectOption(this)">Création Web</div>
+                        </div>
+                    </div>
+
+                    <div class="click-group">
+                        <label>Ajouter des options stratégiques (Optionnel) :</label>
+                        <div class="options-grid">
+                            <div class="option-card" data-type="extra" data-value="Contenu Réseaux Sociaux" onclick="toggleMultiOption(this)">Médias Sociaux</div>
+                            <div class="option-card" data-type="extra" data-value="Livraison Express" onclick="toggleMultiOption(this)">Livraison Rapide</div>
+                        </div>
+                    </div>
+
+                    <div class="click-group">
+                        <label for="clientEmail">Votre courriel de contact</label>
+                        <input type="email" id="clientEmail" class="input-field" placeholder="nom@exemple.com" required>
+                    </div>
+
+                    <div class="price-summary">
+                        Frais de consultation initiale obligatoires : <strong>60 $</strong>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Envoyer ma demande en 1 clic</button>
+                </form>
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-logo">
+                <img src="RoMedia-Changer.png" alt="RoMedia Logo">
             </div>
             
-            <div class="image-stack-wrapper">
-                <div class="image-stack" onclick="rotateStack()">
-                    <div class="stack-card" style="background-color: #e26137;">[ Cliquez pour défiler ]</div>
-                    <div class="stack-card" style="background-color: #0B1B3D;">[ Roldens - Studio ]</div>
-                    <div class="stack-card" style="background-color: #4a5a7a;">[ Montréal Nord Art ]</div>
-                    <div class="stack-card" style="background-color: #f48c66;">[ Direction Visuelle ]</div>
-                    <div class="stack-card" style="background-color: #1c2d52;">[ Coulisses Session ]</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="casino-partners">
-            <div class="casino-info">
-                <h4>Ils me font confiance</h4>
-                <p style="color: var(--gray);">Un écosystème de marques et de communautés locales (secteur alimentaire, culturel et événementiel de Montréal) qui ont choisi de changer pour évoluer.</p>
-            </div>
-            <div class="casino-window">
-                <div class="casino-reel">
-                    <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
-                    <div class="slot-logo">ARTISTES LOCAUX</div>
-                    <div class="slot-logo">ENTREPRISES QUÉBEC</div>
-                    <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
-                    <div class="slot-logo">MARQUES URBAINES</div>
-                    <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
-                    <div class="slot-logo">ARTISTES LOCAUX</div>
-                    <div class="slot-logo">ENTREPRISES QUÉBEC</div>
-                    <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
-                    <div class="slot-logo">MARQUES URBAINES</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="services" class="reveal">
-        <h2 class="section-title">Ce que je peux offrir</h2>
-        <div class="services-grid">
-            <div class="service-card">
-                <h3>Infographie</h3>
-                <p>Création de chartes graphiques percutantes, logos, bannières et identités visuelles uniques adaptées à vos supports.</p>
-                <ul>
-                    <li>Identité de marque complète</li>
-                    <li>Design d'imprimés & numériques</li>
-                    <li>Refonte de logos</li>
-                </ul>
-            </div>
-            <div class="service-card">
-                <h3>Photographie</h3>
-                <p>Production visuelle de haute qualité pour capturer l'essence de vos projets, événements ou créations culinaires.</p>
-                <ul>
-                    <li>Shootings produits & culinaires</li>
-                    <li>Portraits de marque & Corporate</li>
-                    <li>Couverture événementielle brute</li>
-                </ul>
-            </div>
-            <div class="service-card featured-card">
-                <h3>Création & Design Web</h3>
-                <p>Développement de sites web vitrines statiques ultra-rapides, épurés et pensés pour convertir vos visiteurs.</p>
-                <ul>
-                    <li>Maquettes UX/UI sur mesure</li>
-                    <li>Code moderne, fluide & responsive</li>
-                    <li>Optimisation SEO & Performance</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolios" class="reveal">
-        <h2 class="section-title">Mes Portfolios</h2>
-        
-        <div class="portfolio-tabs">
-            <button class="tab-btn active" onclick="switchTab('photo')">Espace Photographie</button>
-            <button class="tab-btn" onclick="switchTab('design')">Espace Design Graphique</button>
-        </div>
-
-        <div class="portfolio-container">
-            <div id="portfolio-photo" class="portfolio-section active">
-                <div class="gallery-item">[ Direction Artistique Urbaine ]</div>
-                <div class="gallery-item">[ Captation Culinaire / Food ]</div>
-                <div class="gallery-item">[ Événementiel & Scène ]</div>
+            <div class="footer-email" style="margin-bottom: 20px;">
+                Des questions ? <a href="mailto:roldensjulien@gmail.com">roldensjulien@gmail.com</a>
             </div>
 
-            <div id="portfolio-design" class="portfolio-section">
-                <div class="gallery-item">[ Identité Visuelle / Logo ]</div>
-                <div class="gallery-item">[ Maquettes Web UI ]</div>
-                <div class="gallery-item">[ Design Éditorial / Bannières ]</div>
+            <div class="footer-socials">
+                <a href="#" target="_blank">Instagram</a>
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">Facebook</a>
             </div>
-        </div>
-    </section>
 
-    <section id="consultation" class="reveal">
-        <h2 class="section-title">Démarrer un projet</h2>
-        
-        <div class="booking-container">
-            <form id="projectForm" onsubmit="handleFormSubmit(event)">
-                
-                <div class="click-group">
-                    <label>Sélectionnez votre besoin principal :</label>
-                    <div class="options-grid">
-                        <div class="option-card" data-type="service" data-value="Infographie" onclick="selectOption(this)">Infographie</div>
-                        <div class="option-card" data-type="service" data-value="Photographie" onclick="selectOption(this)">Photographie</div>
-                        <div class="option-card" data-type="service" data-value="Création Web" onclick="selectOption(this)">Création Web</div>
-                    </div>
-                </div>
-
-                <div class="click-group">
-                    <label>Ajouter des options stratégiques (Optionnel) :</label>
-                    <div class="options-grid">
-                        <div class="option-card" data-type="extra" data-value="Contenu Réseaux Sociaux" onclick="toggleMultiOption(this)">Médias Sociaux</div>
-                        <div class="option-card" data-type="extra" data-value="Livraison Express" onclick="toggleMultiOption(this)">Livraison Rapide</div>
-                    </div>
-                </div>
-
-                <div class="click-group">
-                    <label for="clientEmail">Votre courriel de contact</label>
-                    <input type="email" id="clientEmail" class="input-field" placeholder="nom@exemple.com" required>
-                </div>
-
-                <div class="price-summary">
-                    Frais de consultation initiale obligatoires : <strong>60 $</strong>
-                </div>
-
-                <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">Envoyer ma demande en 1 clic</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="footer-logo">
-            <img src="RoMedia-Changer.png" alt="RoMedia Logo">
-        </div>
-        
-        <div class="footer-email" style="margin-bottom: 20px;">
-            Des questions ? <a href="mailto:roldensjulien@gmail.com">roldensjulien@gmail.com</a>
-        </div>
-
-        <div class="footer-socials">
-            <a href="#" target="_blank">Instagram</a>
-            <a href="#" target="_blank">LinkedIn</a>
-            <a href="#" target="_blank">Facebook</a>
-        </div>
-
-        <p style="font-size: 0.85rem; opacity: 0.5; margin-top: 25px;">&copy; 2026 RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
-    </footer>
+            <p style="font-size: 0.85rem; opacity: 0.5; margin-top: 25px;">&copy; 2026 RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
+        </footer>
+    </div>
 
     <script>
-        // 1. Barre de navigation transparente au scroll
+        const crtScreen = document.getElementById('crtScreen');
+        const header = document.getElementById('mainHeader');
+
+        // Logique Scroll : Gestion nav-bar + effet TV RGB rétro
         window.addEventListener('scroll', () => {
-            const header = document.getElementById('mainHeader');
-            if (window.scrollY > 50) {
+            let scrollPos = window.scrollY;
+            let windowHeight = window.innerHeight;
+            
+            // A. Gestion Navbar
+            if (scrollPos > 50) {
                 header.classList.add('scrolled');
             } else {
                 header.classList.remove('scrolled');
             }
+
+            // B. EFFET TV CATHODIQUE (CRT TV POWER OFF) GRAPHIC-DYNAMICS
+            // Calcule le ratio de défilement sur la hauteur de la première section (0 à 1)
+            let progress = Math.min(scrollPos / windowHeight, 1);
+
+            if (progress > 0) {
+                // Étape 1 : Écrasement vertical progressif (scaleY) et horizontal léger (scaleX)
+                let scaleY = Math.max(1 - (progress * 1.15), 0.005); 
+                let scaleX = 1;
+                let brightness = 1;
+                let opacity = 1 - (progress * 0.9);
+
+                // Étape 2 : Quand l'écran est très aplati, il s'écrase horizontalement d'un coup sec (le point blanc qui s'éteint)
+                if (progress > 0.6) {
+                    scaleX = Math.max(1 - ((progress - 0.6) * 2.5), 0);
+                    brightness = 4; // Flash blanc intense du faisceau d'électrons
+                }
+
+                crtScreen.style.transform = `scale(${scaleX}, ${scaleY})`;
+                crtScreen.style.opacity = opacity;
+                crtScreen.style.filter = `contrast(1.5) brightness(${brightness})`;
+                crtScreen.style.borderRadius = `${progress * 80}px`; // L'écran s'arrondit pendant qu'il se ferme
+            } else {
+                // Reset parfait à l'état d'origine tout en haut
+                crtScreen.style.transform = `scale(1, 1)`;
+                crtScreen.style.opacity = 1;
+                crtScreen.style.filter = `none`;
+                crtScreen.style.borderRadius = `0px`;
+            }
         });
 
-        // 2 & 5. Révélation magique au scroll + cascade des cartes de services
+        // Révélation magique au scroll (Intersection Observer)
         const revealElements = document.querySelectorAll('.reveal');
         const serviceCards = document.querySelectorAll('.service-card');
 
-        const observerOptions = {
-            threshold: 0.15
-        };
-
-        const pageObserver = new IntersectionObserver((entries, observer) => {
+        const pageObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.target.classList.contains('reveal') && entry.isIntersecting) {
+                if (entry.isIntersecting) {
                     entry.target.classList.add('active');
                     
-                    // Si la section révélée est la section services, déclencher la cascade des cartes
                     if (entry.target.id === 'services') {
                         serviceCards.forEach((card, index) => {
                             setTimeout(() => {
                                 card.classList.add('revealed');
-                            }, index * 200); // 200ms de délai entre chaque carte
+                            }, index * 200);
                         });
                     }
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.12 });
 
         revealElements.forEach(el => pageObserver.observe(el));
-        // On observe la section services spécifiquement pour la cascade
-        const serviceSection = document.getElementById('services');
-        if(serviceSection) pageObserver.observe(serviceSection);
 
-        // 3. Pile de photos interactive (Stack)
+        // Pile de photos interactive (Stack)
         function rotateStack() {
             const stack = document.querySelector('.image-stack');
             const cards = stack.querySelectorAll('.stack-card');
             if (cards.length === 0) return;
 
             const topCard = cards[0];
-            
-            // Déplacer visuellement la carte du dessus vers la gauche
             topCard.classList.add('displaced');
 
             setTimeout(() => {
-                // Envoyer la carte à la fin de l'élément HTML parent pour la mettre en dessous
                 stack.appendChild(topCard);
                 topCard.classList.remove('displaced');
-            }, 500); // Temps aligné sur la transition CSS
+            }, 500);
         }
 
-        // 4. Commutateur d'onglets Portfolios
+        // Commutateur de Portfolios
         function switchTab(type) {
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelectorAll('.portfolio-section').forEach(sec => sec.classList.remove('active'));
@@ -851,7 +924,7 @@
             }
         }
 
-        // 6. Formulaire "Click-Click" interactif
+        // Formulaire Interactif
         function selectOption(element) {
             const siblings = element.parentNode.querySelectorAll('.option-card');
             siblings.forEach(card => card.classList.remove('selected'));
@@ -865,8 +938,8 @@
         function handleFormSubmit(event) {
             event.preventDefault();
             const email = document.getElementById('clientEmail').value;
-            
             const selectedService = document.querySelector('.option-card[data-type="service"].selected');
+            
             if(!selectedService) {
                 alert("Veuillez sélectionner votre besoin principal en cliquant dessus.");
                 return;
