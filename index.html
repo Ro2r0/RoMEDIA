@@ -1,1292 +1,222 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RoMedia | Changer pour Évoluer</title>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>RoMEDIA | Services de Photographie, Design Graphique & Sites Web</title>
     
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js pour l'effet Morph / Gestion de l'affichage dynamique -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <!-- Configuration Custom de Tailwind pour tes couleurs de marque -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        romedia: {
+                            darkblue: '#0A1128',
+                            blue: '#1C3144',
+                            electric: '#007EA7',
+                            orange: '#FF6B35',
+                            brightorange: '#FF8811',
+                            white: '#F4F4F9',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #e26137;
-            --dark-blue: #0B1B3D;
-            --light-bg: #f8f9fa;
-            --text-dark: #111111;
-            --text-light: #ffffff;
-            --gray: #555555;
-            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            color: var(--text-dark);
-            background-color: var(--light-bg);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Effet d'apparition magique globale (Scroll Reveal) */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: var(--transition-smooth);
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Navigation Dynamique */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            z-index: 1000;
-            transition: var(--transition-smooth);
-        }
-
-        header.scrolled {
-            background: rgba(11, 27, 61, 0.4);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        header.scrolled nav a {
-            color: var(--text-light);
-        }
-
-        header.scrolled nav a:hover {
-            color: var(--primary);
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
-
-        .logo img {
-            height: 45px;
-            width: auto;
-            display: block;
-        }
-
-        nav {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-            align-items: center;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--dark-blue);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--primary);
-        }
-
-        .nav-btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--text-light) !important;
-            padding: 10px 22px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: var(--transition-smooth);
-        }
-
-        .nav-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(226, 97, 55, 0.3);
-        }
-
-        /* --- CONTENEUR HERO FIXE POUR EFFET TV CRT --- */
-        .hero-outer-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            background-color: #000000;
-            overflow: hidden;
-            z-index: 10;
-        }
-
-        .hero {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(rgba(11, 27, 61, 0.85), rgba(4, 10, 24, 0.9)), url('votre-photo-de-fond.jpg');
-            background-size: cover;
-            background-position: center;
-            color: var(--text-light);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 20px;
-            transform-origin: center center;
-            will-change: transform, opacity, filter;
-            transition: transform 0.1s linear, opacity 0.1s linear, filter 0.1s linear, border-radius 0.2s;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            letter-spacing: -1px;
-        }
-
-        .hero h1 span {
-            color: var(--primary);
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            max-width: 650px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
-        }
-
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            display: inline-block;
-            background-color: var(--primary);
-            color: var(--text-light);
-            padding: 14px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            border: 2px solid var(--primary);
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(226, 97, 55, 0.4);
-        }
-
-        .btn-secondary {
-            background-color: transparent;
-            border: 2px solid var(--text-light);
-            color: var(--text-light);
-        }
-
-        .btn-secondary:hover {
-            background-color: var(--text-light);
-            color: var(--dark-blue);
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
-        }
-
-        /* --- SECTIONS SUIVANTES --- */
-        .main-content-wrapper {
-            position: relative;
-            background-color: var(--light-bg);
-            z-index: 20;
-            box-shadow: 0 -20px 40px rgba(0,0,0,0.3);
-        }
-
-        section {
-            padding: 100px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: var(--dark-blue);
-            margin-bottom: 50px;
-        }
-
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 4px;
-            background-color: var(--primary);
-            margin: 12px auto 0;
-            border-radius: 2px;
-        }
-
-        /* À Propos avec Stack de Photos */
-        .about-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .about-text h3 {
-            font-size: 2rem;
-            color: var(--dark-blue);
-            margin-bottom: 20px;
-        }
-
-        .about-text p {
-            margin-bottom: 18px;
-            color: var(--gray);
-            font-size: 1.05rem;
-        }
-
-        .image-stack-wrapper {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 400px;
-            position: relative;
-        }
-
-        .image-stack {
-            position: relative;
-            width: 280px;
-            height: 380px;
-            cursor: pointer;
-        }
-
-        .stack-card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 16px;
-            background-color: #ddd;
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s, z-index 0.5s;
-            display: flex;
-            align-items: flex-end;
-            padding: 20px;
-            color: white;
-            font-weight: bold;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-
-        .stack-card:nth-child(1) { transform: translate3d(0, 0, 0) rotate(0deg); z-index: 5; }
-        .stack-card:nth-child(2) { transform: translate3d(10px, 10px, 0) rotate(2deg); z-index: 4; }
-        .stack-card:nth-child(3) { transform: translate3d(20px, 20px, 0) rotate(-3deg); z-index: 3; }
-        .stack-card:nth-child(4) { transform: translate3d(30px, 30px, 0) rotate(4deg); z-index: 2; }
-        .stack-card:nth-child(5) { transform: translate3d(40px, 40px, 0) rotate(-1deg); z-index: 1; }
-
-        .stack-card.displaced {
-            transform: translate3d(-200px, -20px, 0) rotate(-15deg) !important;
-            opacity: 0;
-            z-index: 0;
-        }
-
-        /* Machine à sous (Casino Scrolling Logos) */
-        .casino-partners {
-            background-color: #f0f3f8;
-            border-radius: 20px;
-            padding: 50px 40px;
-            margin-top: 60px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-        }
-
-        .casino-info h4 {
-            font-size: 1.6rem;
-            color: var(--dark-blue);
-            margin-bottom: 10px;
-        }
-
-        .casino-window {
-            height: 180px;
-            background: var(--dark-blue);
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 8px 25px rgba(11,27,61,0.2);
-            border: 4px solid var(--primary);
-        }
-
-        .casino-window::before, .casino-window::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 40px;
-            z-index: 2;
-            pointer-events: none;
-        }
-        .casino-window::before { top: 0; background: linear-gradient(to bottom, rgba(11,27,61,0.9), transparent); }
-        .casino-window::after { bottom: 0; background: linear-gradient(to top, rgba(11,27,61,0.9), transparent); }
-
-        .casino-reel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            padding: 20px 0;
-            animation: slotMachine 12s linear infinite;
-        }
-
-        .slot-logo {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-light);
-            width: 85%;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 8px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border: 1px solid rgba(255,255,255,0.1);
-            flex-shrink: 0;
-        }
-
-        @keyframes slotMachine {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(-50%); }
-        }
-
-        /* Services Section */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        .service-card {
-            background: white;
-            padding: 45px 35px;
-            border-radius: 16px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.04);
-            border-top: 5px solid var(--primary);
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .service-card.revealed {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .service-card.featured-card {
-            background: var(--dark-blue);
-            color: var(--text-light);
-            border-top: 5px solid var(--primary);
-            box-shadow: 0 15px 35px rgba(11, 27, 61, 0.25);
-        }
-
-        .service-card.featured-card h3 {
-            color: var(--primary);
-        }
-
-        .service-card.featured-card ul li {
-            color: #b0c2de;
-        }
-
-        .service-card h3 {
-            font-size: 1.6rem;
-            color: var(--dark-blue);
-            margin-bottom: 15px;
-        }
-
-        .service-card ul {
-            list-style: none;
-            margin-top: 20px;
-        }
-
-        .service-card ul li {
-            position: relative;
-            padding-left: 22px;
-            margin-bottom: 10px;
-            color: var(--gray);
-        }
-
-        .service-card ul li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        /* Portfolios */
-        .portfolio-tabs {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .tab-btn {
-            background: white;
-            border: 2px solid var(--dark-blue);
-            color: var(--dark-blue);
-            padding: 12px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-        }
-
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--dark-blue);
-            color: var(--text-light);
-        }
-
-        .portfolio-container {
-            background: white;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.04);
-        }
-
-        .portfolio-section {
-            display: none;
-        }
-
-        .portfolio-section.active {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-        }
-
-        .gallery-item {
-            background: var(--light-bg);
-            height: 220px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #888;
-            font-weight: 600;
-            border: 2px dashed #ddd;
-        }
-
-        /* --- FORMULAIRE DE CONSULTATION ÉTAPE PAR ÉTAPE (FUNNEL) --- */
-        .booking-container {
-            background: white;
-            max-width: 700px;
-            margin: 0 auto;
-            padding: 45px;
-            border-radius: 16px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        .form-step {
-            display: none;
-        }
-
-        .form-step.active {
-            display: block;
-            animation: fadeInStep 0.4s ease-out forwards;
-        }
-
-        @keyframes fadeInStep {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .click-group {
-            margin-bottom: 25px;
-        }
-
-        .click-group label {
-            display: block;
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--dark-blue);
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-        }
-
-        .option-card {
-            background: var(--light-bg);
-            border: 2px solid transparent;
-            padding: 20px 15px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition-smooth);
-            user-select: none;
-        }
-
-        .option-card:hover {
-            border-color: #ddd;
-            transform: translateY(-2px);
-        }
-
-        .option-card.selected {
-            background: rgba(226, 97, 55, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #eee;
-            border-radius: 10px;
-            font-family: inherit;
-            margin-top: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-
-        .input-field:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        textarea.input-field {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .progress-bar-container {
-            width: 100%;
-            height: 6px;
-            background: #eee;
-            border-radius: 3px;
-            margin-bottom: 35px;
-            overflow: hidden;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 20%;
-            background: var(--primary);
-            transition: width 0.4s ease;
-        }
-
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            gap: 15px;
-        }
-
-        .btn-nav {
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: var(--transition-smooth);
-        }
-
-        .btn-prev {
-            background: #eee;
-            color: var(--gray);
-        }
-        .btn-prev:hover { background: #ddd; }
-
-        .legal-notice {
-            font-size: 0.75rem;
-            color: #777777;
-            line-height: 1.4;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        /* --- ZONE DE DON STRIPE --- */
-        .stripe-donation-wrapper {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px dashed #ddd;
-        }
-
-        .stripe-donation-wrapper p {
-            font-size: 0.95rem;
-            color: var(--gray);
-            margin-bottom: 15px;
-        }
-
-        .btn-stripe {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #635bff;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: var(--transition-smooth);
-            box-shadow: 0 4px 12px rgba(99, 91, 255, 0.2);
-        }
-
-        .btn-stripe:hover {
-            background-color: #0a2540;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(10, 37, 64, 0.3);
-        }
-
-        /* --- NOUVEAU FOOTER EN 3 COLONNES --- */
-        footer {
-            background: var(--dark-blue);
-            color: var(--text-light);
-            padding: 80px 20px 40px;
-        }
-
-        .footer-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            align-items: center;
-            gap: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 50px;
-        }
-
-        /* Colonne Gauche (Textes de contact) */
-        .footer-left {
-            text-align: left;
-        }
-
-        .footer-left h4 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            color: var(--text-light);
-        }
-
-        .footer-left p {
-            font-size: 0.95rem;
-            opacity: 0.8;
-            margin-bottom: 5px;
-        }
-
-        .footer-left a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-            transition: opacity 0.3s;
-        }
-
-        .footer-left a:hover {
-            opacity: 0.8;
-        }
-
-        /* Colonne Centre (Logo au milieu et en haut) */
-        .footer-center {
-            text-align: center;
-        }
-
-        .footer-center img {
-            height: 65px;
-            width: auto;
-            display: inline-block;
-        }
-
-        /* Colonne Droite (Réseaux sociaux) */
-        .footer-right {
-            text-align: right;
-        }
-
-        .footer-right h5 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            opacity: 0.9;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-social-icons {
-            display: flex;
-            justify-content: flex-end;
-            gap: 20px;
-        }
-
-        .footer-social-icons a {
-            color: var(--text-light);
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: color 0.3s, transform 0.3s;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px 18px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .footer-social-icons a:hover {
-            color: var(--primary);
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary);
-        }
-
-        /* Zone inférieure (Copyright + Mentions) */
-        .footer-bottom {
-            max-width: 1200px;
-            margin: 30px auto 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 0.85rem;
-            opacity: 0.6;
-        }
-
-        .footer-bottom a {
-            color: var(--text-light);
-            text-decoration: underline;
-            transition: color 0.3s;
-        }
-
-        .footer-bottom a:hover {
-            color: var(--primary);
-        }
-
-        /* Adaptabilité Mobile */
-        @media (max-width: 900px) {
-            .about-container, .casino-partners {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            .image-stack-wrapper {
-                height: 420px;
-            }
-            /* Adaptation du footer sur tablette/mobile */
-            .footer-grid {
-                grid-template-columns: 1fr;
-                text-align: center;
-                gap: 35px;
-            }
-            .footer-left, .footer-right {
-                text-align: center;
-            }
-            .footer-social-icons {
-                justify-content: center;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-            nav ul {
-                gap: 15px;
-            }
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+        .selection-glow::selection {
+            background-color: #FF6B35;
+            color: #ffffff;
         }
     </style>
 </head>
-<body>
+<body class="bg-romedia-darkblue text-romedia-white min-h-screen overflow-x-hidden selection-glow relative" x-data="{ activeService: null }">
 
-    <!-- Header Navigation Épuré -->
-    <header id="mainHeader">
-        <div class="nav-container">
-            <div class="logo">
-                <img src="RoMedia-Changer.png" alt="RoMedia Logo">
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolios">Portfolios</a></li>
-                </ul>
-                <a href="#consultation" class="nav-btn">Consultation</a>
-            </nav>
+    <!-- Effets d'ambiance en arrière-plan (Gradients flous) -->
+    <div class="absolute top-0 left-1/4 w-96 h-96 bg-romedia-orange/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-romedia-electric/20 rounded-full blur-[150px] pointer-events-none"></div>
+
+    <!-- En-tête de navigation -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center relative z-10">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl font-black tracking-tighter">
+                Ro<span class="text-romedia-orange">MEDIA</span>
+            </span>
         </div>
+        <nav class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide">
+            <a href="#services" class="hover:text-romedia-orange transition-colors">Services</a>
+            <a href="#about" class="hover:text-romedia-orange transition-colors">À Propos</a>
+            <a href="https://instagram.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange transition-colors">Instagram</a>
+            <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange transition-colors">Facebook</a>
+        </nav>
+        <a href="https://instagram.com/romedia.mtl" target="_blank" class="bg-romedia-orange hover:bg-romedia-brightorange text-white px-5 py-2.5 rounded-full text-sm font-bold shadow-md shadow-romedia-orange/20 transition-all">
+            Collaborons
+        </a>
     </header>
 
-    <!-- Zone Block Fixe pour l'effet TV RGB -->
-    <div class="hero-outer-wrapper" id="accueil">
-        <div class="hero" id="crtScreen">
-            <h1>Changer pour <span>Évoluer</span></h1>
-            <p>Design stratégique, infographie et création visuelle brute pour propulser l'écosystème de votre marque.</p>
-            <div class="hero-buttons">
-                <a href="#consultation" class="btn">Réserver ma session</a>
-                <a href="#consultation" class="btn btn-secondary">Me contacter</a>
+    <!-- Section Hero -->
+    <section class="max-w-7xl mx-auto px-6 pt-20 pb-16 text-center relative z-10 flex flex-col items-center">
+        <span class="text-xs font-bold uppercase tracking-[0.3em] bg-white/5 border border-white/10 px-4 py-1.5 rounded-full text-romedia-orange mb-6">
+            Agence Numérique • Montréal
+        </span>
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight max-w-4xl leading-[1.1] mb-6">
+            Visuels Percutants. Identité Forte. <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-romedia-orange via-romedia-brightorange to-romedia-electric">
+                Performance Absolue.
+            </span>
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-normal leading-relaxed mb-10">
+            Fondée par Roldens Julien (Ro2r0). Nous concevons des banques d'images premium, du design graphique de haute précision et des sites web statiques impeccables pour propulser votre entreprise.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
+            <a href="#services" class="bg-romedia-orange hover:bg-romedia-brightorange text-white text-center font-bold px-8 py-4 rounded-2xl shadow-xl shadow-romedia-orange/20 transition-all">
+                Découvrir nos Services
+            </a>
+            <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="bg-white/5 hover:bg-white/10 text-center text-white border border-white/10 font-bold px-8 py-4 rounded-2xl backdrop-blur-sm transition-all">
+                Rejoindre le Groupe Facebook
+            </a>
+        </div>
+    </section>
+
+    <!-- Section Services Bento Grid (Effet Morph via Alpine.js) -->
+    <section id="services" class="bg-slate-900/40 border-y border-white/5 backdrop-blur-sm relative z-10 py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-extrabold text-romedia-white tracking-tight">
+                    Le Savoir-Faire <span class="text-romedia-orange">RoMEDIA</span>
+                </h2>
+                <p class="text-slate-400 mt-2">Cliquez sur un service pour explorer nos compétences en détail</p>
+            </div>
+
+            <!-- Grille des cartes -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Carte 1: Photographie -->
+                <div @click="activeService = 'photography'" class="cursor-pointer overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-romedia-orange to-romedia-brightorange border border-white/10 shadow-xl flex flex-col justify-between h-80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
+                    <div class="text-4xl bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md">📸</div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/5 px-3 py-1 rounded-full">Visuels</span>
+                        <h3 class="text-2xl font-bold text-romedia-white mt-3">Services de Photographie</h3>
+                        <p class="text-sm text-romedia-white/80 mt-2 line-clamp-2">Immortalisation de moments, image de marque haut de gamme et récits urbains.</p>
+                    </div>
+                </div>
+
+                <!-- Carte 2: Design Graphique -->
+                <div @click="activeService = 'design'" class="cursor-pointer overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-romedia-electric to-romedia-blue border border-white/10 shadow-xl flex flex-col justify-between h-80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
+                    <div class="text-4xl bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md">🎨</div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/5 px-3 py-1 rounded-full">Identité</span>
+                        <h3 class="text-2xl font-bold text-romedia-white mt-3">Design Graphique & Branding</h3>
+                        <p class="text-sm text-romedia-white/80 mt-2 line-clamp-2">Création d'identités visuelles, logos sur mesure et outils marketing unifiés.</p>
+                    </div>
+                </div>
+
+                <!-- Carte 3: Technologie Web -->
+                <div @click="activeService = 'web'" class="cursor-pointer overflow-hidden rounded-3xl p-8 bg-gradient-to-br from-romedia-blue to-romedia-darkblue border border-white/10 shadow-xl flex flex-col justify-between h-80 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
+                    <div class="text-4xl bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center backdrop-blur-md">💻</div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/5 px-3 py-1 rounded-full">Web Tech</span>
+                        <h3 class="text-2xl font-bold text-romedia-white mt-3">Sites Web Statiques & Modernes</h3>
+                        <p class="text-sm text-romedia-white/80 mt-2 line-clamp-2">Expériences web percutantes, ultra-rapides et conçues avec précision.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
-    </div>
 
-    <!-- Contenu Principal -->
-    <div class="main-content-wrapper">
-
-        <!-- Section À Propos -->
-        <section id="a-propos" class="reveal">
-            <div class="about-container">
-                <div class="about-text">
-                    <h2 style="font-size: 2.4rem; color: var(--dark-blue); margin-bottom: 20px;">À Propos</h2>
-                    <h3>Roldens Julien</h3>
-                    <p>Enfant de Montréal-Nord, mon parcours s'est entièrement forgé au cœur de la culture urbaine, de la musique et des arts visuels. Ce background créatif pur et sans filtre m'a donné les codes pour bâtir des univers visuels authentiques qui marquent les esprits.</p>
-                    <p>Passer de l'expression artistique brute à la direction stratégique d'image de marque m'a permis de comprendre un principe fondamental : pour grandir, il faut savoir briser les codes.</p>
-                    <p>Aujourd'hui, à travers <strong>RoMedia</strong>, j'accompagne les entrepreneurs, les créatifs et les collectifs à structurer leur communication et à passer au niveau supérieur. Pas de blabla, juste du design stratégique d'impact.</p>
-                </div>
+        <!-- Fenêtre Modale Dynamique (Effet Morph) -->
+        <template x-if="activeService">
+            <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                <!-- Arrière-plan flou -->
+                <div class="fixed inset-0 bg-black/70 backdrop-blur-md" @click="activeService = null"></div>
                 
-                <!-- Pile de photos interactive -->
-                <div class="image-stack-wrapper">
-                    <div class="image-stack" onclick="rotateStack()">
-                        <div class="stack-card" style="background-color: #e26137;">[ Cliquez pour défiler ]</div>
-                        <div class="stack-card" style="background-color: #0B1B3D;">[ Roldens - Studio ]</div>
-                        <div class="stack-card" style="background-color: #4a5a7a;">[ Montréal Nord Art ]</div>
-                        <div class="stack-card" style="background-color: #f48c66;">[ Direction Visuelle ]</div>
-                        <div class="stack-card" style="background-color: #1c2d52;">[ Coulisses Session ]</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Section Machine à sous (Casino Scrolling) -->
-            <div class="casino-partners">
-                <div class="casino-info">
-                    <h4>Ils me font confiance</h4>
-                    <p style="color: var(--gray);">Un écosystème de marques et de communautés locales (secteur alimentaire, culturel et événementiel de Montréal) qui ont choisi de changer pour évoluer.</p>
-                </div>
-                <div class="casino-window">
-                    <div class="casino-reel">
-                        <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
-                        <div class="slot-logo">ARTISTES LOCAUX</div>
-                        <div class="slot-logo">ENTREPRISES QUÉBEC</div>
-                        <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
-                        <div class="slot-logo">MARQUES URBAINES</div>
-                        <div class="slot-logo">COMMUNAUTÉS FOOD MTL</div>
-                        <div class="slot-logo">ARTISTES LOCAUX</div>
-                        <div class="slot-logo">ENTREPRISES QUÉBEC</div>
-                        <div class="slot-logo">PROJETS ÉVÉNEMENTIELS</div>
-                        <div class="slot-logo">MARQUES URBAINES</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Services -->
-        <section id="services" class="reveal">
-            <h2 class="section-title">Ce que je peux offrir</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <h3>Infographie</h3>
-                    <p>Création de chartes graphiques percutantes, logos, bannières et identités visuelles uniques adaptées à vos supports.</p>
-                    <ul>
-                        <li>Identité de marque complète</li>
-                        <li>Design d'imprimés & numériques</li>
-                        <li>Refonte de logos</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <h3>Photographie</h3>
-                    <p>Production visuelle de haute qualité pour capturer l'essence de vos projets, événements ou créations culinaires.</p>
-                    <ul>
-                        <li>Shootings produits & culinaires</li>
-                        <li>Portraits de marque & Corporate</li>
-                        <li>Couverture événementielle brute</li>
-                    </ul>
-                </div>
-                <div class="service-card featured-card">
-                    <h3>Création & Design Web</h3>
-                    <p>Développement de sites web vitrines statiques ultra-rapides, épurés et pensés pour convertir vos visiteurs.</p>
-                    <ul>
-                        <li>Maquettes UX/UI sur mesure</li>
-                        <li>Code moderne, fluide & responsive</li>
-                        <li>Optimisation SEO & Performance</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Portfolios -->
-        <section id="portfolios" class="reveal">
-            <h2 class="section-title">Mes Portfolios</h2>
-            
-            <div class="portfolio-tabs">
-                <button class="tab-btn active" onclick="switchTab('photo')">Espace Photographie</button>
-                <button class="tab-btn" onclick="switchTab('design')">Espace Design Graphique</button>
-            </div>
-
-            <div class="portfolio-container">
-                <div id="portfolio-photo" class="portfolio-section active">
-                    <div class="gallery-item">[ Direction Artistique Urbaine ]</div>
-                    <div class="gallery-item">[ Captation Culinaire / Food ]</div>
-                    <div class="gallery-item">[ Événementiel & Scène ]</div>
-                </div>
-                <div id="portfolio-design" class="portfolio-section">
-                    <div class="gallery-item">[ Identité Visuelle / Logo ]</div>
-                    <div class="gallery-item">[ Maquettes Web UI ]</div>
-                    <div class="gallery-item">[ Design Éditorial / Bannières ]</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Section Consultation Funnel Interactive -->
-        <section id="consultation" class="reveal">
-            <h2 class="section-title">Démarrer un projet</h2>
-            
-            <div class="booking-container">
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="formProgress"></div>
-                </div>
-
-                <form id="projectForm" onsubmit="handleFormSubmit(event)">
+                <!-- Boîte de dialogue avec changement dynamique de couleur de fond -->
+                <div class="relative w-full max-w-2xl p-8 md:p-12 rounded-3xl shadow-2xl border border-white/20 pointer-events-auto transition-all"
+                     :class="{
+                        'bg-gradient-to-br from-romedia-orange to-romedia-brightorange': activeService === 'photography',
+                        'bg-gradient-to-br from-romedia-electric to-romedia-blue': activeService === 'design',
+                        'bg-gradient-to-br from-romedia-blue to-romedia-darkblue': activeService === 'web'
+                     }">
                     
-                    <!-- ÉTAPE 1 : Besoin Principal -->
-                    <div class="form-step active" data-step="1">
-                        <div class="click-group">
-                            <label>De quoi avez-vous besoin ?</label>
-                            <div class="options-grid">
-                                <div class="option-card" data-type="service" data-value="Photographie" onclick="selectMainService(this)">Services de Photographie</div>
-                                <div class="option-card" data-type="service" data-value="Infographie" onclick="selectMainService(this)">Services d'Infographie</div>
-                                <div class="option-card" data-type="service" data-value="Création Web" onclick="selectMainService(this)">Création & Design Web</div>
-                            </div>
+                    <button @click="activeService = null" class="absolute top-6 right-6 text-romedia-white bg-black/20 hover:bg-black/40 w-10 h-10 rounded-full flex items-center justify-center text-xl font-bold transition-colors">✕</button>
+
+                    <div class="flex items-start gap-4 mb-6">
+                        <div class="text-5xl bg-white/10 p-4 rounded-2xl backdrop-blur-md shrink-0" x-text="activeService === 'photography' ? '📸' : (activeService === 'design' ? '🎨' : '💻')"></div>
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-romedia-white/70 bg-white/10 px-3 py-1 rounded-full" x-text="activeService === 'photography' ? 'Visuels' : (activeService === 'design' ? 'Identité' : 'Web Tech')"></span>
+                            <h3 class="text-3xl font-extrabold text-romedia-white mt-2" x-text="activeService === 'photography' ? 'Services de Photographie' : (activeService === 'design' ? 'Design Graphique & Branding' : 'Sites Web Statiques & Modernes')"></h3>
                         </div>
                     </div>
 
-                    <!-- ÉTAPE 2 : Sous-options dynamiques -->
-                    <div class="form-step" data-step="2">
-                        <div class="click-group">
-                            <label id="subOptionsTitle">Précisez votre besoin :</label>
-                            
-                            <div class="options-grid sub-options-group" id="opts-Photographie" style="display:none;">
-                                <div class="option-card" data-type="subservice" data-value="Photographies de produits" onclick="selectSubService(this)">Photographies de produits</div>
-                                <div class="option-card" data-type="subservice" data-value="Portrait magazine" onclick="selectSubService(this)">Portrait de style magazine</div>
-                                <div class="option-card" data-type="subservice" data-value="Portrait corporation" onclick="selectSubService(this)">Portrait corporation / d'affaires</div>
-                            </div>
-
-                            <div class="options-grid sub-options-group" id="opts-Infographie" style="display:none;">
-                                <div class="option-card" data-type="subservice" data-value="Identité de marque complète" onclick="selectSubService(this)">Identité de marque & Logo</div>
-                                <div class="option-card" data-type="subservice" data-value="Bannières & Visuels Réseaux" onclick="selectSubService(this)">Bannières & Kit Numérique</div>
-                                <div class="option-card" data-type="subservice" data-value="Refonte de marque" onclick="selectSubService(this)">Refonte graphique globale</div>
-                            </div>
-
-                            <div class="options-grid sub-options-group" id="opts-Création-Web" style="display:none;">
-                                <div class="option-card" data-type="subservice" data-value="Site Vitrine" onclick="selectSubService(this)">Site Vitrine Stratégique</div>
-                                <div class="option-card" data-type="subservice" data-value="Portfolio d'Artiste" onclick="selectSubService(this)">Portfolio ou Hub Créatif</div>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(1)">Retour</button>
+                    <div class="space-y-4 text-romedia-white">
+                        <p class="text-lg font-medium border-l-4 border-romedia-white/40 pl-4 py-1" x-text="activeService === 'photography' ? 'Immortalisation de moments, image de marque haut de gamme et récits urbains.' : (activeService === 'design' ? 'Création d\'identités visuelles, logos sur mesure et outils marketing unifiés.' : 'Expériences web percutantes, ultra-rapides et conçues avec précision.')"></p>
+                        <p class="text-base leading-relaxed opacity-90" x-text="activeService === 'photography' ? 'Des lookbooks de marque professionnels aux visuels de produits percutants, en passant par du contenu dynamique pour les réseaux sociaux, des capsules TikTok et de la photographie urbaine. Nous livrons des images nettes et à fort impact, adaptées aussi bien aux petites entreprises locales qu\'aux structures d\'envergure.' : (activeService === 'design' ? 'Nous bâtissons des systèmes visuels complets : logos sur mesure, bannières pour réseaux sociaux, matériel publicitaire et chartes graphiques d\'entreprise complètes pour rendre votre marque instantanément reconnaissable.' : 'Spécialisation dans les sites statiques hyper-propres et les configurations Squarespace avancées enrichies de CSS personnalisé, d\'éléments interactifs et de structures UX modernes. Conçus pour la vitesse, l\'optimisation SEO et la conversion fluide des utilisateurs.')"></p>
+                        
+                        <div class="pt-6">
+                            <a href="https://instagram.com/romedia.mtl" target="_blank" class="inline-block bg-romedia-white text-romedia-darkblue px-6 py-3 rounded-full font-bold shadow-lg hover:bg-opacity-90 transition-all">S'informer sur ce service</a>
                         </div>
                     </div>
-
-                    <!-- ÉTAPE 3 : Commentaire -->
-                    <div class="form-step" data-step="3">
-                        <div class="click-group">
-                            <label for="clientComment">Que recherchez-vous exactement ? Expliquez-moi brièvement votre projet :</label>
-                            <textarea id="clientComment" class="input-field" placeholder="Décrivez votre vision, vos objectifs..."></textarea>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(2)">Retour</button>
-                            <button type="button" class="btn" onclick="goToStep(4)">Continuer</button>
-                        </div>
-                    </div>
-
-                    <!-- ÉTAPE 4 : Options stratégiques -->
-                    <div class="form-step" data-step="4">
-                        <div class="click-group">
-                            <label>Souhaitez-vous ajouter des options stratégiques ?</label>
-                            <div class="options-grid">
-                                <div class="option-card" data-type="extra" data-value="Contenu Réseaux Sociaux" onclick="toggleMultiOption(this)">Contenu pour Médias Sociaux</div>
-                                <div class="option-card" data-type="extra" data-value="Livraison Express" onclick="toggleMultiOption(this)">Livraison Rapide / Prioritaire</div>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(3)">Retour</button>
-                            <button type="button" class="btn" onclick="goToStep(5)">Dernière étape</button>
-                        </div>
-                    </div>
-
-                    <!-- ÉTAPE 5 : Contacts -->
-                    <div class="form-step" data-step="5">
-                        <div class="click-group">
-                            <label>Vos informations de contact</label>
-                            <input type="text" id="clientName" class="input-field" placeholder="Votre nom complet" required>
-                            <input type="email" id="clientEmail" class="input-field" placeholder="Votre adresse courriel" required>
-                            <input type="tel" id="clientPhone" class="input-field" placeholder="Numéro de téléphone (Optionnel)">
-                            <input type="text" id="clientSocial" class="input-field" placeholder="Identifiant Instagram ou autre moyen (Optionnel)">
-                        </div>
-
-                        <p class="legal-notice">
-                            Note importante : Des frais de consultation initiale obligatoires de 60$ CAD sont applicables pour l'analyse stratégique de votre demande. Le montant total de cette consultation sera directement reflété et déduit sur votre première facture officielle.
-                        </p>
-
-                        <div class="form-actions">
-                            <button type="button" class="btn-nav btn-prev" onclick="goToStep(4)">Retour</button>
-                            <button type="submit" class="btn">Faire une demande</button>
-                        </div>
-                    </div>
-
-                </form>
-
-                <!-- Zone de support Stripe -->
-                <div class="stripe-donation-wrapper">
-                    <p>Vous souhaitez simplement soutenir l'agence ou régler un acompte libre ?</p>
-                    <a href="https://donate.stripe.com/votre-lien-ici" target="_blank" class="btn-stripe">
-                        Soutenir ou Verser via Stripe
-                    </a>
                 </div>
-
             </div>
-        </section>
+        </template>
+    </section>
 
-        <!-- --- RESTRUCTURATION DU FOOTER EN 3 COLONNES --- -->
-        <footer>
-            <div class="footer-grid">
-                
-                <!-- Colonne Gauche : Nom & Courriel -->
-                <div class="footer-left">
-                    <h4>RoMEDIA</h4>
-                    <p>Contact direct & opportunités :</p>
-                    <p><a href="mailto:ro.media.renegade@gmail.com">ro.media.renegade@gmail.com</a></p>
+    <!-- Section À Propos / Zoom Fondateur -->
+    <section id="about" class="max-w-5xl mx-auto px-6 py-24 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div class="relative group">
+            <div class="absolute inset-0 bg-gradient-to-tr from-romedia-orange to-romedia-electric rounded-3xl blur-xl opacity-30 group-hover:opacity-40 transition-opacity"></div>
+            <div class="relative bg-romedia-blue border border-white/10 p-8 rounded-3xl h-80 flex flex-col justify-between overflow-hidden">
+                <div class="text-6xl font-bold opacity-10 absolute -right-4 -bottom-4 select-none pointer-events-none text-white">Ro2r0</div>
+                <div>
+                    <span class="text-romedia-orange text-xs font-bold uppercase tracking-wider">Le Fondateur</span>
+                    <h3 class="text-3xl font-extrabold mt-1 text-white">Roldens Julien</h3>
+                    <p class="text-slate-400 text-sm mt-4 leading-relaxed">
+                        Directeur de création, designer stratégique et photographe, combinant interfaces front-end de pointe et production multimédia percutante à Montréal et ses environs.
+                    </p>
                 </div>
-
-                <!-- Colonne Centre : Logo au milieu/haut -->
-                <div class="footer-center">
-                    <img src="RoMedia-Changer.png" alt="RoMedia Logo">
+                <div class="flex gap-4">
+                    <a href="https://instagram.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="text-xs bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2 rounded-xl transition-all">@romedia.mtl</a>
                 </div>
-
-                <!-- Colonne Droite : Icônes/Liens de Réseaux Sociaux -->
-                <div class="footer-right">
-                    <h5>Suivre le mouvement</h5>
-                    <div class="footer-social-icons">
-                        <a href="https://instagram.com/votre_compte" target="_blank">Instagram</a>
-                        <a href="https://facebook.com/votre_page" target="_blank">Facebook</a>
-                        <a href="https://wa.me/votre_numero" target="_blank">WhatsApp</a>
-                    </div>
-                </div>
-
             </div>
-            
-            <!-- Zone Basse : Droits & Lien Légal GitHub -->
-            <div class="footer-bottom">
-                <p>2026 &copy; RoMedia. Tous droits réservés. Changer pour Évoluer.</p>
-                <p><a href="legal.html">Mentions Légales & Confidentialité</a></p>
+        </div>
+
+        <div class="flex flex-col justify-center space-y-6">
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">
+                Des solutions adaptées pour <br>
+                <span class="text-romedia-electric">toutes les échelles d'entreprise.</span>
+            </h2>
+            <p class="text-slate-400 leading-relaxed">
+                Que vous soyez un commerce de proximité ou un restaurant cherchant à étendre votre impact visuel sur TikTok et Instagram, ou une plus grande entreprise ayant besoin de pages de destination statiques ultra-rapides et optimisées, RoMEDIA conçoit des solutions sur mesure qui s'alignent sur vos ambitions.
+            </p>
+            <ul class="space-y-3 text-sm font-medium text-slate-300">
+                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-romedia-orange"></span> Ajustements de mise en page précis au pixel près</li>
+                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-romedia-orange"></span> Frameworks réactifs et chargement ultra-rapide</li>
+                <li class="flex items-center gap-3"><span class="w-2 h-2 rounded-full bg-romedia-orange"></span> Intégration de vidéos promotionnelles axées sur les réseaux</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Pied de page avec lien mentions légales -->
+    <footer id="contact" class="border-t border-white/5 py-12 px-6 bg-black/20 text-center relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-sm text-slate-500">
+                &copy; 2026 RoMEDIA. Tous droits réservés. Conçu par Roldens Julien.
+            </p>
+            <div class="flex gap-6 text-sm font-semibold">
+                <a href="legal.html" class="hover:text-romedia-orange text-slate-400 transition-colors underline">Mentions Légales</a>
+                <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange text-slate-400 transition-colors">Facebook</a>
+                <a href="https://instagram.com/romedia.mtl" target="_blank" rel="noopener noreferrer" class="hover:text-romedia-orange text-slate-400 transition-colors">Instagram</a>
             </div>
-        </footer>
-    </div>
+        </div>
+    </footer>
 
-    <!-- Script GitHub Avancé -->
-    <script>
-        const crtScreen = document.getElementById('crtScreen');
-        const header = document.getElementById('mainHeader');
-
-        // Logique Scroll : Navbar + Effet TV RGB
-        window.addEventListener('scroll', () => {
-            let scrollPos = window.scrollY;
-            let windowHeight = window.innerHeight;
-            
-            if (scrollPos > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-
-            let progress = Math.min(scrollPos / windowHeight, 1);
-
-            if (progress > 0) {
-                let scaleY = Math.max(1 - (progress * 1.15), 0.005); 
-                let scaleX = 1;
-                let brightness = 1;
-                let opacity = 1 - (progress * 0.9);
-
-                if (progress > 0.6) {
-                    scaleX = Math.max(1 - ((progress - 0.6) * 2.5), 0);
-                    brightness = 4; 
-                }
-
-                crtScreen.style.transform = `scale(${scaleX}, ${scaleY})`;
-                crtScreen.style.opacity = opacity;
-                crtScreen.style.filter = `contrast(1.5) brightness(${brightness})`;
-                crtScreen.style.borderRadius = `${progress * 80}px`;
-            } else {
-                crtScreen.style.transform = `scale(1, 1)`;
-                crtScreen.style.opacity = 1;
-                crtScreen.style.filter = `none`;
-                crtScreen.style.borderRadius = `0px`;
-            }
-        });
-
-        // Révélation au scroll
-        const revealElements = document.querySelectorAll('.reveal');
-        const serviceCards = document.querySelectorAll('.service-card');
-
-        const pageObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                    if (entry.target.id === 'services') {
-                        serviceCards.forEach((card, index) => {
-                            setTimeout(() => { card.classList.add('revealed'); }, index * 200);
-                        });
-                    }
-                }
-            });
-        }, { threshold: 0.12 });
-
-        revealElements.forEach(el => pageObserver.observe(el));
-
-        // Pile de photos
-        function rotateStack() {
-            const stack = document.querySelector('.image-stack');
-            const cards = stack.querySelectorAll('.stack-card');
-            if (cards.length === 0) return;
-
-            const topCard = cards[0];
-            topCard.classList.add('displaced');
-
-            setTimeout(() => {
-                stack.appendChild(topCard);
-                topCard.classList.remove('displaced');
-            }, 500);
-        }
-
-        // Commutateur de Portfolios
-        function switchTab(type) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.portfolio-section').forEach(sec => sec.classList.remove('active'));
-
-            if (type === 'photo') {
-                document.getElementById('portfolio-photo').classList.add('active');
-                event.currentTarget.classList.add('active');
-            } else {
-                document.getElementById('portfolio-design').classList.add('active');
-                event.currentTarget.classList.add('active');
-            }
-        }
-
-        // --- ENGINE DU FORMULAIRE ENTONNOIR (FUNNEL) ---
-        let currentMainService = "";
-
-        function updateProgressBar(step) {
-            const progressFill = document.getElementById('formProgress');
-            const totalSteps = 5;
-            const percentage = (step / totalSteps) * 100;
-            progressFill.style.width = `${percentage}%`;
-        }
-
-        function goToStep(stepNumber) {
-            document.querySelectorAll('.form-step').forEach(step => {
-                step.classList.remove('active');
-            });
-            const nextStep = document.querySelector(`.form-step[data-step="${stepNumber}"]`);
-            if(nextStep) {
-                nextStep.classList.add('active');
-                updateProgressBar(stepNumber);
-            }
-        }
-
-        function selectMainService(element) {
-            const siblings = element.parentNode.querySelectorAll('.option-card');
-            siblings.forEach(card => card.classList.remove('selected'));
-            element.classList.add('selected');
-
-            currentMainService = element.getAttribute('data-value');
-            document.getElementById('subOptionsTitle').innerText = `Options spécifiques pour : ${currentMainService}`;
-            
-            document.querySelectorAll('.sub-options-group').forEach(group => {
-                group.style.display = 'none';
-                group.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-            });
-
-            const targetId = `opts-${currentMainService.replace(/\s+/g, '-')}`;
-            const targetGroup = document.getElementById(targetId);
-            if(targetGroup) targetGroup.style.display = 'grid';
-
-            setTimeout(() => { goToStep(2); }, 350);
-        }
-
-        function selectSubService(element) {
-            const siblings = element.parentNode.querySelectorAll('.option-card');
-            siblings.forEach(card => card.classList.remove('selected'));
-            element.classList.add('selected');
-
-            setTimeout(() => { goToStep(3); }, 350);
-        }
-
-        function toggleMultiOption(element) {
-            element.classList.toggle('selected');
-        }
-
-        function handleFormSubmit(event) {
-            event.preventDefault();
-
-            const name = document.getElementById('clientName').value;
-            const email = document.getElementById('clientEmail').value;
-            const phone = document.getElementById('clientPhone').value || "Non spécifié";
-            const social = document.getElementById('clientSocial').value || "Non spécifié";
-            const comment = document.getElementById('clientComment').value || "Aucun commentaire";
-
-            const selectedSub = document.querySelector('.option-card[data-type="subservice"].selected');
-            const subService = selectedSub ? selectedSub.getAttribute('data-value') : "Général";
-
-            let extras = [];
-            document.querySelectorAll('.option-card[data-type="extra"].selected').forEach(card => {
-                extras.push(card.getAttribute('data-value'));
-            });
-
-            alert(`Demande soumise avec succès !\n\n` +
-                  `Client : ${name}\n` +
-                  `Contact : ${email} | Tél : ${phone} | Réseaux : ${social}\n\n` +
-                  `Besoin : ${currentMainService} (${subService})\n` +
-                  `Détails : ${comment}\n` +
-                  `Options stratégiques : ${extras.join(', ') || 'Aucune'}\n\n` +
-                  `Frais de consultation (60$) acceptés.`);
-            
-            document.getElementById('projectForm').reset();
-            document.querySelectorAll('.option-card').forEach(card => card.classList.remove('selected'));
-            goToStep(1);
-        }
-    </script>
 </body>
 </html>
