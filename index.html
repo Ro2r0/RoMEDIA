@@ -13,7 +13,7 @@
                         brandPrimary: '#e26137',   // Orange vibrant
                         brandSecondary: '#0f3066', // Bleu profond
                         brandDark: '#0a0a0c',      // Fond sombre premium
-                        brandLight: '#f4f0eb'     // Fond clair éditorial (style image)
+                        brandLight: '#f4f0eb'     // Fond clair éditorial
                     },
                     fontFamily: {
                         editorial: ['Playfair Display', 'serif'],
@@ -34,7 +34,6 @@
             color: #f4f0eb;
             overflow-x: hidden;
         }
-        /* Custom Cursor unique et amusant */
         .custom-cursor {
             width: 20px;
             height: 20px;
@@ -56,23 +55,21 @@
             pointer-events: none;
             z-index: 9999;
         }
-        /* Style pour les onglets actifs du portfolio */
         .tab-btn.active {
             background-color: #e26137;
             color: white;
         }
     </style>
 </head>
-<body class="font-Poppins-Bold">
+<body class="font-sans">
 
     <div class="custom-cursor hidden md:block" id="customCursor"></div>
     <div class="custom-cursor-dot hidden md:block" id="customCursorDot"></div>
 
     <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5 dynamic-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#accueil" class="text-2xl font-extrabold tracking-wider text-white 
-                hover:text-brandPrimary transition-colors">Ro
-                <span class="text-brandPrimary">MEDIA</span>
+            <a href="#accueil" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
+                Ro<span class="text-brandPrimary">MEDIA</span>
             </a>
             
             <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
@@ -82,12 +79,9 @@
             </nav>
 
             <div>
-                <a href="http://instagram.com/romedia.mtl" target="_blank" 
-                    class="inline-flex items-center justify-center px-6 py-3 
-                    bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider 
-                    rounded-full hover:bg-white hover:text-brandDark transition-all 
-                    duration-300 transform hover:scale-105 shadow-lg shadow-brandPrimary/20">
-                    Collaborons
+                <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" 
+                    class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-brandPrimary/20">
+                    Consultation (Stripe)
                 </a>
             </div>
         </div>
@@ -96,52 +90,33 @@
     <section id="accueil" class="min-h-screen pt-28 flex flex-col lg:flex-row items-stretch relative overflow-hidden">
         <div class="w-full lg:w-1/2 p-8 lg:p-16 flex flex-col justify-center bg-brandDark relative z-10">
             <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-sm mb-4 block reveal-text">
-                STRATÉGIE, DESIGN & RENOVATION</span>
+                STRATÉGIE, DESIGN & DIGITAL</span>
             <h1 class="text-4xl md:text-6xl font-editorial font-light leading-tight mb-6 text-white reveal-text">
                 Un média créatif <br>
                 <span class="font-bold italic text-brandLight">pour de meilleures solutions.</span>
             </h1>
             
-            <div class="mt-4 max-w-lg text-gray-400 space-y-4 text-base md:text-lg 
-                border-l-2 border-brandSecondary pl-4 reveal-text">
+            <div class="mt-4 max-w-lg text-gray-400 space-y-4 text-base md:text-lg border-l-2 border-brandSecondary pl-4 reveal-text">
                 <p>
-                    Bienvenue chez <strong-italic>RoMEDIA</strong-italic>. Fondée en 2023, 
-                    On s'est rapidement imposée comme un acteur majeur dans le domaine auprès de la 
-                    communauté caribéenne et africaine grâce à notre approche créative et professionnelle 
-                    avec l'excellence en qualité de service.
+                    Bienvenue chez <strong>RoMEDIA</strong>. Fondée en 2023, l'agence s'est rapidement imposée comme un acteur majeur auprès des communautés créatives et entrepreneuriales grâce à une approche moderne, agile et axée sur l'excellence.
                 </p>
                 <p>
-                    Que ce soit pour capturer l'essence d'une marque à travers la photographie, 
-                    bâtir une infographie complète ou déployer des sites web statiques ultra-performants, 
-                    nous créons des expériences mémorables et sur mesure. Chaque projet est pensé de manière 
-                    à renforcer la visibilité et l'impact escompté de nos clients chez RoMedia. On s'engage 
-                    en la satisfaction de notre clientèle, on est constamment à l'affût des dernières tendances 
-                    ce qui nous permet de proposer des solutions toujours à la pointe et adaptées aux besoins 
-                    spécifiques demandés, en toute simplicité. 
+                    Que ce soit pour capturer l'essence d'une marque par la photographie, bâtir une infographie complète ou déployer des plateformes web performantes, nous créons des expériences mémorables et sur mesure.
                 </p>
             </div>
             
-            <div class="mt-8 flex gap-4 reveal-text">
-                <a href="#services" class="px-6 py-3 border border-white/20 rounded-full 
-                    hover:border-brandPrimary hover:text-brandPrimary transition-all 
-                    text-sm uppercase tracking-wider">Explorer nos services</a>
-                <a href="#reservation" class="px-6 py-3 bg-brandSecondary text-white 
-                    rounded-full hover:bg-brandPrimary transition-all text-sm 
-                    uppercase tracking-wider">Réserver votre créneau</a>
+            <div class="mt-8 flex flex-wrap gap-4 reveal-text">
+                <a href="#services" class="px-6 py-3 border border-white/20 rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all text-sm uppercase tracking-wider">Explorer nos services</a>
+                <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" class="px-6 py-3 bg-brandSecondary text-white rounded-full hover:bg-brandPrimary transition-all text-sm uppercase tracking-wider">Réserver un créneau</a>
             </div>
         </div>
 
-        <div class="w-full lg:w-1/2 relative bg-brandSecondary/30 min-h-[500px] lg:min-h-screen 
-            flex items-center justify-center p-8 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-tr from-brandSecondary/50 
-                to-brandDark mix-blend-multiply opacity-80"></div>
+        <div class="w-full lg:w-1/2 relative bg-brandSecondary/30 min-h-[500px] lg:min-h-screen flex items-center justify-center p-8 overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-tr from-brandSecondary/50 to-brandDark mix-blend-multiply opacity-80"></div>
             
-            <div class="relative z-10 bg-brandLight text-brandDark p-6 rounded-3xl 
-                shadow-2xl w-full max-w-sm transform rotate-[-2deg] hover:rotate-0 
-                transition-transform duration-500 float-card">
+            <div class="relative z-10 bg-brandLight text-brandDark p-6 rounded-3xl shadow-2xl w-full max-w-sm transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 float-card">
                 <div class="flex justify-between items-center mb-6">
-                    <span class="text-xs uppercase font-extrabold tracking-wider 
-                        bg-brandSecondary/10 px-3 py-1 rounded-full text-brandSecondary">RoMEDIA</span>
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-brandSecondary/10 px-3 py-1 rounded-full text-brandSecondary">RoMEDIA</span>
                     <div class="flex space-x-1">
                         <div class="w-2 h-2 rounded-full bg-brandPrimary"></div>
                         <div class="w-2 h-2 rounded-full bg-brandSecondary"></div>
@@ -151,76 +126,11 @@
                     <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
                         <p class="text-white text-xs uppercase tracking-widest font-bold">Couleur & Créativité</p>
                     </div>
-                    <div class="w-full h-full bg-cover bg-center flex items-center 
-                        justify-center text-brandSecondary" style="background-image: 
-                            url('images/IMG_0055-1.jpg')">
-                        <i class="fas fa-camera text-4xl text-white/80 opacity-0 group-hover:opacity-100 
-                            transition-opacity"></i>
+                    <div class="w-full h-full bg-cover bg-center flex items-center justify-center text-brandSecondary" style="background-image: url('https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=600')">
                     </div>
                 </div>
                 <h3 class="font-editorial text-xl font-bold mb-2 text-brandSecondary">Deux visions, une action.</h3>
-                <p class="text-sm text-gray-600">Nous façonnons des identités visuelles uniques et adaptées pour tous nos
-                    clients. Notre diversité permet la <em>tranquilité d'esprit</em> dans tous nos projets.</p>
-            </div>
-
-            <div class="absolute bottom-12 right-6 lg:right-12 z-20 bg-brandDark/90 border 
-                border-white/10 text-white p-5 rounded-2xl shadow-2xl max-w-xs hidden sm:block transform 
-                rotate-[4deg] float-card-delayed">
-                <div class="flex items-center space-x-3 mb-3">
-                    <div class="w-8 h-8 rounded-full bg-brandPrimary flex items-center justify-center">
-                        <i class="fas fa-bolt text-xs text-white"></i>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider">Design Personnalisé</h4>
-                        <p class="text-[10px] text-gray-400">100% sur mesure</p>
-                    </div>
-                </div>
-                <p class="text-xs text-gray-300">Des designs statiques percutants, 
-                    codés pour briller sur tous les écrans.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-brandDark border-t border-white/5 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-brandPrimary uppercase tracking-widest font-extrabold 
-                    text-xs block mb-2">Notre Engagement</span>
-                <h2 class="text-3xl md:text-5xl font-editorial text-white">Selon nos services</h2>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl 
-                    hover:border-brandPrimary/40 transition-all group hover:-translate-y-2 duration-300">
-                    <div class="w-12 h-12 rounded-xl bg-brandSecondary/30 flex items-center justify-center 
-                        text-brandPrimary mb-6 group-hover:bg-brandPrimary group-hover:text-white transition-colors">
-                        <i class="fas fa-gem text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Qualité Éditoriale</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Chaque pixel, chaque angle de vue et chaque ligne 
-                        de code sont soignés pour offrir un rendu haut de gamme aux fines pointes de la technologie.</p>
-                </div>
-                <div class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl hover:border-brandPrimary/40 
-                    transition-all group hover:-translate-y-2 duration-300">
-                    <div class="w-12 h-12 rounded-xl bg-brandSecondary/30 flex items-center justify-center 
-                        text-brandPrimary mb-6 group-hover:bg-brandPrimary group-hover:text-white transition-colors">
-                        <i class="fas fa-sliders-h text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Flexibilité</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Nos structures tarifaires et livrables s'adaptent 
-                        parfaitement à votre envergure, avec une agilité absolue et un accompagnement humain.</p>
-                </div>
-                <div class="p-8 bg-white/[0.02] border border-white/5 rounded-2xl hover:border-brandPrimary/40 
-                    transition-all group hover:-translate-y-2 duration-300">
-                    <div class="w-12 h-12 rounded-xl bg-brandSecondary/30 flex items-center justify-center 
-                        text-brandPrimary mb-6 group-hover:bg-brandPrimary group-hover:text-white transition-colors">
-                        <i class="fas fa-rocket text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-3">Unique & Moderne</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">Oubliez les templates préconçus vus partout qui ne vous
-                        démarque pas. Apportez, surtout, une touche d'audace, d'animation et de rareté qui capte l'attention 
-                        immédiatement, grâce à nous.</p>
-                </div>
+                <p class="text-sm text-gray-600">Nous façonnons des identités visuelles uniques. Notre diversité permet la tranquillité d'esprit dans tous vos projets.</p>
             </div>
         </div>
     </section>
@@ -229,70 +139,61 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16">
                 <div>
-                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Nos Expertises
-                    </span>
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Nos Expertises</span>
                     <h2 class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary">Services & Solutions</h2>
                 </div>
-                <p class="text-gray-600 max-w-md mt-4 md:mt-0"> Des services et des solutions intégrés pour couvrir l'ensemble de votre 
-                    écosystème de marque, du physique au numérique, de la bannière au logo, au coeur de vos spectateurs.</p>
+                <p class="text-gray-600 max-w-md mt-4 md:mt-0">Des services intégrés pour couvrir l'ensemble de votre écosystème de marque, du physique au numérique.</p>
             </div>
 
             <div class="space-y-6">
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 
-                    flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                <!-- Service 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
                     <div class="max-w-xl">
                         <div class="flex items-center space-x-3 mb-3">
                             <span class="text-xs font-bold bg-brandPrimary/10 text-brandPrimary px-3 py-1 rounded-full">LV1</span>
                             <h3 class="text-2xl font-bold text-brandSecondary">Photographie Professionnelle</h3>
                         </div>
-                        <p class="text-gray-600 text-sm">Portrait corporatif ou artistique, mise en valeur de produits e-commerce et 
-                        couverture complète de vos événements. Nous captons la lumière et l'émotion brute. Personnel et éditorial aussi
-                        pour votre prochaine magazine, vos panneaux publicitaires.</p>
+                        <p class="text-gray-600 text-sm">Portrait corporatif ou artistique, mise en valeur de produits e-commerce et couverture d'événements.</p>
                     </div>
                     <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
-                        <span>• Portrait • Produit • Événement • Mariage • Magazine • Animal de compagnie • Groupe école</span>
-                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white 
-                            group-hover:translate-x-2 transition-transform">
+                        <span>• Portrait • Produit • Événement</span>
+                        <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">
                             <i class="fas fa-arrow-right"></i>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all 
-                    duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                <!-- Service 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
                     <div class="max-w-xl">
                         <div class="flex items-center space-x-3 mb-3">
                             <span class="text-xs font-bold bg-brandSecondary/10 text-brandSecondary px-3 py-1 rounded-full">LV2</span>
-                            <h3 class="text-2xl font-bold text-brandSecondary">Infographie Complète et Adaptée</h3>
+                            <h3 class="text-2xl font-bold text-brandSecondary">Infographie & Branding</h3>
                         </div>
-                        <p class="text-gray-600 text-sm">Création et refonte d'image de marque, logos percutants, chartes graphiques, 
-                            bannières et supports publicitaires imprimés ou numériques pour affirmer votre identité.</p>
+                        <p class="text-gray-600 text-sm">Création de logos percutants, chartes graphiques complètes et supports marketing imprimés ou numériques.</p>
                     </div>
                     <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
-                        <span>• Branding • Visuels • Cartes d'affaires • Étiquettes de produits • Signature et courriel</span>
-                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white 
-                            group-hover:translate-x-2 transition-transform">
+                        <span>• Branding • Visuels • Cartes d'affaires</span>
+                        <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">
                             <i class="fas fa-arrow-right"></i>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 
-                    flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                <!-- Service 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
                     <div class="max-w-xl">
                         <div class="flex items-center space-x-3 mb-3">
                             <span class="text-xs font-bold bg-brandPrimary/10 text-brandPrimary px-3 py-1 rounded-full">LV3</span>
-                            <h3 class="text-2xl font-bold text-brandSecondary">Sites Web Statiques</h3>
+                            <h3 class="text-2xl font-bold text-brandSecondary">Développement Web Statique</h3>
                         </div>
-                        <p class="text-gray-600 text-sm">Développement de vitrines web légères, ultra-rapides, optimisées pour le SEO et 
-                            entièrement sécurisées. Idéal pour présenter votre entreprise avec élégance et fluidité. Visible sur tous les écrans.</p>
+                        <p class="text-gray-600 text-sm">Développement de vitrines web légères, ultra-rapides, optimisées pour le SEO et entièrement sécurisées via GitHub.</p>
                     </div>
                     <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
-                        <span>• Performance • Vitrine • Responsive • Animation globale • Facilité de changement</span>
-                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white 
-                            group-hover:translate-x-2 transition-transform">
+                        <span>• Performance • Responsive • Vitrine</span>
+                        <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center text-white group-hover:translate-x-2 transition-transform">
                             <i class="fas fa-arrow-right"></i>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -303,141 +204,113 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Nos Réalisations</span>
-                <h2 class="text-3xl md:text-5xl font-editorial mb-8">Quelques exemples pour votre appétit.</h2>
+                <h2 class="text-3xl md:text-5xl font-editorial mb-8">3 exemples ciblés par expertise.</h2>
                 
                 <div class="inline-flex bg-white/5 p-1.5 rounded-full border border-white/10 space-x-2">
-                    <button onclick="filterPortfolio('photo')" id="btn-photo" class="tab-btn active px-6 py-2 
-                        rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Photographie</button>
-                    <button onclick="filterPortfolio('info')" id="btn-info" class="tab-btn px-6 py-2 
-                        rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Infographie</button>
-                    <button onclick="filterPortfolio('web')" id="btn-web" class="tab-btn px-6 py-2 
-                        rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Site Web</button>
+                    <button onclick="filterPortfolio('photo')" id="btn-photo" class="tab-btn active px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Photographie</button>
+                    <button onclick="filterPortfolio('info')" id="btn-info" class="tab-btn px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Infographie</button>
+                    <button onclick="filterPortfolio('web')" id="btn-web" class="tab-btn px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">Site Web</button>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-grid">
                 
-                <div class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
-                    <div class="w-full h-full bg-cover bg-center" 
-                        style="background-image: url('images/RNP_8961-1.jpg')">
-                    </div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent 
-                        opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                <!-- PHOTOGRAPHIE (3 items) -->
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                         <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Événement</span>
-                        <h4 class="text-lg font-bold text-white">Célébration d'ouverture du restaurant.</h4>
+                        <h4 class="text-lg font-bold text-white">Célébration d'ouverture Resto</h4>
                     </div>
-                </div>
-                <div class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
-                    <div class="w-full h-full bg-cover bg-center" 
-                        style="background-image: url('images/RNP_2824.CR2')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 
-                        to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                </a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Portrait</span>
+                        <h4 class="text-lg font-bold text-white">Collaboration Studio Éclat</h4>
+                    </div>
+                </a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                         <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Cosplay</span>
-                        <h4 class="text-lg font-bold text-white">Amazing collaboration with Supergirl Montreal</h4>
+                        <h4 class="text-lg font-bold text-white">Supergirl Montréal Session</h4>
                     </div>
-                </div>
+                </a>
 
-                <div class="portfolio-item info hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
-                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600')"></div>
+                <!-- INFOGRAPHIE (3 items) -->
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item info hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1626785774573-4b799315345d?q=80&w=600')"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                         <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Identité Visuelle</span>
                         <h4 class="text-lg font-bold text-white">Branding Café Distinction</h4>
                     </div>
-                </div>
+                </a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item info hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Charte Graphique</span>
+                        <h4 class="text-lg font-bold text-white">Refonte Identitaire Complète</h4>
+                    </div>
+                </a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item info hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1561070791-26c113006238?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Supports Marketing</span>
+                        <h4 class="text-lg font-bold text-white">Mockups & Designs Imprimés</h4>
+                    </div>
+                </a>
 
-                <div class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square">
-                    <div class="w-full h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600')"></div>
+                <!-- SITES WEB (3 items) -->
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600')"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
                         <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Développement Front-End</span>
                         <h4 class="text-lg font-bold text-white">Architecture Minimaliste Web</h4>
                     </div>
-                </div>
+                </a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Performance</span>
+                        <h4 class="text-lg font-bold text-white">Landing Page Ultra-Rapide</h4>
+                    </div>
+                </a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
+                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600')"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">UI/UX Design</span>
+                        <h4 class="text-lg font-bold text-white">Interfaces Statiques Épurées</h4>
+                    </div>
+                </a>
 
             </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-brandSecondary/10 relative overflow-hidden">
-        <div class="max-w-5xl mx-auto px-6">
-            <div class="text-center mb-16">
-                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Avis</span>
-                <h2 class="text-3xl md:text-5xl font-editorial text-white">Ce que nos clients disent</h2>
-            </div>
-
-            <div class="space-y-8">
-                <blockquote class="bg-white/[0.02] border border-white/5 p-8 rounded-2xl relative testimonial-card">
-                    <p class="font-editorial text-xl md:text-2xl italic text-gray-300 mb-6">"RoMEDIA a complètement transformé notre image de marque. Les photos de produits ont boosté nos ventes en ligne dès la première semaine, et le site internet statique est d'une rapidité déconcertante."</p>
-                    <cite class="not-italic flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-brandPrimary flex items-center justify-center font-bold text-sm">M</div>
-                        <div>
-                            <span class="block font-bold text-white text-sm">Maxime Tremblay</span>
-                            <span class="block text-xs text-brandPrimary">Fondateur, RestoMTL</span>
-                        </div>
-                    </cite>
-                </blockquote>
-                
-                <blockquote class="bg-white/[0.02] border border-white/5 p-8 rounded-2xl relative testimonial-card">
-                    <p class="font-editorial text-xl md:text-2xl italic text-gray-300 mb-6">"Un sens du détail rare. L'approche stratégique combinée à un design impeccable fait toute la différence pour une petite entreprise comme la nôtre."</p>
-                    <cite class="not-italic flex items-center space-x-3">
-                        <div class="w-10 h-10 rounded-full bg-brandSecondary flex items-center justify-center font-bold text-sm">S</div>
-                        <div>
-                            <span class="block font-bold text-white text-sm">Sophie G.</span>
-                            <span class="block text-xs text-brandPrimary">Directrice Artistique, Studio Éclat</span>
-                        </div>
-                    </cite>
-                </blockquote>
-            </div>
-        </div>
-    </section>
-
-    <section class="py-24 bg-brandDark border-t border-white/5 relative">
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <div class="w-16 h-16 rounded-full bg-brandPrimary/20 text-brandPrimary flex items-center justify-center mx-auto mb-6">
-                <i class="fas fa-heart text-2xl animate-pulse"></i>
-            </div>
-            <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Soutien & Impact</span>
-            <h2 class="text-3xl md:text-4xl font-editorial text-white mb-6">Soutenir la création locale</h2>
-            <p class="text-gray-400 max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed">
-                Chez RoMEDIA, nous croyons à l'accessibilité à l'art et au soutien des communautés créatives émergentes de Montréal. Vos contributions et dons nous aident à financer du matériel et à offrir des sessions de mentorat et de photographie gratuites aux artistes indépendants de la relève.
-            </p>
-            <a href="#" class="inline-flex items-center justify-center px-8 py-4 bg-white text-brandDark font-bold rounded-full hover:bg-brandPrimary hover:text-white transition-all transform hover:scale-105">
-                Faire un don de soutien <i class="fas fa-hand-holding-heart ml-2"></i>
-            </a>
         </div>
     </section>
 
     <section id="reservation" class="py-24 bg-brandLight text-brandDark relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
-                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Planification</span>
-                <h2 class="text-3xl md:text-5xl font-editorial text-brandSecondary mb-4">Réserver un rendez-vous</h2>
-                <p class="text-gray-600 max-w-md mx-auto text-sm">Sélectionnez une plage horaire disponible directement dans notre calendrier pour discuter de votre projet.</p>
-            </div>
-
-            <div class="bg-white p-4 md:p-8 rounded-3xl shadow-xl max-w-4xl mx-auto border border-gray-100 overflow-hidden relative min-h-[500px] flex flex-col justify-between">
-                
-                <div class="w-full h-[450px] bg-gray-50 rounded-2xl overflow-hidden flex items-center justify-center border border-dashed border-gray-200">
-                    <div class="text-center p-6">
-                        <i class="calendar-icon fas fa-calendar-alt text-5xl text-brandSecondary mb-4 block"></i>
-                        <span class="text-sm font-bold text-brandDark block mb-2">Intégration Google Agenda</span>
-                        <p class="text-xs text-gray-500 max-w-sm mx-auto mb-4">Pour afficher votre calendrier ici, insérez votre iframe d'intégration Google Calendar.</p>
-                        <iframe src="https://calendar.google.com/calendar/embed?src=fr.canadian%23holiday%40group.v.calendar.google.com&ctz=America%2FToronto" style="border: 0; width: 100%; height: 350px;" frameborder="0" scrolling="no"></iframe>
-                    </div>
-                </div>
-
-                <div class="text-center mt-4">
-                    <p class="text-xs text-gray-400">Des questions urgentes avant de réserver ? Écrivez-nous directement sur Instagram.</p>
-                </div>
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Planification & Paiement</span>
+                <h2 class="text-3xl md:text-5xl font-editorial text-brandSecondary mb-4">Réserver une consultation</h2>
+                <p class="text-gray-600 max-w-md mx-auto text-sm mb-6">Bloquez votre créneau et finalisez votre paiement de manière sécurisée via Stripe.</p>
+                <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold rounded-full hover:bg-brandSecondary transition-all transform hover:scale-105 shadow-xl">
+                    Réserver et Payer sur Stripe <i class="fas fa-credit-card ml-2"></i>
+                </a>
             </div>
         </div>
     </section>
 
     <footer class="bg-brandDark border-t border-white/5 py-12 text-gray-500 text-xs">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div>
-                <p>&copy; 2026 RoMEDIA. Tous droits réservés. Propulsé par la créativité et l'innovation.</p>
+            <div class="flex items-center space-x-4">
+                <!-- Intégration du logo partagé -->
+                <img src="RoMedia-Changer.png" alt="RoMedia Logo" class="h-12 w-auto object-contain">
+                <div>
+                    <p>&copy; 2026 RoMEDIA. Tous droits réservés. Propulsé par la créativité et l'innovation.</p>
+                </div>
             </div>
-            <div class="flex space-x-6">
+            <div class="flex space-x-6 items-center">
                 <a href="legal.html" class="hover:text-brandPrimary transition-colors underline decoration-brandPrimary/40 underline-offset-4">Mentions Légales & Confidentialité</a>
                 <a href="http://instagram.com/romedia.mtl" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-instagram text-base"></i></a>
             </div>
@@ -445,10 +318,9 @@
     </footer>
 
     <script>
-        // Initialisation de GSAP & ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Amusant Custom Cursor Code
+        // Curseur personnalisé
         const cursor = document.getElementById('customCursor');
         const cursorDot = document.getElementById('customCursorDot');
 
@@ -457,7 +329,6 @@
             gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.02 });
         });
 
-        // Agrandir le curseur au survol des liens/boutons
         document.querySelectorAll('a, button, .portfolio-item').forEach(elem => {
             elem.addEventListener('mouseenter', () => {
                 cursor.style.width = '40px';
@@ -471,8 +342,7 @@
             });
         });
 
-        // 2. Animations Rares au Scroll (GSAP)
-        // Révélation fluide du texte de l'accueil
+        // Animations GSAP
         gsap.from(".reveal-text", {
             y: 40,
             opacity: 0,
@@ -481,7 +351,6 @@
             ease: "power4.out"
         });
 
-        // Effet de flottement continu et asynchrone des cartes graphiques (Amusant & Premium)
         gsap.to(".float-card", {
             y: -15,
             duration: 3,
@@ -489,52 +358,32 @@
             yoyo: true,
             ease: "sine.inOut"
         });
-        gsap.to(".float-card-delayed", {
-            y: 12,
-            duration: 3.5,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            delay: 0.5
-        });
 
-        // Animation de rotation continue de l'icône calendrier au survol
-        const calIcon = document.querySelector('.calendar-icon');
-        if(calIcon) {
-            calIcon.addEventListener('mouseenter', () => {
-                gsap.to(calIcon, { rotation: 15, repeat: 3, yoyo: true, duration: 0.1 });
-            });
-        }
-
-        // 3. Logique du Portfolio Filtrable
+        // Logique de filtrage du Portfolio
         function filterPortfolio(category) {
-            // Mettre à jour l'état visuel des boutons d'onglets
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${category}`).classList.add('active');
+            const items = document.querySelectorAll('.portfolio-item');
+            const buttons = document.querySelectorAll('.tab-btn');
 
-            // Animation de transition de la grille d'éléments
-            gsap.to(".portfolio-item", {
-                opacity: 0,
-                scale: 0.9,
-                duration: 0.2,
-                onComplete: () => {
-                    document.querySelectorAll('.portfolio-item').forEach(item => {
-                        if (item.classList.contains(category)) {
-                            item.classList.remove('hidden');
-                        } else {
-                            item.classList.add('hidden');
-                        }
-                    });
-                    gsap.to(`.${category}`, {
-                        opacity: 1,
-                        scale: 1,
-                        duration: 0.4,
-                        stagger: 0.1,
-                        ease: "power2.out"
-                    });
+            buttons.forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${category}`);
+            if (activeBtn) activeBtn.classList.add('active');
+
+            items.forEach(item => {
+                if (item.classList.contains(category)) {
+                    item.classList.remove('hidden');
+                    gsap.fromTo(item, 
+                        { opacity: 0, scale: 0.95 }, 
+                        { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }
+                    );
+                } else {
+                    item.classList.add('hidden');
                 }
             });
         }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            filterPortfolio('photo');
+        });
     </script>
 </body>
 </html>
