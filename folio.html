@@ -1,1 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoMEDIA | L'Étagère Créative</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPrimary: '#e26137',
+                        brandSecondary: '#0f3066',
+                        brandDark: '#0a0a0c',
+                        brandLight: '#f4f0eb'
+                    },
+                    fontFamily: {
+                        editorial: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        body {
+            background-color: #0a0a0c;
+            color: #f4f0eb;
+            overflow-x: hidden;
+        }
+        /* Style des livres pour l'effet 3D de la tranche */
+        .book-container {
+            perspective: 1000px;
+        }
+        .book {
+            transform-style: preserve-3d;
+            transform: rotateY(-20deg) translateZ(0px);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        .book:hover {
+            transform: rotateY(0deg) translateZ(20px);
+        }
+        /* Ombre sous l'étagère */
+        .shelf-shadow {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
+        }
+    </style>
+</head>
+<body class="font-sans min-h-screen flex flex-col justify-between bg-brandDark">
 
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html#accueil" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
+                Ro<span class="text-brandPrimary">MEDIA</span>
+            </a>
+            <nav class="flex items-center space-x-10 font-semibold tracking-wide">
+                <a href="index.html#accueil" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
+                <a href="index.html#services" class="hover:text-brandPrimary transition-colors text-sm uppercase">Services</a>
+                <a href="index.html#portfolio" class="text-brandPrimary text-sm uppercase border-b-2 border-brandPrimary pb-1">Bibliothèque</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Section Principale : La Bibliothèque -->
+    <main class="pt-32 pb-20 px-6 max-w-7xl mx-auto w-full flex-grow flex flex-col justify-center">
+        
+        <div class="text-center mb-16">
+            <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Archives de l'agence</span>
+            <h1 class="text-4xl md:text-5xl font-editorial text-white">La Bibliothèque Créative</h1>
+            <p class="text-gray-400 max-w-md mx-auto mt-4 text-sm">Cliquez sur un ouvrage pour ouvrir les archives et explorer nos réalisations par discipline.</p>
+        </div>
+
+        <!-- Structure de l'Étagère -->
+        <div class="relative w-full max-w-5xl mx-auto mb-12">
+            
+            <!-- Les Livres alignés verticalement sur l'étagère -->
+            <div class="flex items-end justify-center space-x-4 md:space-x-12 px-6 h-72 md:h-96 relative z-10">
+                
+                <!-- LIVRE 1 : PHOTOGRAPHIE -->
+                <div class="book-container cursor-pointer w-20 md:w-32 h-[85%] md:h-[90%]" onclick="openBook('photo')">
+                    <div id="book-photo" class="book w-full h-full bg-brandSecondary border-l-8 border-brandPrimary/40 rounded-r shadow-2xl relative flex flex-col justify-between p-4 text-white">
+                        <div class="border border-white/10 h-full w-full rounded p-2 flex flex-col justify-between items-center text-center">
+                            <span class="text-[9px] md:text-xs uppercase tracking-widest font-extrabold text-brandPrimary">VOL. I</span>
+                            <!-- Texte orienté verticalement ou condensé pour simuler un titre de livre -->
+                            <h2 class="font-editorial text-xs md:text-lg font-bold leading-tight my-auto tracking-wide [writing-mode:vertical-lr] md:[writing-mode:horizontal-tb] rotate-180 md:rotate-0">PHOTO</h2>
+                            <i class="fas fa-camera text-sm md:text-xl opacity-60"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVRE 2 : INFOGRAPHIE -->
+                <div class="book-container cursor-pointer w-20 md:w-32 h-[90%] md:h-[95%]" onclick="openBook('info')">
+                    <div id="book-info" class="book w-full h-full bg-slate-800 border-l-8 border-white/20 rounded-r shadow-2xl relative flex flex-col justify-between p-4 text-white">
+                        <div class="border border-white/10 h-full w-full rounded p-2 flex flex-col justify-between items-center text-center">
+                            <span class="text-[9px] md:text-xs uppercase tracking-widest font-extrabold text-gray-400">VOL. II</span>
+                            <h2 class="font-editorial text-xs md:text-base font-bold leading-tight my-auto tracking-wide [writing-mode:vertical-lr] md:[writing-mode:horizontal-tb] rotate-180 md:rotate-0">DESIGN</h2>
+                            <i class="fas fa-palette text-sm md:text-xl opacity-60"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVRE 3 : SITES WEB -->
+                <div class="book-container cursor-pointer w-20 md:w-32 h-[80%] md:h-[85%]" onclick="openBook('web')">
+                    <div id="book-web" class="book w-full h-full bg-[#1b1c22] border-l-8 border-brandPrimary rounded-r shadow-2xl relative flex flex-col justify-between p-4 text-white">
+                        <div class="border border-white/10 h-full w-full rounded p-2 flex flex-col justify-between items-center text-center">
+                            <span class="text-[9px] md:text-xs uppercase tracking-widest font-extrabold text-brandPrimary">VOL. III</span>
+                            <h2 class="font-editorial text-xs md:text-lg font-bold leading-tight my-auto tracking-wide [writing-mode:vertical-lr] md:[writing-mode:horizontal-tb] rotate-180 md:rotate-0">WEB</h2>
+                            <i class="fas fa-code text-sm md:text-xl opacity-60"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- L'étagère physique (Planche en bois/métal épuré au design RoMEDIA) -->
+            <div class="w-full h-4 bg-brandLight rounded shadow-xl relative z-20"></div>
+            <!-- Ombre sous l'étagère -->
+            <div class="w-full h-8 shelf-shadow absolute top-full left-0 z-0 opacity-80"></div>
+        </div>
+
+        <!-- ZONE D'AFFICHAGE DU CONTENU DU LIVRE SÉLECTIONNÉ -->
+        <div id="gallery-container" class="mt-12 hidden opacity-0">
+            <div class="flex justify-between items-center border-b border-white/10 pb-4 mb-8">
+                <h3 id="gallery-title" class="text-2xl font-editorial text-brandLight italic">Catégorie</h3>
+                <button onclick="closeLibrary()" class="text-xs uppercase tracking-wider font-bold bg-white/5 hover:bg-brandPrimary hover:text-white px-4 py-2 rounded-full transition-colors">
+                    <i class="fas fa-times mr-2"></i> Fermer l'ouvrage
+                </button>
+            </div>
+
+            <!-- Grille dynamique des projets -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="projects-grid">
+                <!-- Les cartes de projet seront injectées dynamiquement ici par le JavaScript -->
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brandDark border-t border-white/5 py-8 text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>2026 &copy; RoMEDIA. Tous droits réservés.</p>
+            <a href="index.html" class="hover:text-brandPrimary transition-colors text-brandPrimary font-semibold"><i class="fas fa-arrow-left mr-2"></i> Retour au site principal</a>
+        </div>
+    </footer>
+
+    <!-- DONNÉES ET ANIMATIONS DES LIVRES -->
+    <script>
+        // Base de données des projets du portfolio
+        const portfolioData = {
+            photo: [
+                { title: "Célébration d'ouverture Chill&Feel", category: "Événement", img: "images/RNP_8961-1.jpg", url: "http://instagram.com/romedia.mtl" },
+                { title: "Service d'agence mannequinat", category: "Portrait", img: "images/58668_03.jpg", url: "http://instagram.com/romedia.mtl" },
+                { title: "Écouteurs personnalisés", category: "Produits", img: "images/RNP_7120-1.jpg", url: "http://instagram.com/romedia.mtl" }
+            ],
+            info: [
+                { title: "Branding soins à domicile", category: "Identité Visuelle", img: "images/Props1.png", url: "http://instagram.com/romedia.mtl" },
+                { title: "Choix de visuel différent", category: "Signature courriel", img: "images/58894455-265.png", url: "http://instagram.com/romedia.mtl" },
+                { title: "Mockups & Designs Imprimés", category: "Supports Marketing", img: "images/restaurant-window-mockup.jpg", url: "http://instagram.com/romedia.mtl" }
+            ],
+            web: [
+                { title: "Architecture Minimaliste Web", category: "Développement Front-End", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600", url: "http://instagram.com/romedia.mtl" },
+                { title: "Landing Page Ultra-Rapide", category: "Performance", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600", url: "http://instagram.com/romedia.mtl" },
+                { title: "Interfaces Statiques Épurées", category: "UI/UX Design", img: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600", url: "http://instagram.com/romedia.mtl" }
+            ]
+        };
+
+        let currentOpenCategory = null;
+
+        function openBook(category) {
+            const container = document.getElementById('gallery-container');
+            const grid = document.getElementById('projects-grid');
+            const title = document.getElementById('gallery-title');
+
+            // Réinitialiser les animations des livres (remettre sur l'étagère)
+            gsap.to(".book", { y: 0, scale: 1, rotationY: -20, duration: 0.4 });
+
+            if (currentOpenCategory === category) {
+                // Si on clique sur le livre déjà ouvert, on ferme la section
+                closeLibrary();
+                return;
+            }
+
+            currentOpenCategory = category;
+
+            // Animer le livre cliqué pour donner l'effet qu'on le "tire" de l'étagère
+            gsap.to(`#book-${category}`, { 
+                y: -30, 
+                scale: 1.05, 
+                rotationY: 0, 
+                duration: 0.4, 
+                ease: "power2.out" 
+            });
+
+            // Mettre à jour le titre de l'ouvrage
+            const titlesMapping = {
+                photo: "Volume I : Photographie Professionnelle",
+                info: "Volume II : Infographie & Branding",
+                web: "Volume III : Développement Web Statique"
+            };
+            title.textContent = titlesMapping[category];
+
+            // Vider et reconstruire la grille des projets correspondants
+            grid.innerHTML = "";
+            portfolioData[category].forEach(project => {
+                const projectHTML = `
+                    <a href="${project.url}" target="_blank" class="group bg-white/5 rounded-2xl overflow-hidden border border-white/5 relative aspect-square block opacity-0 translate-y-4 project-card">
+                        <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('${project.img}')"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
+                            <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">${project.category}</span>
+                            <h4 class="text-lg font-bold text-white">${project.title}</h4>
+                        </div>
+                    </a>
+                `;
+                grid.insertAdjacentHTML('beforeend', projectHTML);
+            });
+
+            // Afficher le conteneur de la galerie et lancer l'animation GSAP
+            container.classList.remove('hidden');
+            gsap.to(container, { opacity: 1, duration: 0.5 });
+            gsap.to(".project-card", { opacity: 1, y: 0, stagger: 0.1, duration: 0.5, ease: "power2.out" });
+
+            // Scroll fluide vers la zone d'affichage
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        function closeLibrary() {
+            currentOpenCategory = null;
+            const container = document.getElementById('gallery-container');
+            
+            // Remettre tous les livres en place
+            gsap.to(".book", { y: 0, scale: 1, rotationY: -20, duration: 0.4 });
+            
+            // Cacher la galerie
+            gsap.to(container, { 
+                opacity: 0, 
+                duration: 0.4, 
+                onComplete: () => {
+                    container.classList.add('hidden');
+                } 
+            });
+        }
+    </script>
+</body>
+</html>
