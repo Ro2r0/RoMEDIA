@@ -23,7 +23,7 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght=0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     
@@ -33,7 +33,6 @@
             color: #f4f0eb;
             overflow-x: hidden;
         }
-        /* Masquer la scrollbar de la bibliothèque */
         .shelf-scroll::-webkit-scrollbar {
             display: none;
         }
@@ -41,7 +40,6 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        /* Animation de défilement infini du carrousel */
         @keyframes marquee {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
@@ -58,19 +56,7 @@
 </head>
 <body class="font-sans min-h-screen bg-brandDark flex flex-col justify-between">
 
-    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
-                Ro<span class="text-brandPrimary">MEDIA</span>
-            </a>
-            <nav class="flex items-center space-x-10 font-semibold tracking-wide">
-                <a href="index.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
-                <span class="text-brandPrimary text-sm uppercase border-b-2 border-brandPrimary pb-1 cursor-default">Portfolio</span>
-            </nav>
-        </div>
-    </header>
-
-    <main class="pt-28 pb-12 px-4 flex-grow flex flex-col justify-center max-w-7xl mx-auto w-full">
+    <main class="pt-16 pb-12 px-4 flex-grow flex flex-col justify-center max-w-7xl mx-auto w-full">
         
         <div class="text-center mb-10">
             <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">PROJETS ARCHIVÉS</span>
@@ -95,7 +81,7 @@
                 <p class="text-gray-400 text-xs mt-1">Laissez défiler... Positionnez votre curseur sur les images pour mettre en pause.</p>
             </div>
 
-            <div class="w-full overflow-hidden relative py-4 mask-edges">
+            <div class="w-full overflow-hidden relative py-4">
                 <div id="carousel-track" class="carousel-track space-x-6">
                     </div>
             </div>
@@ -103,41 +89,67 @@
 
     </main>
 
-    <footer class="bg-brandDark border-t border-white/5 py-6 text-gray-500 text-xs text-center">
-        <p>2026 &copy; RoMEDIA. Tous droits réservés.</p>
+    <footer class="bg-brandDark border-t border-white/5 py-8 text-center">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center justify-center gap-4">
+            <a href="index.html" class="inline-flex items-center justify-center px-6 py-3 border border-white/20 rounded-full text-sm font-semibold tracking-wide text-white hover:text-brandPrimary hover:border-brandPrimary transition-all duration-300 transform hover:scale-105 shadow-lg bg-white/5">
+                <i class="fas fa-arrow-left mr-3 text-xs"></i> Retour à la page principale
+            </a>
+            <p class="text-gray-500 text-[10px] mt-2">2026 &copy; RoMEDIA. Tous droits réservés.</p>
+        </div>
     </footer>
 
     <script>
-        // Données d'exemple simulant ~20 photos/livres de styles différents (Photo, Info, Web)
-        const booksData = [
-            { id: 1, type: "photo", cover: "images/RNP_8961-1.jpg", title: "Chill & Feel Event", collection: ["images/RNP_8961-1.jpg", "images/58668_03.jpg", "images/RNP_7120-1.jpg"] },
-            { id: 2, type: "info", cover: "images/Props1.png", title: "Branding Soins", collection: ["images/Props1.png", "images/58894455-265.png", "images/restaurant-window-mockup.jpg"] },
-            { id: 3, type: "photo", cover: "images/58668_03.jpg", title: "Studio Portrait", collection: ["images/58668_03.jpg", "images/RNP_8961-1.jpg", "images/RNP_7120-1.jpg"] },
-            { id: 4, type: "web", cover: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400", title: "Minimalist Web", collection: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600", "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600", "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600"] },
-            { id: 5, type: "photo", cover: "images/RNP_7120-1.jpg", title: "Product Design", collection: ["images/RNP_7120-1.jpg", "images/RNP_8961-1.jpg", "images/58668_03.jpg"] },
-            { id: 6, type: "info", cover: "images/58894455-265.png", title: "Corporate Kit", collection: ["images/58894455-265.png", "images/Props1.png", "images/restaurant-window-mockup.jpg"] },
-            { id: 7, type: "web", cover: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400", title: "Performance Dev", collection: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600", "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600"] },
-            { id: 8, type: "info", cover: "images/restaurant-window-mockup.jpg", title: "Mockup Glass", collection: ["images/restaurant-window-mockup.jpg", "images/Props1.png", "images/58894455-265.png"] },
-            { id: 9, type: "web", cover: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=400", title: "UI/UX Static", collection: ["https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600", "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600"] },
-            // Duplication des données pour atteindre facilement la vingtaine de livres demandés
-            { id: 10, type: "photo", cover: "images/RNP_8961-1.jpg", title: "Chill Fest II", collection: ["images/RNP_8961-1.jpg", "images/58668_03.jpg"] },
-            { id: 11, type: "info", cover: "images/Props1.png", title: "Branding Design", collection: ["images/Props1.png", "images/restaurant-window-mockup.jpg"] },
-            { id: 12, type: "photo", cover: "images/58668_03.jpg", title: "Fashion Vol 4", collection: ["images/58668_03.jpg", "images/RNP_7120-1.jpg"] },
-            { id: 13, type: "web", cover: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=400", title: "Creative Agency", collection: ["https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600"] },
-            { id: 14, type: "photo", cover: "images/RNP_7120-1.jpg", title: "Audio Tech", collection: ["images/RNP_7120-1.jpg", "images/RNP_8961-1.jpg"] },
-            { id: 15, type: "info", cover: "images/58894455-265.png", title: "Email Brand", collection: ["images/58894455-265.png", "images/Props1.png"] },
-            { id: 16, type: "web", cover: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=400", title: "Landing Build", collection: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600"] },
-            { id: 17, type: "info", cover: "images/restaurant-window-mockup.jpg", title: "Store Front", collection: ["images/restaurant-window-mockup.jpg"] },
-            { id: 18, type: "web", cover: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=400", title: "Sleek Screen", collection: ["https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600"] },
-            { id: 19, type: "photo", cover: "images/RNP_8961-1.jpg", title: "Backstage Ro", collection: ["images/RNP_8961-1.jpg"] },
-            { id: 20, type: "info", cover: "images/Props1.png", title: "Final Book", collection: ["images/Props1.png"] }
+        // ==========================================
+        // AJOUTEZ TOUTES VOS PHOTOS ICI UNIQUEMENT
+        // ==========================================
+        const TOUTES_LES_PHOTOS = [
+            "images/RNP_8961-1.jpg",
+            "images/58668_03.jpg",
+            "images/RNP_7120-1.jpg",
+            "images/Props1.png",
+            "images/58894455-265.png",
+            "images/restaurant-window-mockup.jpg",
+            "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600",
+            "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600",
+            "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600",
+            // Ajoutez autant de liens ou chemins d'images que vous voulez à la suite...
+            "images/RNP_8961-1.jpg",
+            "images/58668_03.jpg",
+            "images/RNP_7120-1.jpg",
+            "images/Props1.png",
+            "images/58894455-265.png",
+            "images/restaurant-window-mockup.jpg",
+            "images/RNP_8961-1.jpg",
+            "images/58668_03.jpg",
+            "images/RNP_7120-1.jpg",
+            "images/Props1.png",
+            "images/58894455-265.png",
+            "images/restaurant-window-mockup.jpg",
+            "images/RNP_8961-1.jpg",
+            "images/58668_03.jpg"
         ];
+
+        // Configuration : nombre d'images maximum par carrousel/livre
+        const IMAGES_PAR_LIVRE = 5; 
+        const booksData = [];
+
+        // Découpage automatique des photos en paquets pour créer les livres
+        for (let i = 0; i < TOUTES_LES_PHOTOS.length; i += IMAGES_PAR_LIVRE) {
+            const collectionPourCeLivre = TOUTES_LES_PHOTOS.slice(i, i + IMAGES_PAR_LIVRE);
+            const numeroLivre = booksData.length + 1;
+            
+            booksData.push({
+                id: numeroLivre,
+                title: `Archive Volume ${numeroLivre}`,
+                cover: collectionPourCeLivre[0], // La première image du paquet sert de couverture
+                collection: collectionPourCeLivre
+            });
+        }
 
         const shelf = document.getElementById('library-shelf');
 
-        // 1. Génération des livres sur l'étagère
+        // Génération visuelle des livres sur l'étagère
         booksData.forEach((book, index) => {
-            // Hauteur légèrement variable pour chaque livre pour faire plus réaliste
             const heights = ['h-[85%]', 'h-[92%]', 'h-[88%]', 'h-[95%]', 'h-[90%]'];
             const randomHeight = heights[index % heights.length];
 
@@ -146,11 +158,10 @@
                      class="book-item cursor-pointer flex-none w-[16px] sm:w-[24px] md:w-[32px] ${randomHeight} bg-brandDark border border-white/10 rounded-sm overflow-hidden transition-all duration-300 origin-bottom hover:w-[70px] sm:hover:w-[120px] md:hover:w-[160px] opacity-40 hover:opacity-100 hover:border-brandPrimary hover:shadow-[0_0_25px_rgba(226,97,55,0.6)] relative group">
                     
                     <div class="w-full h-full bg-cover bg-center grayscale group-hover:grayscale-0 transition-all duration-300" style="background-image: url('${book.cover}')"></div>
-                    
                     <div class="absolute inset-0 bg-black/50 group-hover:bg-transparent transition-colors"></div>
 
                     <div class="absolute inset-0 p-2 flex flex-col justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent">
-                        <span class="text-[8px] text-brandPrimary font-bold uppercase tracking-wider">${book.type}</span>
+                        <span class="text-[8px] text-brandPrimary font-bold uppercase tracking-wider">PROJET</span>
                         <h4 class="text-[10px] md:text-xs font-bold text-white truncate">${book.title}</h4>
                     </div>
                 </div>
@@ -158,7 +169,7 @@
             shelf.insertAdjacentHTML('beforeend', bookHTML);
         });
 
-        // 2. Ouvrir le carrousel au clic
+        // Ouvrir le carrousel
         function openCarousel(index) {
             const modal = document.getElementById('carousel-modal');
             const track = document.getElementById('carousel-track');
@@ -168,7 +179,7 @@
             title.textContent = selectedBook.title;
             track.innerHTML = "";
 
-            // Récupérer la liste d'images de la collection (dupliquée pour le défilement infini)
+            // Tripler la liste pour assurer un effet de défilement infini fluide même s'il y a peu d'images
             const imagesList = [...selectedBook.collection, ...selectedBook.collection, ...selectedBook.collection];
 
             imagesList.forEach(imgUrl => {
@@ -180,7 +191,6 @@
                 track.insertAdjacentHTML('beforeend', imgHTML);
             });
 
-            // Afficher le modal avec animation GSAP
             modal.classList.remove('hidden');
             gsap.to(modal, { 
                 opacity: 1, 
@@ -189,7 +199,7 @@
             });
         }
 
-        // 3. Fermer le carrousel
+        // Fermer le carrousel
         function closeCarousel() {
             const modal = document.getElementById('carousel-modal');
             gsap.to(modal, { 
