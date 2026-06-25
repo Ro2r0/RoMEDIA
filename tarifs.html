@@ -1,396 +1,301 @@
 <!DOCTYPE html>
-<html lang="fr" class="scroll-smooth">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarifs Portrait | RoMEDIA</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brandPrimary: '#e26137',   // Orange vibrant
-                        brandSecondary: '#0f3066', // Bleu profond
-                        brandDark: '#0a0a0c',      // Fond sombre premium
-                        brandLight: '#f4f0eb'     // Fond clair éditorial
-                    },
-                    fontFamily: {
-                        editorial: ['Playfair Display', 'serif'],
-                        sans: ['Plus Jakarta Sans', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <title>Tarifs Officiels | RoMEDIA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     <style>
+        :root {
+            --romedia-orange: #e26137;
+            --romedia-blue: #0f3066;
+        }
         body {
-            background-color: #0a0a0c;
-            color: #f4f0eb;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #faf8f5;
+            color: #1a1a1a;
             overflow-x: hidden;
         }
-        .custom-cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #e26137;
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.3s, height 0.3s, background-color 0.3s;
+        /* Style pour l'effet de révélation de gauche à droite */
+        .reveal-card {
+            clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
+            opacity: 0;
+            transform: translateX(-20px);
         }
-        .custom-cursor-dot {
-            width: 4px;
-            height: 4px;
-            background-color: #e26137;
-            border-radius: 50%;
-            position: fixed;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-        }
-        .tab-btn.active {
-            background-color: #e26137;
-            color: white;
-            border-color: #e26137;
-        }
+        .orange-accent { color: var(--romedia-orange); }
+        .blue-bg { background-color: var(--romedia-blue); }
+        .orange-bg { background-color: var(--romedia-orange); }
+        .border-blue { border-color: var(--romedia-blue); }
     </style>
 </head>
-<body class="font-sans antialiased">
+<body class="py-12 px-4 md:px-12 lg:px-24">
 
-    <div class="custom-cursor hidden md:block" id="customCursor"></div>
-    <div class="custom-cursor-dot hidden md:block" id="customCursorDot"></div>
+    <!-- SECTION PRICING PRINCIPALE -->
+    <main class="max-w-7xl mx-auto space-y-20">
+        
+        <!-- Titre d'introduction discret (Pas de header complet) -->
+        <div class="text-center max-w-2xl mx-auto space-y-4">
+            <span class="text-sm font-bold uppercase tracking-widest" style="color: #e26137;">Tarification Transparente</span>
+            <h1 class="text-4xl font-extrabold tracking-tight md:text-5xl" style="color: #0f3066;">Nos Solutions & Grilles Tarifaires</h1>
+            <p class="text-gray-600 text-lg">Sélectionnez l'offre adaptée à vos ambitions. Tous nos prix sont affichés en CAD, hors taxes (TPS/TVQ applicables au Québec).</p>
+        </div>
 
-    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="index.html" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
-                Ro<span class="text-brandPrimary">MEDIA</span>
-            </a>
+        <!-- CATEGORIE 1 : PHOTOGRAPHIE -->
+        <section class="space-y-8 category-section">
+            <div class="border-b pb-4 flex items-baseline justify-between">
+                <h2 class="text-2xl font-bold tracking-tight flex items-center gap-3" style="color: #0f3066;">
+                    <span class="w-3 h-6 block rounded-sm" style="background-color: #e26137;"></span> 
+                    01. Photographie Professionnelle
+                </h2>
+                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Portrait, Produit & Événement</span>
+            </div>
             
-            <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
-                <a href="index.html#accueil" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
-                <a href="index.html#services" class="hover:text-brandPrimary transition-colors text-sm uppercase">Services</a>
-                <a href="index.html#portfolio" class="hover:text-brandPrimary transition-colors text-sm uppercase">Folio</a>
-                <a href="#" class="text-brandPrimary text-sm uppercase border-b-2 border-brandPrimary pb-1">Tarifs</a>
-            </nav>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                <!-- Carte 1 -->
+                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Portraits & Corporate</h3>
+                        <p class="text-gray-500 text-sm mt-1">Idéal pour entrepreneurs, professionnels et réseaux.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">250 $</span>
+                            <span class="text-gray-400 text-sm">/ session</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Session de 1h30 en studio ou extérieur</li>
+                            <li class="flex items-center gap-2">✓ 5 photos haute résolution retouchées</li>
+                            <li class="flex items-center gap-2">✓ Droits d'utilisation commerciale inclus</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Carte 2 (Vedette) -->
+                <div class="reveal-card bg-white rounded-xl p-8 border-2 shadow-sm flex flex-col justify-between relative overflow-hidden" style="border-color: #e26137;">
+                    <div class="absolute top-0 right-0 px-3 py-1 text-xs font-bold text-white uppercase tracking-wider rounded-bl-lg" style="background-color: #e26137;">Populaire</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Photographie de Produits</h3>
+                        <p class="text-gray-500 text-sm mt-1">Optimisé pour les boutiques e-commerce et catalogues.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">450 $</span>
+                            <span class="text-gray-400 text-sm">/ projet</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Jusqu'à 15 produits distincts</li>
+                            <li class="flex items-center gap-2">✓ Arrière-plan épuré (blanc/transparent)</li>
+                            <li class="flex items-center gap-2">✓ Retouches avancées pour e-commerce</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Carte 3 -->
+                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Événementiel & Reportage</h3>
+                        <p class="text-gray-500 text-sm mt-1">Couverture de lancements, galas et soirées d'affaires.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">120 $</span>
+                            <span class="text-gray-400 text-sm">/ heure</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Minimum de 3 heures de présence</li>
+                            <li class="flex items-center gap-2">✓ Galerie en ligne privée pour vos invités</li>
+                            <li class="flex items-center gap-2">✓ Toutes les photos triées et colorimétrées</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <div>
-                <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" 
-                    class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold 
-                    text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-brandPrimary/20">
-                    Consultation
+        <!-- CATEGORIE 2 : INFOGRAPHIE & BRANDING -->
+        <section class="space-y-8 category-section">
+            <div class="border-b pb-4 flex items-baseline justify-between">
+                <h2 class="text-2xl font-bold tracking-tight flex items-center gap-3" style="color: #0f3066;">
+                    <span class="w-3 h-6 block rounded-sm" style="background-color: #e26137;"></span> 
+                    02. Infographie & Identité Visuelle
+                </h2>
+                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Design Stratégique</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                <!-- Carte 1 -->
+                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Logo Unique</h3>
+                        <p class="text-gray-500 text-sm mt-1">Idéal pour le lancement d'un nouveau projet autonome.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">350 $</span>
+                            <span class="text-gray-400 text-sm">/ forfait</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ 3 propositions initiales distinctes</li>
+                            <li class="flex items-center gap-2">✓ 2 vagues de révisions incluses</li>
+                            <li class="flex items-center gap-2">✓ Fichiers vectoriels complets (SVG, EPS, PDF)</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Carte 2 (Vedette) -->
+                <div class="reveal-card bg-white rounded-xl p-8 border-2 shadow-sm flex flex-col justify-between relative overflow-hidden" style="border-color: #0f3066;">
+                    <div class="absolute top-0 right-0 px-3 py-1 text-xs font-bold text-white uppercase tracking-wider rounded-bl-lg" style="background-color: #0f3066;">Complet</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Identité de Marque</h3>
+                        <p class="text-gray-500 text-sm mt-1">Une charte graphique cohérente pour s'imposer sur le marché.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">750 $</span>
+                            <span class="text-gray-400 text-sm">/ forfait</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Logo principal, secondaire et sous-marque</li>
+                            <li class="flex items-center gap-2">✓ Palette de couleurs (HEX/CMYK) & Typographies</li>
+                            <li class="flex items-center gap-2">✓ Mini-guide de marque (Brandbook PDF)</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Carte 3 -->
+                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Supports Publicitaires</h3>
+                        <p class="text-gray-500 text-sm mt-1">Matériel visuel sur demande pour vos campagnes.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">65 $</span>
+                            <span class="text-gray-400 text-sm">/ heure</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Design de brochures, cartes pro ou bannières</li>
+                            <li class="flex items-center gap-2">✓ Visuels pour vos réseaux sociaux</li>
+                            <li class="flex items-center gap-2">✓ Estimation précise avant démarrage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CATEGORIE 3 : SITE WEB STATIQUE -->
+        <section class="space-y-8 category-section">
+            <div class="border-b pb-4 flex items-baseline justify-between">
+                <h2 class="text-2xl font-bold tracking-tight flex items-center gap-3" style="color: #0f3066;">
+                    <span class="w-3 h-6 block rounded-sm" style="background-color: #e26137;"></span> 
+                    03. Développement Web Statique
+                </h2>
+                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Performant, Léger & Moderne</span>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+                <!-- Carte 1 -->
+                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Landing Page / Portfolio</h3>
+                        <p class="text-gray-500 text-sm mt-1">Parfait pour une vitrine percutante sur une seule page.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">1 200 $</span>
+                            <span class="text-gray-400 text-sm">/ projet</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Architecture Single-Page ultra-rapide</li>
+                            <li class="flex items-center gap-2">✓ Formulaire Formspree intégré</li>
+                            <li class="flex items-center gap-2">✓ Hébergement gratuit à vie (GitHub Pages)</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Carte 2 (Vedette) -->
+                <div class="reveal-card bg-white rounded-xl p-8 border-2 shadow-sm flex flex-col justify-between relative overflow-hidden" style="border-color: #e26137;">
+                    <div class="absolute top-0 right-0 px-3 py-1 text-xs font-bold text-white uppercase tracking-wider rounded-bl-lg" style="background-color: #e26137;">Premium</div>
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Vitrine Multi-Pages</h3>
+                        <p class="text-gray-500 text-sm mt-1">Idéal pour présenter des services complets de PME.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">2 500 $</span>
+                            <span class="text-gray-400 text-sm">/ projet</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Jusqu'à 5 pages de contenu stylisées</li>
+                            <li class="flex items-center gap-2">✓ Intégrations Stripe & Bouton de réservation</li>
+                            <li class="flex items-center gap-2">✓ Animations éditoriales uniques (GSAP)</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Carte 3 (Ajout Stratégique : Consultation) -->
+                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
+                    <div>
+                        <h3 class="text-xl font-bold text-gray-900">Maintenance & Évolution</h3>
+                        <p class="text-gray-500 text-sm mt-1">Pour les mises à jour et le support technique continu.</p>
+                        <div class="my-6">
+                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">60 $</span>
+                            <span class="text-gray-400 text-sm">/ heure</span>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-600">
+                            <li class="flex items-center gap-2">✓ Ajout de contenu ou nouvelles sections</li>
+                            <li class="flex items-center gap-2">✓ Optimisation des performances SEO</li>
+                            <li class="flex items-center gap-2">✓ Sans engagement de durée</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AJOUTS STRATÉGIQUES : INFORMATIONS CLIENTS INDISPENSABLES -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-100 p-8 rounded-2xl border border-slate-200/60">
+            <div class="space-y-3">
+                <h4 class="font-bold text-lg" style="color: #0f3066;">Informations importantes</h4>
+                <ul class="space-y-2 text-sm text-gray-600">
+                    <li>• <strong>Taxes :</strong> Les taxes en vigueur (TPS et TVQ) s'ajouteront au montant final pour les clients du Québec.</li>
+                    <li>• <strong>Modalités de paiement :</strong> Un acompte de 40% est exigé au démarrage de tout forfait fixe, le solde à la livraison.</li>
+                    <li>• <strong>Validité :</strong> Les prix affichés ici font foi d'estimation标准 et restent valides pour l'année en cours.</li>
+                </ul>
+            </div>
+            <div class="space-y-3 flex flex-col justify-between">
+                <div>
+                    <h4 class="font-bold text-lg" style="color: #0f3066;">Prêt à collaborer ?</h4>
+                    <p class="text-sm text-gray-600">Vous souhaitez un devis personnalisé ajusté précisément à vos besoins ? Cliquez ci-dessous pour initier votre projet.</p>
+                </div>
+                <a href="https://formspree.io/f/mrewzvjz" class="inline-block text-center text-white text-sm font-bold py-3 px-6 rounded-lg transition-transform hover:scale-105" style="background-color: #e26137;">
+                    Demander une soumission personnalisée
                 </a>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <main class="pt-32 pb-24 min-h-screen max-w-7xl mx-auto px-6">
-        <div class="text-center max-w-3xl mx-auto mb-16 reveal-element">
-            <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Grille Tarifaire Officielle</span>
-            <h1 class="text-4xl md:text-6xl font-editorial font-bold mb-6 text-white">Liste de Prix <span class="text-brandPrimary italic">Portrait</span></h1>
-            <p class="text-gray-400 text-sm md:text-base leading-relaxed">
-                Des prestations photographiques haut de gamme adaptées à vos besoins personnels et professionnels. 
-                Choisissez le cadre qui vous convient le mieux pour immortaliser votre image.
-            </p>
-
-            <div class="mt-10 inline-flex bg-white/5 p-1.5 rounded-full border border-white/10 space-x-2">
-                <button onclick="switchTab('studio')" id="btn-studio" class="tab-btn active px-8 py-3 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300 border border-transparent">
-                    <i class="fas fa-building mr-2"></i> En Studio
-                </button>
-                <button onclick="switchTab('location')" id="btn-location" class="tab-btn px-8 py-3 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300 border border-transparent text-gray-400 hover:text-white">
-                    <i class="fas fa-map-marker-alt mr-2"></i> Sur Location
-                </button>
-            </div>
-        </div>
-
-        <div id="grid-studio" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl relative overflow-hidden group hover:border-brandPrimary/40 transition-all flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Solo</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Bronze Solo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>25</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 1 heure de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                        <li class="text-gray-500 italic"><i class="fas fa-times text-gray-600 mr-2"></i> Temps studio en sus</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif unique</span>
-                    <span class="text-3xl font-bold text-white font-editorial">160 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-brandPrimary/40 p-8 rounded-3xl relative overflow-hidden group shadow-xl shadow-brandPrimary/5 flex flex-col justify-between">
-                <div class="absolute top-0 right-0 bg-brandPrimary text-white text-[10px] font-extrabold uppercase tracking-widest px-4 py-1 rounded-bl-xl">Populaire</div>
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Solo</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Diamant Solo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>45</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 1 heure de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                        <li class="text-gray-500 italic"><i class="fas fa-times text-gray-600 mr-2"></i> Temps studio en sus</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif unique</span>
-                    <span class="text-3xl font-bold text-white font-editorial">210 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl relative overflow-hidden group hover:border-brandPrimary/40 transition-all flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Duo</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Bronze Duo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>45</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 1 heure de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                        <li class="text-gray-500 italic"><i class="fas fa-times text-gray-600 mr-2"></i> Temps studio en sus</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif duo</span>
-                    <span class="text-3xl font-bold text-white font-editorial">200 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl relative overflow-hidden group hover:border-brandPrimary/40 transition-all flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Duo</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Or Duo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>75</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 2 heures de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                        <li class="text-gray-500 italic"><i class="fas fa-times text-gray-600 mr-2"></i> Temps studio en sus</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif duo</span>
-                    <span class="text-3xl font-bold text-white font-editorial">240 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl relative overflow-hidden group hover:border-brandPrimary/40 transition-all flex flex-col justify-between md:col-span-2 lg:col-span-1">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Groupe</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Session Familiale</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>75</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 2 heures de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                        <li class="text-gray-500 italic"><i class="fas fa-times text-gray-600 mr-2"></i> Temps studio en sus</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Forfait Famille</span>
-                    <span class="text-3xl font-bold text-white font-editorial">280 $</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="grid-location" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Solo (Extérieur)</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Bronze Solo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>35</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 1 heure de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif unique</span>
-                    <span class="text-3xl font-bold text-white font-editorial">130 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Solo (Extérieur)</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Diamant Solo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>50</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 1 heure de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif unique</span>
-                    <span class="text-3xl font-bold text-white font-editorial">180 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Duo (Extérieur)</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Bronze Duo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>50</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 1 heure de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif duo</span>
-                    <span class="text-3xl font-bold text-white font-editorial">190 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl flex flex-col justify-between">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Duo (Extérieur)</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Or Duo</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>80</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 2 heures de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Tarif duo</span>
-                    <span class="text-3xl font-bold text-white font-editorial">220 $</span>
-                </div>
-            </div>
-
-            <div class="bg-white/5 border border-white/10 p-8 rounded-3xl flex flex-col justify-between md:col-span-2 lg:col-span-1">
-                <div>
-                    <h3 class="text-brandPrimary uppercase font-extrabold text-xs tracking-widest mb-1">Groupe (Extérieur)</h3>
-                    <h2 class="font-editorial text-2xl font-bold text-white mb-4">Session Familiale</h2>
-                    <ul class="space-y-3 text-sm text-gray-300 mb-8">
-                        <li><i class="fas fa-check text-brandPrimary mr-2"></i> <strong>80</strong> photos retouchées</li>
-                        <li><i class="fas fa-clock text-brandPrimary mr-2"></i> 2 heures de pose professionnelle</li>
-                        <li><i class="fas fa-share-node text-brandPrimary mr-2"></i> Partage électronique seulement</li>
-                    </ul>
-                </div>
-                <div class="flex items-baseline justify-between border-t border-white/5 pt-4">
-                    <span class="text-xs uppercase font-bold text-gray-400">Forfait Famille</span>
-                    <span class="text-3xl font-bold text-white font-editorial">250 $</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-12 reveal-element">
-            <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
-                <h3 class="font-editorial text-2xl font-bold text-white mb-6 border-b border-white/10 pb-3">
-                    <span class="text-brandPrimary text-sm font-sans block uppercase tracking-wider mb-1">Sur Devis</span> Autres Projets
-                </h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Collaboration artistique</span><span class="text-brandPrimary font-bold">Selon le projet</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Mariage</span><span class="text-white font-bold">À partir de 350 $</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Événements (Anniversaire, Fête)</span><span class="text-white font-bold">À partir de 140 $</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Bal de fin d'année</span><span class="text-white font-bold">À partir de 110 $</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Photographie de produits</span><span class="text-white font-bold">À partir de 120 $</span></div>
-                </div>
-            </div>
-
-            <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
-                <h3 class="font-editorial text-2xl font-bold text-white mb-6 border-b border-white/10 pb-3">
-                    <span class="text-brandPrimary text-sm font-sans block uppercase tracking-wider mb-1">Personnalisation</span> Options & Extras
-                </h3>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Déplacement (Aller-retour)</span><span class="text-white font-bold">25 $</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Expertise & Conseil</span><span class="text-white font-bold">Frais de 80 $</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Retouche supplémentaire</span><span class="text-white font-bold">5 $ / photo</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Heure de session additionnelle</span><span class="text-white font-bold">65 $ / heure</span></div>
-                    <div class="flex justify-between items-center text-sm"><span class="text-gray-300 font-semibold">Filtres cinématiques & LUTs personnalisés</span><span class="text-white font-bold">20 $</span></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="mt-16 bg-brandSecondary/20 border border-brandSecondary/40 p-8 rounded-3xl text-sm text-gray-300 max-w-4xl mx-auto reveal-element">
-            <h4 class="font-bold text-white text-base mb-3"><i class="fas fa-info-circle text-brandPrimary mr-2"></i> Conditions Générales & Politique de Réservation</h4>
-            <p class="mb-4 leading-relaxed">
-                Les impressions matérielles et le partage sur support physique (CD/Clé USB) ne sont plus inclus d'office dans nos offres de base. Pour toute commande ou support physique spécifique, veuillez le mentionner au photographe lors de votre prise de contact. Toute demande sur mesure sera évaluée et acceptée selon certaines conditions applicables.
-            </p>
-            <p class="leading-relaxed text-gray-400">
-                ⚠️ Pour garantir la logistique et bloquer l'agenda du studio mobile, un <strong class="text-brandPrimary">dépôt de 100 $</strong> est exigé au moins deux (2) semaines avant la date choisie. Ce dépôt sécurise la présence du professionnel et sera déduit de la facture finale une fois la totalité des services rendus payée.
-            </p>
-        </div>
     </main>
 
-    <footer class="bg-brandDark border-t border-white/5 py-12 text-gray-500 text-xs">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center space-x-4">
-                <div class="text-white font-bold text-base tracking-wider">Ro<span class="text-brandPrimary">MEDIA</span></div>
-                <div>
-                    <p>2026 &copy; RoMEDIA. Tous droits réservés. Évoluer pour impacter.</p>
-                </div>
-            </div>
-            <div class="flex space-x-6 items-center">
-                <a href="index.html" class="hover:text-brandPrimary transition-colors">Retour à l'accueil</a>
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-instagram text-base"></i></a>
-                <a href="https://www.facebook.com/romedia.mtl" target="_blank" class="hover:text-white transition-colors"><i class="fab fa-facebook text-base"></i></a>
-            </div>
+    <!-- BAS DE PAGE COPIÉ + LIEN RETOUR -->
+    <footer class="mt-24 border-t pt-12 pb-6 text-center space-y-6">
+        <div>
+            <!-- Bouton Retour à la page principale inséré stratégiquement -->
+            <a href="index.html" class="inline-flex items-center gap-2 text-sm font-bold transition-colors hover:opacity-80" style="color: #0f3066;">
+                ← Retour à la page principale
+            </a>
+        </div>
+        <div class="text-xs text-gray-400 space-y-2">
+            <p>© 2026 RoMEDIA. Tous droits réservés. Enregistré au Québec.</p>
+            <p>Design graphique, Photographie & Sites Web Statiques haute performance.</p>
         </div>
     </footer>
 
+    <!-- SCRIPT D'ANIMATION DE GAUCHE À DROITE (GSAP) -->
     <script>
-        // Gestion de l'interactivité du curseur
-        const cursor = document.getElementById('customCursor');
-        const cursorDot = document.getElementById('customCursorDot');
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
 
-        document.addEventListener('mousemove', (e) => {
-            gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
-            gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.02 });
-        });
-
-        document.querySelectorAll('a, button, .bg-white\\/5').forEach(elem => {
-            elem.addEventListener('mouseenter', () => {
-                cursor.style.width = '40px';
-                cursor.style.height = '40px';
-                cursor.style.backgroundColor = 'rgba(226, 97, 55, 0.1)';
-            });
-            elem.addEventListener('mouseleave', () => {
-                cursor.style.width = '20px';
-                cursor.style.height = '20px';
-                cursor.style.backgroundColor = 'transparent';
-            });
-        });
-
-        // Changement d'onglets dynamique avec Animation GSAP
-        function switchTab(type) {
-            const studioGrid = document.getElementById('grid-studio');
-            const locationGrid = document.getElementById('grid-location');
-            const btnStudio = document.getElementById('btn-studio');
-            const btnLocation = document.getElementById('btn-location');
-
-            if(type === 'studio') {
-                btnStudio.classList.add('active', 'text-white');
-                btnStudio.classList.remove('text-gray-400');
-                btnLocation.classList.remove('active', 'text-white');
-                btnLocation.classList.add('text-gray-400');
+            // Animer chaque catégorie de cartes de manière séquentielle lors du scroll
+            document.querySelectorAll('.category-section').forEach((section) => {
+                const cards = section.querySelectorAll('.reveal-card');
                 
-                locationGrid.classList.add('hidden');
-                studioGrid.classList.remove('hidden');
-                gsap.fromTo(studioGrid, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.5});
-            } else {
-                btnLocation.classList.add('active', 'text-white');
-                btnLocation.classList.remove('text-gray-400');
-                btnStudio.classList.remove('active', 'text-white');
-                btnStudio.classList.add('text-gray-400');
-                
-                studioGrid.classList.add('hidden');
-                locationGrid.classList.remove('hidden');
-                gsap.fromTo(locationGrid, {opacity: 0, y: 20}, {opacity: 1, y: 0, duration: 0.5});
-            }
-        }
-
-        // Animation d'entrée au chargement global de la page
-        gsap.from(".reveal-element", {
-            y: 30,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.15,
-            ease: "power3.out"
+                gsap.to(cards, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%", // Déclenche l'animation quand la section entre à l'écran
+                        toggleActions: "play none none none"
+                    },
+                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", // Effet d'ouverture de fenêtre gauche->droite
+                    opacity: 1,
+                    x: 0,
+                    duration: 1.2,
+                    ease: "power3.out",
+                    stagger: 0.25 // Décale l'apparition de chaque carte sur la ligne
+                });
+            });
         });
     </script>
 </body>
