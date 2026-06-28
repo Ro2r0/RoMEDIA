@@ -41,18 +41,21 @@
         </div>
 
         <div class="relative w-full border-b-4 border-brandLight/40 pb-1 mb-16">
-            <div id="library-shelf" class="shelf-scroll flex items-end justify-start md:justify-center overflow-x-auto space-x-1 md:space-x-2 px-4 h-[350px] md:h-[420px] relative z-10 bottom-[-4px]">
+            <div id="library-shelf" class="shelf-scroll flex items-end justify-start md:justify-center 
+                overflow-x-auto space-x-1 md:space-x-2 px-4 h-[350px] md:h-[420px] relative z-10 bottom-[-4px]">
                 </div>
             <div class="absolute bottom-[-16px] left-0 w-full h-4 bg-gradient-to-b from-black/60 to-transparent"></div>
         </div>
 
-        <div id="carousel-modal" class="fixed inset-0 z-50 bg-brandDark/95 hidden opacity-0 flex-col justify-center items-center p-4 backdrop-blur-md">
-            <button onclick="closeCarousel()" class="absolute top-6 right-6 text-white bg-white/10 hover:bg-brandPrimary px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-bold transition-all z-50">
+        <div id="carousel-modal" class="fixed inset-0 z-50 bg-brandDark/95 hidden opacity-0 flex-col 
+            justify-center items-center p-4 backdrop-blur-md">
+            <button onclick="closeCarousel()" class="absolute top-6 right-6 text-white bg-white/10 
+                hover:bg-brandPrimary px-5 py-2.5 rounded-full text-xs uppercase tracking-wider font-bold transition-all z-50">
                 <i class="fas fa-times mr-2"></i> Fermer
             </button>
             <div class="text-center mb-8 max-w-xl">
                 <h2 id="modal-title" class="text-2xl md:text-4xl font-editorial text-brandLight italic">Collection</h2>
-                <p class="text-gray-400 text-xs mt-1">Positionnez votre curseur sur les images pour mettre en pause.</p>
+                <p class="text-gray-400 text-xs mt-1">Les images peuvent arrêter.</p>
             </div>
             <div class="w-full overflow-hidden relative py-4 flex items-center justify-center">
                 <div id="carousel-track" class="carousel-track space-x-8">
@@ -66,32 +69,21 @@
             <a href="index.html" class="inline-flex items-center justify-center px-6 py-3 border border-white/20 rounded-full text-sm font-semibold tracking-wide text-white hover:text-brandPrimary hover:border-brandPrimary transition-all duration-300 transform hover:scale-105 shadow-lg bg-white/5">
                 <i class="fas fa-arrow-left mr-3 text-xs"></i> Retour à la page principale
             </a>
-            <p class="text-gray-500 text-[10px] mt-2">2026 &copy; RoMEDIA. Tous droits réservés. Que du plaisir</p>
+            <p class="text-gray-500 text-[10px] mt-2">2026 &copy; RoMEDIA. Tous droits réservés. Changer pour évoluer.</p>
         </div>
     </footer>
 
     <script>
         const booksData = [
-            { titre: "Chill & Feel Event", cover: "images/RNP_8961-1.jpg", carrousel: ["images/RNP_8961-1.jpg", "images/58668_03.jpg", "images/RNP_7120-1.jpg"] },
-            { titre: "Branding Soins à Domicile", cover: "images/Props1.png", carrousel: ["images/Props1.png", "images/58894455-265.png", "images/restaurant-window-mockup.jpg"] },
-            { titre: "Studio Portrait", cover: "images/58668_03.jpg", carrousel: ["images/58668_03.jpg", "images/RNP_8961-1.jpg"] },
-            { titre: "Architecture Web Minimaliste", cover: "images/restaurant-window-mockup.jpg", carrousel: ["images/restaurant-window-mockup.jpg", "images/Props1.png"] },
-            { titre: "Catégorie 5", cover: "images/RNP_7120-1.jpg", carrousel: ["images/RNP_7120-1.jpg"] },
-            { titre: "Catégorie 6", cover: "images/Props1.png", carrousel: ["images/Props1.png"] },
-            { titre: "Catégorie 7", cover: "images/58894455-265.png", carrousel: ["images/58894455-265.png"] },
-            { titre: "Catégorie 8", cover: "images/restaurant-window-mockup.jpg", carrousel: ["images/restaurant-window-mockup.jpg"] },
-            { titre: "Catégorie 9", cover: "images/RNP_8961-1.jpg", carrousel: ["images/RNP_8961-1.jpg"] },
-            { titre: "Catégorie 10", cover: "images/58668_03.jpg", carrousel: ["images/58668_03.jpg"] },
-            { titre: "Catégorie 11", cover: "images/RNP_7120-1.jpg", carrousel: ["images/RNP_7120-1.jpg"] },
-            { titre: "Catégorie 12", cover: "images/Props1.png", carrousel: ["images/Props1.png"] },
-            { titre: "Catégorie 13", cover: "images/58894455-265.png", carrousel: ["images/58894455-265.png"] },
-            { titre: "Catégorie 14", cover: "images/restaurant-window-mockup.jpg", carrousel: ["images/restaurant-window-mockup.jpg"] },
-            { titre: "Catégorie 15", cover: "images/RNP_8961-1.jpg", carrousel: ["images/RNP_8961-1.jpg"] },
-            { titre: "Catégorie 16", cover: "images/58668_03.jpg", carrousel: ["images/58668_03.jpg"] },
-            { titre: "Catégorie 17", cover: "images/RNP_7120-1.jpg", carrousel: ["images/RNP_7120-1.jpg"] },
-            { titre: "Catégorie 18", cover: "images/Props1.png", carrousel: ["images/Props1.png"] },
-            { titre: "Catégorie 19", cover: "images/58894455-265.png", carrousel: ["images/58894455-265.png"] },
-            { titre: "Catégorie 20", cover: "images/restaurant-window-mockup.jpg", carrousel: ["images/restaurant-window-mockup.jpg"] }
+            { titre: "Portrait en Studio", 
+             cover: "images/RNP_0598-2.jpg", 
+             carrousel: ["images/RNP_8961-1.jpg", "images/RNP_0598-2.jpg", "images/RNP_7120-1.jpg", "images/RNP_8961-1.jpg", "images/58668_03.jpg", "images/RNP_7120-1.jpg"] },
+            { titre: "Portrait Événementiel", 
+             cover: "images/RNP_4322-1.jpg", 
+             carrousel: ["images/RNP_4690-1.jpg", "images/58894455-265.png", "images/RNP_4322-1.jpg"] },
+            { titre: "Portrait Naturel", cover: "images/58668_03.jpg", 
+             carrousel: ["images/IMG_0055-1.jpg", "images/58668_03.jpg", "images/IMG_7811-1.jpg", "images/RNP_4768-1.jpg", "images/RNP_7120-1.jpg"] },
+            }
         ];
 
         const shelf = document.getElementById('library-shelf');
