@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estimateur de prix | RoMEDIA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPrimary: '#e26137',
+                        brandSecondary: '#0f3066',
+                        brandDark: '#0a0a0c',
+                        brandLight: '#f4f0eb'
+                    },
+                    fontFamily: {
+                        editorial: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #0a0a0c; color: #f4f0eb; overflow-x: hidden; }
+        /* Cartes d'option sélectionnables */
+        .opt input { position: absolute; opacity: 0; pointer-events: none; }
+        .opt span.card {
+            display: block; height: 100%; padding: 14px 16px; border-radius: 16px;
+            border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.04);
+            cursor: pointer; transition: all .25s;
+        }
+        .opt:hover span.card { border-color: rgba(226,97,55,.6); }
+        .opt input:checked + span.card { background: #e26137; border-color: #e26137; color: #fff; }
+        .opt input:checked + span.card small { color: rgba(255,255,255,.85); }
+        .opt input:focus-visible + span.card { outline: 2px solid #f4f0eb; outline-offset: 2px; }
+        .step-btn {
+            width: 44px; height: 44px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.2);
+            font-size: 20px; transition: all .2s;
+        }
+        .step-btn:hover { border-color: #e26137; color: #e26137; }
+        .step-btn:focus-visible { outline: 2px solid #e26137; outline-offset: 2px; }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    </style>
+</head>
+<body class="font-sans">
+
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
+                Ro<span class="text-brandPrimary">MEDIA</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
+                <a href="index.html#accueil" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
+                <a href="index.html#services" class="hover:text-brandPrimary transition-colors text-sm uppercase">Services</a>
+                <a href="index.html#portfolio" class="hover:text-brandPrimary transition-colors text-sm uppercase">Folio</a>
+                <a href="tarifs.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Tarifs</a>
+            </nav>
+            <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank"
+                class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all duration-300 hover:scale-105 shadow-lg shadow-brandPrimary/20">
+                Consultation
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-12">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Photographie</span>
+                <h1 class="text-4xl md:text-6xl font-editorial font-light leading-tight text-white mb-5">
+                    Estimez votre <span class="font-bold italic text-brandLight">séance</span> en quelques clics.
+                </h1>
+                <p class="text-gray-400 border-l-2 border-brandSecondary pl-4">
+                    Choisissez vos options : le montant se met à jour tout de suite. Il s’agit d’une estimation
+                    à titre indicatif; le prix final est confirmé après une courte discussion sur votre projet.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-5 gap-10 items-start">
+                <!-- Formulaire -->
+                <form id="calc" class="lg:col-span-3 space-y-10" onsubmit="return false">
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-4">Type de photographie</legend>
+                        <div id="g-type" class="grid sm:grid-cols-2 gap-3"></div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-4">Durée de la séance</legend>
+                        <div class="flex items-center gap-4">
+                            <button type="button" class="step-btn" data-step="hours" data-d="-0.5" aria-label="Retirer 30 minutes">−</button>
+                            <div class="min-w-[110px] text-center">
+                                <span id="hours-val" class="font-editorial text-4xl font-bold">2</span>
+                                <span class="text-gray-400 text-sm"> h</span>
+                            </div>
+                            <button type="button" class="step-btn" data-step="hours" data-d="0.5" aria-label="Ajouter 30 minutes">+</button>
+                            <span class="text-xs text-gray-500">Minimum 1 h, par tranches de 30 min</span>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-1">Photos numériques à livrer</legend>
+                        <p id="photos-hint" class="text-xs text-gray-500 mb-4"></p>
+                        <div class="flex items-center gap-4">
+                            <button type="button" class="step-btn" data-step="photos" data-d="-5" aria-label="Retirer 5 photos">−</button>
+                            <div class="min-w-[110px] text-center">
+                                <span id="photos-val" class="font-editorial text-4xl font-bold">20</span>
+                                <span class="text-gray-400 text-sm"> photos</span>
+                            </div>
+                            <button type="button" class="step-btn" data-step="photos" data-d="5" aria-label="Ajouter 5 photos">+</button>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-4">Lieu de la séance</legend>
+                        <div id="g-lieu" class="grid sm:grid-cols-3 gap-3"></div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-4">Déplacement</legend>
+                        <div id="g-depl" class="grid sm:grid-cols-3 gap-3"></div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-4">Retouche</legend>
+                        <div id="g-retouche" class="grid sm:grid-cols-2 gap-3"></div>
+                    </fieldset>
+
+                    <fieldset>
+                        <legend class="text-lg font-bold mb-4">Options</legend>
+                        <div id="g-options" class="grid sm:grid-cols-2 gap-3"></div>
+                    </fieldset>
+                </form>
+
+                <!-- Résumé -->
+                <aside class="lg:col-span-2 lg:sticky lg:top-28">
+                    <div class="bg-brandLight text-brandDark p-7 rounded-3xl shadow-2xl">
+                        <h2 class="font-editorial text-2xl font-bold text-brandSecondary mb-1">Votre estimation</h2>
+                        <p class="text-xs text-gray-500 mb-5">Avant taxes</p>
+
+                        <p class="font-editorial text-4xl md:text-5xl font-bold text-brandPrimary leading-none" id="range">—</p>
+                        <p class="text-sm text-gray-600 mt-2" id="total-tax"></p>
+
+                        <ul id="lines" class="mt-6 pt-5 border-t border-gray-300 space-y-2 text-sm"></ul>
+
+                        <div class="mt-7 flex flex-col gap-3">
+                            <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank"
+                                class="text-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary transition-all">
+                                Réserver une consultation
+                            </a>
+                            <button type="button" id="copy"
+                                class="px-6 py-3 border border-brandSecondary/30 text-brandSecondary font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary hover:text-white transition-all">
+                                Copier mon estimation
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-4">Les taxes (TPS/TVQ) s’ajoutent si applicables. Cette estimation ne constitue pas une soumission officielle.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-brandDark border-t border-white/5 py-12 text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center space-x-4">
+                <img src="images/RoMedia-Changer.png" alt="RoMedia Logo" class="h-12 w-auto object-contain">
+                <p>2026 &copy; RoMEDIA. Tous droits réservés. Changer pour évoluer.</p>
+            </div>
+            <div class="flex space-x-6 items-center">
+                <a href="legal.html" class="hover:text-brandPrimary transition-colors underline decoration-brandPrimary/40 underline-offset-4">Mentions Légales & Confidentialité</a>
+                <a href="http://instagram.com/romedia.mtl" target="_blank" class="hover:text-white transition-colors" aria-label="Instagram">Instagram</a>
+                <a href="https://www.facebook.com/romedia.mtl" target="_blank" class="hover:text-white transition-colors" aria-label="Facebook">Facebook</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    /* ============================================================
+       TARIFS : modifiez ces valeurs pour ajuster les prix
+       (tous les montants sont en $ CAD, avant taxes)
+       ============================================================ */
+    const CONFIG = {
+        minHours: 1, maxHours: 18,
+        photosPerHourIncluded: 5,   // photos livrées incluses par heure
+        extraPhotoPrice: 5,         // prix par photo au-delà des photos incluses
+        rangeLow: 0.10,             // fourchette : -10 %
+        rangeHigh: 0.35,            // fourchette : +35 %
+        type: {
+            portrait:   { label: "Portrait",           note: "Individuel, couple, famille", rate: 102 },
+            produit:    { label: "Produits",           note: "Boutique, catalogue, e-commerce", rate: 126 },
+            evenement:  { label: "Événement",          note: "Ouverture, fête, conférence", rate: 148 },
+            mannequin:  { label: "Mode",               note: "Book, lookbook, agence", rate: 122 }
+        },
+        lieu: {
+            interieur: { label: "Intérieur",  note: "Chez vous ou un endroit réservé", price: 10 },
+            exterieur: { label: "Extérieur",  note: "Parc, rue, nature", price: 20 },
+            studio:    { label: "Studio",     note: "Location de studio", price: 80 }
+        },
+        depl: {
+            mtl:    { label: "Montréal",       note: "Île de Montréal", price: 40 },
+            proche: { label: "Grand Montréal", note: "Laval, Rive-Sud, etc.", price: 80 },
+            loin:   { label: "Plus loin",      note: "Sur devis", price: 100 }
+        },
+        retouche: {
+            standard: { label: "Standard", note: "Couleurs, exposition, recadrage", perPhoto: 5 },
+            avancee:  { label: "Avancée",  note: "Peau, retrait d’éléments, détails", perPhoto: 10 }
+        },
+        options: {
+            rush:    { label: "Livraison express (48 h)", note: "+35 % sur le total", pct: 0.35 },
+            licence: { label: "Usage commercial étendu",  note: "+60 % sur le total", pct: 0.60 }
+        }
+    };
+
+    const state = { type: "portrait", hours: 2, photos: 20, lieu: "interieur", depl: "mtl", retouche: "standard", rush: false, licence: false };
+    const $ = id => document.getElementById(id);
+    const money = n => Math.round(n).toLocaleString("fr-CA") + " $";
+
+    function radioGroup(containerId, name, items, extra) {
+        $(containerId).innerHTML = Object.entries(items).map(([key, it]) => `
+            <label class="opt relative block">
+                <input type="radio" name="${name}" value="${key}" ${state[name] === key ? "checked" : ""}>
+                <span class="card"><strong class="block text-sm">${it.label}</strong><small class="text-gray-400 text-xs">${it.note}${extra ? extra(it) : ""}</small></span>
+            </label>`).join("");
+        $(containerId).addEventListener("change", e => { state[name] = e.target.value; render(); });
+    }
+
+    radioGroup("g-type", "type", CONFIG.type, it => ` · ${it.rate} $/h`);
+    radioGroup("g-lieu", "lieu", CONFIG.lieu, it => it.price ? ` · +${it.price} $` : "");
+    radioGroup("g-depl", "depl", CONFIG.depl, it => it.price ? ` · +${it.price} $` : "");
+    radioGroup("g-retouche", "retouche", CONFIG.retouche, it => it.perPhoto ? ` · +${it.perPhoto} $/photo` : "");
+
+    $("g-options").innerHTML = Object.entries(CONFIG.options).map(([key, it]) => `
+        <label class="opt relative block">
+            <input type="checkbox" name="${key}">
+            <span class="card"><strong class="block text-sm">${it.label}</strong><small class="text-gray-400 text-xs">${it.note}</small></span>
+        </label>`).join("");
+    $("g-options").addEventListener("change", e => { state[e.target.name] = e.target.checked; render(); });
+
+    document.querySelectorAll(".step-btn").forEach(btn => btn.addEventListener("click", () => {
+        const d = parseFloat(btn.dataset.d);
+        if (btn.dataset.step === "hours") state.hours = Math.min(CONFIG.maxHours, Math.max(CONFIG.minHours, state.hours + d));
+        else state.photos = Math.max(0, state.photos + d);
+        render();
+    }));
+
+    function compute() {
+        const t = CONFIG.type[state.type];
+        const included = Math.round(state.hours * CONFIG.photosPerHourIncluded);
+        const extra = Math.max(0, state.photos - included);
+        const lines = [
+            [`Séance ${t.label.toLowerCase()} (${state.hours} h × ${t.rate} $)`, state.hours * t.rate],
+            [`Photos supplémentaires (${extra} × ${CONFIG.extraPhotoPrice} $)`, extra * CONFIG.extraPhotoPrice],
+            [`Lieu : ${CONFIG.lieu[state.lieu].label.toLowerCase()}`, CONFIG.lieu[state.lieu].price],
+            [`Déplacement : ${CONFIG.depl[state.depl].label}`, CONFIG.depl[state.depl].price],
+            [`Retouche ${CONFIG.retouche[state.retouche].label.toLowerCase()}`, CONFIG.retouche[state.retouche].perPhoto * state.photos]
+        ];
+        let subtotal = lines.reduce((s, l) => s + l[1], 0);
+        Object.entries(CONFIG.options).forEach(([key, o]) => {
+            if (state[key]) { const add = subtotal * o.pct; lines.push([o.label, add]); subtotal += add; }
+        });
+        return { lines: lines.filter(l => l[1] > 0), subtotal, included };
+    }
+
+    let lastText = "";
+    function render() {
+        const { lines, subtotal, included } = compute();
+        const low = subtotal * (1 - CONFIG.rangeLow), high = subtotal * (1 + CONFIG.rangeHigh);
+        $("hours-val").textContent = String(state.hours).replace(".", ",");
+        $("photos-val").textContent = state.photos;
+        $("photos-hint").textContent = `${included} photos sont incluses pour ${String(state.hours).replace(".", ",")} h; ensuite ${CONFIG.extraPhotoPrice} $ par photo.`;
+        $("range").textContent = `${money(low)} – ${money(high)}`;
+        $("total-tax").textContent = `Environ ${money(subtotal * 1.14975)} avec taxes (milieu de fourchette)`;
+        $("lines").innerHTML = lines.map(l => `<li class="flex justify-between gap-4"><span class="text-gray-600">${l[0]}</span><span class="font-semibold whitespace-nowrap">${money(l[1])}</span></li>`).join("");
+        lastText = `Estimation RoMEDIA : ${money(low)} à ${money(high)} (avant taxes)\n` +
+            `Type : ${CONFIG.type[state.type].label} | Durée : ${state.hours} h | Photos : ${state.photos}\n` +
+            `Lieu : ${CONFIG.lieu[state.lieu].label} | Déplacement : ${CONFIG.depl[state.depl].label} | Retouche : ${CONFIG.retouche[state.retouche].label}` +
+            (state.rush ? " | Express 48 h" : "") + (state.licence ? " | Usage commercial étendu" : "");
+    }
+
+    $("copy").addEventListener("click", async () => {
+        const btn = $("copy"), old = btn.textContent;
+        try { await navigator.clipboard.writeText(lastText); btn.textContent = "Estimation copiée"; }
+        catch (e) { btn.textContent = "Copie impossible"; }
+        setTimeout(() => btn.textContent = old, 1800);
+    });
+
+    render();
+    </script>
+</body>
+</html>
