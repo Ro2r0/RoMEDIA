@@ -126,7 +126,7 @@
 
                     <fieldset>
                         <legend class="text-lg font-bold mb-4">Retouche</legend>
-                        <div id="g-retouche" class="grid sm:grid-cols-2 gap-3"></div>
+                        <div id="g-retouche" class="grid sm:grid-cols-3 gap-3"></div>
                     </fieldset>
 
                     <fieldset>
@@ -160,6 +160,29 @@
                     </div>
                 </aside>
             </div>
+
+            <!-- Rappel : estimation seulement -->
+            <div class="mt-16 border border-white/10 bg-white/5 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div class="max-w-2xl">
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Bon à savoir</span>
+                    <h2 class="font-editorial text-2xl md:text-3xl font-bold text-white mb-3">Ceci n’est qu’une estimation.</h2>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Le montant affiché est approximatif et peut varier selon les besoins précis de votre projet
+                        (lieu, horaire, nombre de personnes, usage des photos, etc.). Pour obtenir un prix exact
+                        et une soumission adaptée, contactez-nous : nous en discuterons ensemble.
+                    </p>
+                </div>
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank"
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all transform hover:scale-105">
+                        Nous contacter
+                    </a>
+                    <a href="http://instagram.com/romedia.mtl" target="_blank"
+                        class="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-bold text-sm uppercase tracking-wider rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all">
+                        Écrire sur Instagram
+                    </a>
+                </div>
+            </div>
         </div>
     </main>
 
@@ -181,6 +204,8 @@
     /* ============================================================
        TARIFS : modifiez ces valeurs pour ajuster les prix
        (tous les montants sont en $ CAD, avant taxes)
+       Les clés (portraitSeul, produit, etc.) ne doivent contenir
+       ni espace ni accent.
        ============================================================ */
     const CONFIG = {
         minHours: 1, maxHours: 18,
@@ -189,11 +214,11 @@
         rangeLow: 0.10,             // fourchette : -10 %
         rangeHigh: 0.35,            // fourchette : +35 %
         type: {
-            portrait seul:   { label: "Portrait seul",           note: "Individuel, couple, famille", rate: 82 },
-            portrait familial:   { label: "Portrait groupe",           note: "Individuel, couple, famille", rate: 102 },
-            produit:    { label: "Produits",           note: "Boutique, catalogue, e-commerce", rate: 126 },
-            evenement:  { label: "Événement",          note: "Ouverture, fête, conférence", rate: 148 },
-            mannequin:  { label: "Mode",               note: "Book, lookbook, agence", rate: 122 }
+            portraitSeul:   { label: "Portrait seul",   note: "Individuel", rate: 82 },
+            portraitGroupe: { label: "Portrait groupe", note: "Couple, famille, groupe", rate: 102 },
+            produit:        { label: "Produits",        note: "Boutique, catalogue, e-commerce", rate: 126 },
+            evenement:      { label: "Événement",       note: "Ouverture, fête, conférence", rate: 148 },
+            mannequin:      { label: "Mode",            note: "Book, lookbook, agence", rate: 122 }
         },
         lieu: {
             interieur: { label: "Intérieur",  note: "Chez vous ou un endroit réservé", price: 10 },
@@ -206,7 +231,7 @@
             loin:   { label: "Plus loin",      note: "Sur devis", price: 100 }
         },
         retouche: {
-            rien: { label: "Null", note: "aucun changement", perPhoto: 0 },
+            rien:     { label: "Aucune",   note: "Photos livrées sans modification", perPhoto: 0 },
             standard: { label: "Standard", note: "Couleurs, exposition, recadrage", perPhoto: 2 },
             avancee:  { label: "Avancée",  note: "Peau, retrait d’éléments, détails", perPhoto: 8 }
         },
@@ -216,7 +241,7 @@
         }
     };
 
-    const state = { type: "portrait", hours: 2, photos: 20, lieu: "interieur", depl: "mtl", retouche: "standard", rush: false, licence: false };
+    const state = { type: "portraitSeul", hours: 2, photos: 20, lieu: "interieur", depl: "mtl", retouche: "standard", rush: false, licence: false };
     const $ = id => document.getElementById(id);
     const money = n => Math.round(n).toLocaleString("fr-CA") + " $";
 
@@ -257,7 +282,7 @@
             [`Photos supplémentaires (${extra} × ${CONFIG.extraPhotoPrice} $)`, extra * CONFIG.extraPhotoPrice],
             [`Lieu : ${CONFIG.lieu[state.lieu].label.toLowerCase()}`, CONFIG.lieu[state.lieu].price],
             [`Déplacement : ${CONFIG.depl[state.depl].label}`, CONFIG.depl[state.depl].price],
-            [`Retouche ${CONFIG.retouche[state.retouche].label.toLowerCase()}`, CONFIG.retouche[state.retouche].perPhoto * state.photos]
+            [`Retouche : ${CONFIG.retouche[state.retouche].label.toLowerCase()}`, CONFIG.retouche[state.retouche].perPhoto * state.photos]
         ];
         let subtotal = lines.reduce((s, l) => s + l[1], 0);
         Object.entries(CONFIG.options).forEach(([key, o]) => {
@@ -274,12 +299,13 @@
         $("photos-val").textContent = state.photos;
         $("photos-hint").textContent = `${included} photos sont incluses pour ${String(state.hours).replace(".", ",")} h; ensuite ${CONFIG.extraPhotoPrice} $ par photo.`;
         $("range").textContent = `${money(low)} – ${money(high)}`;
-        $("total-tax").textContent = `Environ ${money(subtotal * 1.14975)} avec taxes (milieu de fourchette)`;
+        $("total-tax").textContent = `Montant de base : ${money(subtotal)} (environ ${money(subtotal * 1.14975)} avec taxes)`;
         $("lines").innerHTML = lines.map(l => `<li class="flex justify-between gap-4"><span class="text-gray-600">${l[0]}</span><span class="font-semibold whitespace-nowrap">${money(l[1])}</span></li>`).join("");
         lastText = `Estimation RoMEDIA : ${money(low)} à ${money(high)} (avant taxes)\n` +
             `Type : ${CONFIG.type[state.type].label} | Durée : ${state.hours} h | Photos : ${state.photos}\n` +
             `Lieu : ${CONFIG.lieu[state.lieu].label} | Déplacement : ${CONFIG.depl[state.depl].label} | Retouche : ${CONFIG.retouche[state.retouche].label}` +
-            (state.rush ? " | Express 48 h" : "") + (state.licence ? " | Usage commercial étendu" : "");
+            (state.rush ? " | Express 48 h" : "") + (state.licence ? " | Usage commercial étendu" : "") +
+            `\nEstimation à titre indicatif seulement : contactez RoMEDIA pour un prix exact.`;
     }
 
     $("copy").addEventListener("click", async () => {
