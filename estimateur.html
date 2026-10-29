@@ -189,7 +189,8 @@
         rangeLow: 0.10,             // fourchette : -10 %
         rangeHigh: 0.35,            // fourchette : +35 %
         type: {
-            portrait:   { label: "Portrait",           note: "Individuel, couple, famille", rate: 102 },
+            portrait seul:   { label: "Portrait seul",           note: "Individuel, couple, famille", rate: 82 },
+            portrait familial:   { label: "Portrait groupe",           note: "Individuel, couple, famille", rate: 102 },
             produit:    { label: "Produits",           note: "Boutique, catalogue, e-commerce", rate: 126 },
             evenement:  { label: "Événement",          note: "Ouverture, fête, conférence", rate: 148 },
             mannequin:  { label: "Mode",               note: "Book, lookbook, agence", rate: 122 }
@@ -200,13 +201,14 @@
             studio:    { label: "Studio",     note: "Location de studio", price: 80 }
         },
         depl: {
-            mtl:    { label: "Montréal",       note: "Île de Montréal", price: 40 },
+            mtl:    { label: "Montréal",       note: "Île de Montréal", price: 20 },
             proche: { label: "Grand Montréal", note: "Laval, Rive-Sud, etc.", price: 80 },
             loin:   { label: "Plus loin",      note: "Sur devis", price: 100 }
         },
         retouche: {
-            standard: { label: "Standard", note: "Couleurs, exposition, recadrage", perPhoto: 5 },
-            avancee:  { label: "Avancée",  note: "Peau, retrait d’éléments, détails", perPhoto: 10 }
+            rien: { label: "Null", note: "aucun changement", perPhoto: 0 },
+            standard: { label: "Standard", note: "Couleurs, exposition, recadrage", perPhoto: 2 },
+            avancee:  { label: "Avancée",  note: "Peau, retrait d’éléments, détails", perPhoto: 8 }
         },
         options: {
             rush:    { label: "Livraison express (48 h)", note: "+35 % sur le total", pct: 0.35 },
