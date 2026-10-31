@@ -59,6 +59,7 @@
             background-color: #e26137;
             color: white;
         }
+        .stack-card { will-change: transform; }
     </style>
 </head>
 <body class="font-sans">
@@ -96,7 +97,7 @@
                 STRATÉGIE, DESIGN & NUMÉRIQUE</span>
             <h1 class="text-4xl md:text-6xl font-editorial font-light leading-tight mb-6 text-white reveal-text">
                 Un média <span class="font-bold italic text-brandLight">créatif</span><br> pour de 
-                <span class="font-bold italic text-brandLight">meilleures</span> solutions.</br>
+                <span class="font-bold italic text-brandLight">meilleures</span> solutions.
             </h1>
             
             <div class="mt-4 max-w-lg text-gray-400 space-y-4 text-base md:text-lg border-l-2 
@@ -131,27 +132,13 @@
             <div class="absolute inset-0 bg-gradient-to-tr from-brandSecondary/50 to-brandDark mix-blend-multiply 
                 opacity-80"></div>
             
-            <div class="relative z-10 bg-brandLight text-brandDark p-6 rounded-3xl shadow-2xl w-full max-w-sm 
-                transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500 float-card">
-                <div class="flex justify-between items-center mb-6">
-                    <span class="text-xs uppercase font-extrabold tracking-wider bg-brandSecondary/10 px-3 py-1 
-                        rounded-full text-brandSecondary">Photographie</span>
-                    <div class="flex space-x-1">
-                        <div class="w-2 h-2 rounded-full bg-brandPrimary"></div>
-                        <div class="w-2 h-2 rounded-full bg-brandSecondary"></div>
-                    </div>
-                </div>
-                <div class="aspect-[4/3] bg-gray-300 rounded-2xl mb-4 overflow-hidden relative group">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
-                        <p class="text-white text-xs uppercase tracking-widest font-bold">Créativité & Profondeur</p>
-                    </div>
-                    <div class="w-full h-full bg-cover bg-center flex items-center justify-center text-brandSecondary" 
-                        style="background-image: url('images/RNP_4768-1.jpg')">
-                    </div>
-                </div>
-                <h3 class="font-editorial text-xl font-bold mb-2 text-brandSecondary">Votre vision, notre expertise.</h3>
-                <p class="text-sm text-gray-600">Nous façonnons des identités visuelles uniques et adaptées pour tous nos 
-                    clients. Notre diversité permet la <em>tranquillité d'esprit</em> dans tous nos projets.</p>
+            <!-- Pile de photos (le contenu est généré depuis HERO_STACK dans le script) -->
+            <div class="relative z-10 w-full max-w-sm float-card">
+                <div id="heroStack" data-hover role="button" tabindex="0" aria-label="Afficher la photo suivante"
+                    class="relative w-full h-[500px] cursor-pointer outline-none"></div>
+                <p class="mt-6 text-center text-xs uppercase tracking-widest text-white/60">
+                    Cliquez pour voir la suite · <span id="stackCount"></span>
+                </p>
             </div>
         </div>
     </section>
@@ -165,10 +152,11 @@
                     <h2 class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary">Services & Solutions</h2>
                 </div>
                 <p class="text-gray-600 max-w-md mt-4 md:mt-0">Des services et des solutions intégrés pour couvrir 
-                    l'ensemble de votre écosystème de marque, du physique au numérique, au cœur de vos consommateurs et cmembres.</p>
+                    l'ensemble de votre écosystème de marque, du physique au numérique, au cœur de vos consommateurs et membres.</p>
             </div>
 
             <div class="space-y-6">
+                <!-- LV1 : Photographie -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all 
                     duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
                     <div class="max-w-xl">
@@ -186,7 +174,7 @@
                     </div>
                     <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
                         <span>• Portrait • Produits • Événements</span>
-                        <a href="https://calendar.app.google/hiSwepkWFyZLRMMQ9" target="_blank" 
+                        <a href="estimateur.html?service=photo" aria-label="Estimer le prix de la photographie"
                             class="w-10 h-10 rounded-full bg-brandSecondary flex items-center 
                             justify-center text-white group-hover:translate-x-2 transition-transform">
                             <i class="fas fa-arrow-right"></i>
@@ -194,12 +182,38 @@
                     </div>
                 </div>
 
+                <!-- LV2 : Vidéographie -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all 
                     duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
                     <div class="max-w-xl">
                         <div class="flex items-center space-x-3 mb-3">
                             <span class="text-xs font-bold bg-brandSecondary/10 text-brandSecondary 
                                 px-3 py-1 rounded-full">LV2</span>
+                            <h3 class="text-2xl font-bold text-brandSecondary">Vidéographie Dynamique</h3>
+                        </div>
+                        <p class="text-gray-600 text-sm">Parce qu'une vidéo capte en quelques secondes ce qu'une image seule 
+                            ne peut pas raconter. Tournées avec un téléphone moderne et montées avec soin, nos vidéos 
+                            sont pensées pour vos réseaux sociaux, votre site web ou vos événements. Nous ne faisons pas 
+                            que filmer : nous racontons l'histoire de votre marque dans un format vivant, prêt à être 
+                            partagé et à retenir l'attention de votre public.</p>
+                    </div>
+                    <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
+                        <span>• Reels • Promo • Événements</span>
+                        <a href="estimateur.html?service=video" aria-label="Estimer le prix de la vidéographie"
+                            class="w-10 h-10 rounded-full bg-brandSecondary flex items-center 
+                            justify-center text-white group-hover:translate-x-2 transition-transform">
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- LV3 : Infographie -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all 
+                    duration-300 flex flex-col lg:flex-row items-start lg:items-center justify-between group">
+                    <div class="max-w-xl">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <span class="text-xs font-bold bg-brandPrimary/10 text-brandPrimary 
+                                px-3 py-1 rounded-full">LV3</span>
                             <h3 class="text-2xl font-bold text-brandSecondary">Infographie Complète et Adaptée</h3>
                         </div>
                         <p class="text-gray-600 text-sm">Considérez qu’une identité visuelle forte est le pilier de votre réussite commerciale. 
@@ -211,7 +225,7 @@
                     </div>
                     <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
                         <span>• Branding • Visuels • Cartes d'affaires</span>
-                        <a href="https://calendar.app.google/hiSwepkWFyZLRMMQ9" target="_blank" 
+                        <a href="estimateur.html?service=info" aria-label="Estimer le prix de l'infographie"
                             class="w-10 h-10 rounded-full bg-brandSecondary flex items-center 
                             justify-center text-white group-hover:translate-x-2 transition-transform">
                             <i class="fas fa-arrow-right"></i>
@@ -219,13 +233,14 @@
                     </div>
                 </div>
 
+                <!-- LV4 : Site web -->
                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl 
                     transition-all duration-300 flex flex-col lg:flex-row items-start 
                     lg:items-center justify-between group">
                     <div class="max-w-xl">
                         <div class="flex items-center space-x-3 mb-3">
-                            <span class="text-xs font-bold bg-brandPrimary/10 text-brandPrimary 
-                                px-3 py-1 rounded-full">LV3</span>
+                            <span class="text-xs font-bold bg-brandSecondary/10 text-brandSecondary 
+                                px-3 py-1 rounded-full">LV4</span>
                             <h3 class="text-2xl font-bold text-brandSecondary">Site Web Statique</h3>
                         </div>
                         <p class="text-gray-600 text-sm">Votre présence en ligne mérite un site web performant 
@@ -239,7 +254,7 @@
                     </div>
                     <div class="mt-6 lg:mt-0 flex items-center space-x-4 text-sm font-semibold text-brandPrimary">
                         <span>• HTML • Vitrine • SEO</span>
-                        <a href="https://calendar.app.google/hiSwepkWFyZLRMMQ9" target="_blank" 
+                        <a href="estimateur.html?service=web" aria-label="Estimer le prix d'un site web"
                             class="w-10 h-10 rounded-full bg-brandSecondary flex items-center 
                             justify-center text-white group-hover:translate-x-2 transition-transform">
                             <i class="fas fa-arrow-right"></i>
@@ -257,130 +272,23 @@
                     font-extrabold text-xs block mb-2">Nos Réalisations</span>
                 <h2 class="text-3xl md:text-5xl font-editorial mb-8">Quelques exemples présélectionnés</h2>
                 
-                <div class="inline-flex bg-white/5 p-1.5 rounded-full border border-white/10 space-x-2">
-                    <button onclick="filterPortfolio('photo')" id="btn-photo" 
-                        class="tab-btn active px-6 py-2 rounded-full text-xs uppercase 
-                        font-bold tracking-wider transition-all duration-300">Photographie</button>
-                    <button onclick="filterPortfolio('info')" id="btn-info" 
-                        class="tab-btn px-6 py-2 rounded-full text-xs uppercase 
-                        font-bold tracking-wider transition-all duration-300">Infographie</button>
-                    <button onclick="filterPortfolio('web')" id="btn-web" 
-                        class="tab-btn px-6 py-2 rounded-full text-xs uppercase 
-                        font-bold tracking-wider transition-all duration-300">Site Web</button>
-                </div>
+                <!-- Onglets générés depuis CATEGORIES (un onglet sans contenu n'apparaît pas) -->
+                <div id="portfolio-tabs" class="inline-flex flex-wrap justify-center bg-white/5 p-1.5 rounded-full border border-white/10 gap-2"></div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-grid">
-                
-                <a href="folio.html" target="_blank" class="portfolio-item photo bg-white/5 
-                    rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 
-                        group-hover:scale-105" 
-                        style="background-image: 
-                            url('images/RNP_8961-1.jpg')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 
-                        to-transparent opacity-0 group-hover:opacity-100 transition-opacity 
-                        duration-300 p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Événement</span>
-                        <h4 class="text-lg font-bold text-white">Célébration d'ouverture Chill&Feel</h4>
-                    </div>
-                </a>
-                <a href="folio.html" target="_blank" 
-                    class="portfolio-item photo bg-white/5 rounded-2xl overflow-hidden 
-                    group border border-white/5 relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform 
-                        duration-500 group-hover:scale-105" style="background-image: 
-                            url('images/58668_03.jpg')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark 
-                        via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 
-                        transition-opacity duration-300 p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Portrait</span>
-                        <h4 class="text-lg font-bold text-white">Service d'agence mannequinat</h4>
-                    </div>
-                </a>
-                <a href="folio.html" target="_blank" class="portfolio-item 
-                    photo bg-white/5 rounded-2xl overflow-hidden group border border-white/5 
-                    relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 
-                        group-hover:scale-105" style="background-image: 
-                            url('images/RNP_7120-1.jpg')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark 
-                        via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 
-                        transition-opacity duration-300 p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase 
-                            tracking-widest">Produits</span>
-                        <h4 class="text-lg font-bold text-white">Écouteurs personnalisés</h4>
-                    </div>
-                </a>
-
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item 
-                    info hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 
-                    relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 
-                        group-hover:scale-105" style="background-image: 
-                            url('images/Props1.png')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 
-                        to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-                        p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase 
-                            tracking-widest">Identité Visuelle</span>
-                        <h4 class="text-lg font-bold text-white">Branding soins à domicile</h4>
-                    </div>
-                </a>
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item info 
-                    hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative 
-                    aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 
-                        group-hover:scale-105" style="background-image: 
-                            url('images/58894455-265.png')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 
-                        to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-                        p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase 
-                            tracking-widest">Signature courriel</span>
-                        <h4 class="text-lg font-bold text-white">Choix de visuel différent</h4>
-                    </div>
-                </a>
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item info 
-                    hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative 
-                    aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 
-                        group-hover:scale-105" style="background-image: 
-                            url('images/restaurant-window-mockup.jpg')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 
-                        to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-                        p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase 
-                            tracking-widest">Supports Marketing</span>
-                        <h4 class="text-lg font-bold text-white">Mockups & Designs Imprimés</h4>
-                    </div>
-                </a>
-
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Développement Front-End</span>
-                        <h4 class="text-lg font-bold text-white">Architecture Minimaliste Web</h4>
-                    </div>
-                </a>
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">Performance</span>
-                        <h4 class="text-lg font-bold text-white">Landing Page Ultra-Rapide</h4>
-                    </div>
-                </a>
-                <a href="http://instagram.com/romedia.mtl" target="_blank" class="portfolio-item web hidden bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block">
-                    <div class="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600')"></div>
-                    <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end">
-                        <span class="text-brandPrimary text-xs font-bold uppercase tracking-widest">UI/UX Design</span>
-                        <h4 class="text-lg font-bold text-white">Interfaces Statiques Épurées</h4>
-                    </div>
-                </a>
-
-            </div>
+            <!-- Grille générée depuis PORTFOLIO -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="portfolio-grid"></div>
         </div>
     </section>
+
+    <!-- Fenêtre d'agrandissement (photos et vidéos sans lien) -->
+    <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+        <button type="button" id="lightboxClose" aria-label="Fermer"
+            class="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 hover:bg-brandPrimary text-white transition-colors">
+            <i class="fas fa-xmark"></i>
+        </button>
+        <div id="lightboxContent" class="max-w-5xl w-full flex flex-col items-center gap-4"></div>
+    </div>
 
     <section class="py-24 bg-brandDark border-t border-white/5 relative">
         <div class="max-w-4xl mx-auto px-6 text-center">
@@ -426,19 +334,19 @@
                     mieux vous orienter. Finalisez votre réservation et votre paiement de manière 
                     sécurisée ci-dessous.</p>
                 <div class="flex flex-wrap items-center justify-center gap-4">
-    <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" 
-        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary 
-        text-white font-bold rounded-full hover:bg-brandSecondary transition-all 
-        transform hover:scale-105 shadow-xl">
-        Planifier mon heure de conseil
-    </a>
-    <a href="estimateur.html" 
-        class="inline-flex items-center justify-center px-8 py-4 border-2 border-brandSecondary 
-        text-brandSecondary font-bold rounded-full hover:bg-brandSecondary hover:text-white 
-        transition-all transform hover:scale-105">
-        Estimer le prix de ma séance
-    </a>
-</div>
+                    <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" 
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary 
+                        text-white font-bold rounded-full hover:bg-brandSecondary transition-all 
+                        transform hover:scale-105 shadow-xl">
+                        Planifier mon heure de conseil
+                    </a>
+                    <a href="estimateur.html" 
+                        class="inline-flex items-center justify-center px-8 py-4 border-2 border-brandSecondary 
+                        text-brandSecondary font-bold rounded-full hover:bg-brandSecondary hover:text-white 
+                        transition-all transform hover:scale-105">
+                        Estimer le prix de mon projet
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -463,29 +371,257 @@
     </footer>
 
     <script>
+        /* =====================================================================
+           ZONE À MODIFIER : c'est ici que vous ajoutez vos photos et vidéos.
+           Vous n'avez rien d'autre à toucher dans la page.
+           (Évitez les guillemets doubles " dans les titres.)
+           ===================================================================== */
+
+        /* ---------- 1. Pile de photos de l'accueil ----------
+           Ajoutez ou retirez des blocs { ... }. Un clic sur la pile passe à la suivante.
+           src   = chemin de la photo (dossier images/)
+           tag   = petite étiquette en haut à gauche
+           label = texte sur la photo
+           title = titre sous la photo
+           text  = courte description                                           */
+        const HERO_STACK = [
+            { src: "images/RNP_4768-1.jpg", tag: "Photographie", label: "Créativité & Profondeur",
+              title: "Votre vision, notre expertise.",
+              text: "Nous façonnons des identités visuelles uniques et adaptées pour tous nos clients. Notre diversité permet la tranquillité d'esprit dans tous nos projets." },
+            { src: "images/RNP_8961-1.jpg", tag: "Événement", label: "Chill&Feel",
+              title: "Célébration d'ouverture",
+              text: "Capturer l'énergie d'un grand moment pour en garder chaque souvenir." },
+            { src: "images/58668_03.jpg", tag: "Portrait", label: "Mannequinat",
+              title: "Service d'agence mannequinat",
+              text: "Des portraits soignés qui mettent en valeur la personnalité de chacun." },
+            { src: "images/RNP_7120-1.jpg", tag: "Produits", label: "Écouteurs personnalisés",
+              title: "Des produits qui donnent envie",
+              text: "Des images nettes et attrayantes qui font ressortir chaque détail de votre produit." }
+        ];
+
+        /* ---------- 2. Onglets du folio ----------
+           Un onglet qui ne contient aucune réalisation n'est pas affiché.          */
+        const CATEGORIES = [
+            { id: "photo", label: "Photographie" },
+            { id: "video", label: "Vidéographie" },
+            { id: "info",  label: "Infographie" },
+            { id: "web",   label: "Site Web" }
+        ];
+
+        /* ---------- 3. Réalisations du folio ----------
+           Pour AJOUTER une réalisation : copiez une ligne, collez-la dans la bonne catégorie
+           et changez les valeurs.
+
+           cat    = "photo", "video", "info" ou "web"
+           type   = "image" ou "video"
+           src    = chemin du fichier (images/... ou videos/...)
+           poster = (vidéo seulement, facultatif) image affichée avant la lecture
+           tag    = petite étiquette au survol
+           title  = titre au survol
+           link   = (facultatif) lien ouvert au clic. Sans link, la photo ou la vidéo
+                    s'agrandit dans la page.
+
+           Pour les vidéos : déposez le fichier .mp4 dans un dossier "videos" du dépôt GitHub
+           (gardez-le léger, idéalement sous 25 Mo). Pour une longue vidéo, mettez-la sur
+           YouTube ou Instagram et utilisez link.                                      */
+        const PORTFOLIO = [
+            /* ----- Photographie ----- */
+            { cat: "photo", type: "image", src: "images/RNP_8961-1.jpg", tag: "Événement", title: "Célébration d'ouverture Chill&Feel", link: "folio.html" },
+            { cat: "photo", type: "image", src: "images/58668_03.jpg",   tag: "Portrait",  title: "Service d'agence mannequinat",       link: "folio.html" },
+            { cat: "photo", type: "image", src: "images/RNP_7120-1.jpg", tag: "Produits",  title: "Écouteurs personnalisés",            link: "folio.html" },
+
+            /* ----- Vidéographie (exemple à décommenter : retirez les // au début de la ligne) ----- */
+            // { cat: "video", type: "video", src: "videos/mon-reel.mp4", poster: "images/mon-reel.jpg", tag: "Reel", title: "Titre de la vidéo" },
+
+            /* ----- Infographie ----- */
+            { cat: "info", type: "image", src: "images/Props1.png",                  tag: "Identité Visuelle",  title: "Branding soins à domicile",   link: "http://instagram.com/romedia.mtl" },
+            { cat: "info", type: "image", src: "images/58894455-265.png",            tag: "Signature courriel", title: "Choix de visuel différent",   link: "http://instagram.com/romedia.mtl" },
+            { cat: "info", type: "image", src: "images/restaurant-window-mockup.jpg", tag: "Supports Marketing", title: "Mockups & Designs Imprimés", link: "http://instagram.com/romedia.mtl" },
+
+            /* ----- Site Web ----- */
+            { cat: "web", type: "image", src: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=600", tag: "Développement Front-End", title: "Architecture Minimaliste Web", link: "http://instagram.com/romedia.mtl" },
+            { cat: "web", type: "image", src: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=600",    tag: "Performance",             title: "Landing Page Ultra-Rapide",    link: "http://instagram.com/romedia.mtl" },
+            { cat: "web", type: "image", src: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?q=80&w=600", tag: "UI/UX Design",            title: "Interfaces Statiques Épurées", link: "http://instagram.com/romedia.mtl" }
+        ];
+
+        /* =====================================================================
+           FIN DE LA ZONE À MODIFIER : le reste fait fonctionner la page.
+           ===================================================================== */
+
         gsap.registerPlugin(ScrollTrigger);
+        const $ = id => document.getElementById(id);
 
-        const cursor = document.getElementById('customCursor');
-        const cursorDot = document.getElementById('customCursorDot');
+        /* ---------- Pile de photos (accueil) ---------- */
+        const stackEl = $("heroStack");
+        stackEl.innerHTML = HERO_STACK.map((p, i) => `
+            <div class="stack-card absolute inset-0 bg-brandLight text-brandDark p-6 rounded-3xl shadow-2xl flex flex-col select-none" data-i="${i}">
+                <div class="flex justify-between items-center mb-5">
+                    <span class="text-xs uppercase font-extrabold tracking-wider bg-brandSecondary/10 px-3 py-1 rounded-full text-brandSecondary">${p.tag}</span>
+                    <div class="flex space-x-1">
+                        <div class="w-2 h-2 rounded-full bg-brandPrimary"></div>
+                        <div class="w-2 h-2 rounded-full bg-brandSecondary"></div>
+                    </div>
+                </div>
+                <div class="aspect-[4/3] bg-gray-300 rounded-2xl mb-4 overflow-hidden relative flex-shrink-0">
+                    <img src="${p.src}" alt="${p.title}" draggable="false" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-4">
+                        <p class="text-white text-xs uppercase tracking-widest font-bold">${p.label}</p>
+                    </div>
+                </div>
+                <h3 class="font-editorial text-xl font-bold mb-2 text-brandSecondary">${p.title}</h3>
+                <p class="text-sm text-gray-600 line-clamp-3">${p.text}</p>
+            </div>`).join("");
 
-        document.addEventListener('mousemove', (e) => {
+        const cards = [...stackEl.querySelectorAll(".stack-card")];
+        const POS = [
+            { x: 0,   y: 0,  r: -2, s: 1 },
+            { x: 14,  y: 10, r: 4,  s: 0.97 },
+            { x: -12, y: 18, r: -6, s: 0.94 },
+            { x: 10,  y: 26, r: 7,  s: 0.91 }
+        ];
+        let busy = false;
+
+        function layout(animate) {
+            cards.forEach((c, i) => {
+                const p = POS[Math.min(i, POS.length - 1)];
+                gsap[animate ? "to" : "set"](c, {
+                    x: p.x, y: p.y, rotation: p.r, scale: p.s,
+                    opacity: i < POS.length ? 1 : 0,
+                    zIndex: cards.length - i,
+                    duration: 0.6, ease: "power3.out"
+                });
+            });
+            $("stackCount").textContent = `${Number(cards[0].dataset.i) + 1} / ${cards.length}`;
+        }
+
+        function nextCard() {
+            if (busy || cards.length < 2) return;
+            busy = true;
+            const top = cards[0];
+            gsap.to(top, {
+                x: 300, y: -20, rotation: 14, duration: 0.35, ease: "power2.in",
+                onComplete: () => {
+                    cards.push(cards.shift());
+                    gsap.set(top, { zIndex: 0 });
+                    layout(true);
+                    setTimeout(() => { busy = false; }, 350);
+                }
+            });
+        }
+
+        stackEl.addEventListener("click", nextCard);
+        stackEl.addEventListener("keydown", e => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); nextCard(); }
+        });
+        layout(false);
+
+        /* ---------- Folio ---------- */
+        const tabsEl = $("portfolio-tabs");
+        const gridEl = $("portfolio-grid");
+        const activeCats = CATEGORIES.filter(c => PORTFOLIO.some(p => p.cat === c.id));
+
+        tabsEl.innerHTML = activeCats.map(c => `
+            <button type="button" data-cat="${c.id}"
+                class="tab-btn px-6 py-2 rounded-full text-xs uppercase font-bold tracking-wider transition-all duration-300">${c.label}</button>`).join("");
+        tabsEl.addEventListener("click", e => {
+            const b = e.target.closest("[data-cat]");
+            if (b) filterPortfolio(b.dataset.cat);
+        });
+
+        function itemHTML(p, i) {
+            const media = p.type === "video"
+                ? `<video src="${p.src}#t=0.1" ${p.poster ? `poster="${p.poster}"` : ""} muted loop playsinline preload="metadata"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"></video>
+                   <span class="absolute top-4 right-4 w-10 h-10 rounded-full bg-brandDark/70 flex items-center justify-center text-white text-xs"><i class="fas fa-play"></i></span>`
+                : `<img src="${p.src}" alt="${p.title}" loading="lazy"
+                        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">`;
+            const overlay = `
+                <span class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-6 flex flex-col justify-end text-left">
+                    <span class="block text-brandPrimary text-xs font-bold uppercase tracking-widest">${p.tag}</span>
+                    <span class="block text-lg font-bold text-white">${p.title}</span>
+                </span>`;
+            const cls = "portfolio-item bg-white/5 rounded-2xl overflow-hidden group border border-white/5 relative aspect-square block w-full";
+            return p.link
+                ? `<a href="${p.link}" target="_blank" rel="noopener" class="${cls}">${media}${overlay}</a>`
+                : `<button type="button" data-i="${i}" class="${cls} cursor-pointer">${media}${overlay}</button>`;
+        }
+
+        function filterPortfolio(category) {
+            tabsEl.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.cat === category));
+            gridEl.innerHTML = PORTFOLIO
+                .map((p, i) => ({ p, i }))
+                .filter(o => o.p.cat === category)
+                .map(o => itemHTML(o.p, o.i))
+                .join("");
+            gsap.fromTo(".portfolio-item",
+                { opacity: 0, scale: 0.95 },
+                { opacity: 1, scale: 1, duration: 0.4, stagger: 0.05, ease: "power2.out" });
+        }
+
+        /* Lecture des vidéos au survol */
+        gridEl.addEventListener("mouseover", e => {
+            const it = e.target.closest(".portfolio-item");
+            const v = it && it.querySelector("video");
+            if (v) v.play().catch(() => {});
+        });
+        gridEl.addEventListener("mouseout", e => {
+            const it = e.target.closest(".portfolio-item");
+            if (it && !it.contains(e.relatedTarget)) {
+                const v = it.querySelector("video");
+                if (v) v.pause();
+            }
+        });
+
+        /* ---------- Agrandissement ---------- */
+        function openLightbox(i) {
+            const p = PORTFOLIO[i];
+            $("lightboxContent").innerHTML = (p.type === "video"
+                ? `<video src="${p.src}" controls autoplay playsinline class="max-h-[78vh] max-w-full rounded-2xl"></video>`
+                : `<img src="${p.src}" alt="${p.title}" class="max-h-[78vh] max-w-full rounded-2xl object-contain">`)
+                + `<p class="text-white/80 text-sm"><span class="text-brandPrimary font-bold uppercase tracking-widest text-xs">${p.tag}</span> · ${p.title}</p>`;
+            $("lightbox").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+        function closeLightbox() {
+            $("lightboxContent").innerHTML = "";
+            $("lightbox").classList.add("hidden");
+            document.body.style.overflow = "";
+        }
+        gridEl.addEventListener("click", e => {
+            const b = e.target.closest("button[data-i]");
+            if (b) openLightbox(Number(b.dataset.i));
+        });
+        $("lightbox").addEventListener("click", e => { if (e.target === $("lightbox")) closeLightbox(); });
+        $("lightboxClose").addEventListener("click", closeLightbox);
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
+
+        /* ---------- Curseur personnalisé ---------- */
+        const cursor = $("customCursor");
+        const cursorDot = $("customCursorDot");
+        const hoverSel = "a, button, .portfolio-item, [data-hover]";
+
+        document.addEventListener("mousemove", e => {
             gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1 });
             gsap.to(cursorDot, { x: e.clientX, y: e.clientY, duration: 0.02 });
         });
-
-        document.querySelectorAll('a, button, .portfolio-item').forEach(elem => {
-            elem.addEventListener('mouseenter', () => {
-                cursor.style.width = '40px';
-                cursor.style.height = '40px';
-                cursor.style.backgroundColor = 'rgba(226, 97, 55, 0.1)';
-            });
-            elem.addEventListener('mouseleave', () => {
-                cursor.style.width = '20px';
-                cursor.style.height = '20px';
-                cursor.style.backgroundColor = 'transparent';
-            });
+        document.addEventListener("mouseover", e => {
+            if (e.target.closest(hoverSel)) {
+                cursor.style.width = "40px";
+                cursor.style.height = "40px";
+                cursor.style.backgroundColor = "rgba(226, 97, 55, 0.1)";
+            }
+        });
+        document.addEventListener("mouseout", e => {
+            const from = e.target.closest(hoverSel);
+            const to = e.relatedTarget && e.relatedTarget.closest ? e.relatedTarget.closest(hoverSel) : null;
+            if (from && from !== to) {
+                cursor.style.width = "20px";
+                cursor.style.height = "20px";
+                cursor.style.backgroundColor = "transparent";
+            }
         });
 
+        /* ---------- Animations ---------- */
         gsap.from(".reveal-text", {
             y: 40,
             opacity: 0,
@@ -502,29 +638,9 @@
             ease: "sine.inOut"
         });
 
-        function filterPortfolio(category) {
-            const items = document.querySelectorAll('.portfolio-item');
-            const buttons = document.querySelectorAll('.tab-btn');
-
-            buttons.forEach(btn => btn.classList.remove('active'));
-            const activeBtn = document.getElementById(`btn-${category}`);
-            if (activeBtn) activeBtn.classList.add('active');
-
-            items.forEach(item => {
-                if (item.classList.contains(category)) {
-                    item.classList.remove('hidden');
-                    gsap.fromTo(item, 
-                        { opacity: 0, scale: 0.95 }, 
-                        { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" }
-                    );
-                } else {
-                    item.classList.add('hidden');
-                }
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            filterPortfolio('photo');
+        /* ---------- Démarrage ---------- */
+        window.addEventListener("DOMContentLoaded", () => {
+            if (activeCats.length) filterPortfolio(activeCats[0].id);
         });
     </script>
 </body>
