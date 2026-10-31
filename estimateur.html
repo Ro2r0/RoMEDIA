@@ -132,10 +132,10 @@
             <!-- Rappel : estimation seulement -->
             <div class="mt-16 border border-white/10 bg-white/5 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                 <div class="max-w-2xl">
-                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Bon à savoir</span>
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Intéressant à savoir</span>
                     <h2 class="font-editorial text-2xl md:text-3xl font-bold text-white mb-3">Ceci n’est qu’une estimation.</h2>
                     <p class="text-gray-400 text-sm leading-relaxed">
-                        Le montant affiché est approximatif et peut varier selon les besoins précis de votre projet
+                        Le montant affiché est approximatif et peut varier selon les besoins précis de votre projet ou de vos projets
                         (lieu, horaire, nombre de personnes, usage des photos, etc.). Pour obtenir un prix exact
                         et une soumission adaptée, contactez-nous : nous en discuterons ensemble.
                     </p>
@@ -247,28 +247,28 @@
             /* ===================== VIDÉOGRAPHIE ===================== */
             video: {
                 label: "Vidéographie",
-                note: "Vidéos tournées au téléphone, montées et prêtes à publier",
-                intro: "Vidéos tournées au téléphone, montées et prêtes à publier sur vos réseaux ou votre site.",
+                note: "Vidéos tournées, montées et prêtes à publier",
+                intro: "Vidéos tournées, montées et prêtes à publier sur vos réseaux ou votre site.",
                 montagePerVideo: 50,        // montage de base par vidéo finale
                 q: {
                     type: { title: "Type de vidéo", kind: "choice", cols: 2, def: "reel", items: {
-                        reel:      { label: "Vidéo courte",           note: "Reel, TikTok, Shorts", rate: 70 },
-                        promo:     { label: "Vidéo promotionnelle",   note: "Entreprise, service, marque", rate: 85 },
+                        reel:      { label: "Vidéo courte",           note: "Reel, TikTok, Shorts", rate: 60 },
+                        promo:     { label: "Vidéo promotionnelle",   note: "Entreprise, service, marque", rate: 70 },
                         evenement: { label: "Captation d’événement",  note: "Résumé ou vidéo souvenir", rate: 90 },
                         produit:   { label: "Vidéo produit",          note: "Démonstration ou publicité", rate: 80 }
                     }},
-                    hours: { title: "Temps de tournage", kind: "stepper", step: 0.5, min: 1, max: 12, def: 1, unit: "h",
+                    hours: { title: "Temps de tournage", kind: "stepper", step: 0.5, min: 1, max: 15, def: 1, unit: "h",
                         hint: "Durée du tournage sur place. Minimum 1 h." },
                     videos: { title: "Nombre de vidéos finales", kind: "stepper", step: 1, min: 1, max: 20, def: 1, unit: "vidéo(s)",
                         hint: (v, S) => `Le montage coûte ${S.montagePerVideo} $ par vidéo finale.` },
                     duree: { title: "Durée de chaque vidéo", kind: "choice", cols: 3, def: "court", items: {
-                        court: { label: "Moins de 1 min", note: "Format réseaux sociaux" },
-                        moyen: { label: "1 à 3 min",      note: "Format présentation", perVideo: 40 },
-                        long:  { label: "3 à 5 min",      note: "Format détaillé", perVideo: 90 }
+                        court: { label: "Moins de 1 min", note: "Format réseaux sociaux", perVideo: 40 },
+                        moyen: { label: "1 à 3 min",      note: "Format présentation", perVideo: 60 },
+                        long:  { label: "3 à 5 min",      note: "Format détaillé", perVideo: 68 }
                     }},
                     montage: { title: "Style de montage", kind: "choice", cols: 2, def: "simple", items: {
                         simple:    { label: "Simple",    note: "Coupes, musique, titres" },
-                        dynamique: { label: "Dynamique", note: "Sous-titres, transitions, effets", perVideo: 35 }
+                        dynamique: { label: "Dynamique", note: "Sous-titres, transitions, effets", perVideo: 45 }
                     }},
                     lieu: { title: "Lieu du tournage", kind: "choice", cols: 3, def: "interieur", items: LIEU },
                     depl: { title: "Déplacement",      kind: "choice", cols: 3, def: "mtl",       items: DEPL },
@@ -297,23 +297,24 @@
                 label: "Infographie",
                 note: "Logo, identité visuelle, image de marque complète",
                 intro: "Logo, identité visuelle ou image de marque complète : composez votre forfait.",
-                visuelPrice: 35,            // prix par visuel (affiche, publication, bannière)
+                visuelPrice: 65,            // prix par visuel (affiche, publication, bannière)
                 q: {
                     forfait: { title: "Forfait de départ", kind: "choice", cols: 2, def: "identite", items: {
                         aucun:    { label: "Aucun logo",                note: "Visuels et supports seulement", base: 0 },
-                        logo:     { label: "Logo seul",                 note: "Logo et fichiers prêts à l’emploi", base: 220 },
-                        identite: { label: "Logo + identité visuelle",  note: "Logo, couleurs et typographies", base: 420 },
-                        complete: { label: "Image de marque complète",  note: "Logo, identité, charte graphique et déclinaisons", base: 750 }
+                        logo:     { label: "Logo seul",                 note: "Logo et fichiers prêts à l’emploi", base: 120 },
+                        identite: { label: "Logo + identité visuelle",  note: "Logo, couleurs et typographies", base: 180 },
+                        complete: { label: "Image de marque complète",  note: "Logo, identité, charte graphique et déclinaisons", base: 640 }
                     }},
                     concepts: { title: "Concepts de logo proposés", kind: "choice", cols: 3, def: "c1",
                         showIf: v => v.forfait !== "aucun", items: {
-                        c1: { label: "1 concept",  note: "Un seul concept raffiné" },
+                        c1: { label: "1 concept",  note: "Un seul concept raffiné", price: 20 },
                         c2: { label: "2 concepts", note: "Deux directions au choix", price: 70 },
                         c3: { label: "3 concepts", note: "Trois directions au choix", price: 130 }
                     }},
                     revisions: { title: "Rondes de révisions", kind: "choice", cols: 2, def: "r2", items: {
                         r2: { label: "2 rondes", note: "Incluses dans le prix" },
-                        r4: { label: "4 rondes", note: "Pour les projets plus complexes", price: 60 }
+                        r4: { label: "4 rondes", note: "Pour les projets plus complexes", price: 60 },
+                        r6: { label: "6 rondes et plus", note: "Pour les projets à long terme", price: 70 }
                     }},
                     visuels: { title: "Visuels à créer", kind: "stepper", step: 1, min: 0, max: 30, def: 0, unit: "visuels",
                         hint: (v, S) => `Affiches, publications, bannières : ${S.visuelPrice} $ chacun.` },
