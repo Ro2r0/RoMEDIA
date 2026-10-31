@@ -36,6 +36,7 @@
         .opt:hover span.card { border-color: rgba(226,97,55,.6); }
         .opt input:checked + span.card { background: #e26137; border-color: #e26137; color: #fff; }
         .opt input:checked + span.card small { color: rgba(255,255,255,.85); }
+        .opt input:checked + span.card .num { color: rgba(255,255,255,.8); }
         .opt input:focus-visible + span.card { outline: 2px solid #f4f0eb; outline-offset: 2px; }
         .step-btn {
             width: 44px; height: 44px; border-radius: 9999px; border: 1px solid rgba(255,255,255,.2);
@@ -43,7 +44,9 @@
         }
         .step-btn:hover { border-color: #e26137; color: #e26137; }
         .step-btn:focus-visible { outline: 2px solid #e26137; outline-offset: 2px; }
-        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+        @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+        .rise { animation: rise .5s ease both; }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
     </style>
 </head>
 <body class="font-sans">
@@ -67,98 +70,64 @@
 
     <main class="pt-32 pb-24">
         <div class="max-w-7xl mx-auto px-6">
+
             <div class="max-w-2xl mb-12">
-                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Photographie</span>
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Estimateur</span>
                 <h1 class="text-4xl md:text-6xl font-editorial font-light leading-tight text-white mb-5">
-                    Estimez votre <span class="font-bold italic text-brandLight">séance</span> en quelques clics.
+                    Estimez votre <span class="font-bold italic text-brandLight">projet</span> en quelques clics.
                 </h1>
                 <p class="text-gray-400 border-l-2 border-brandSecondary pl-4">
-                    Choisissez vos options : le montant se met à jour tout de suite. Il s’agit d’une estimation
-                    à titre indicatif; le prix final est confirmé après une courte discussion sur votre projet.
+                    Choisissez d’abord ce dont vous avez besoin, puis répondez à quelques questions : le montant se met
+                    à jour tout de suite. Il s’agit d’une estimation à titre indicatif; le prix final est confirmé
+                    après une courte discussion sur votre projet.
                 </p>
             </div>
 
-            <div class="grid lg:grid-cols-5 gap-10 items-start">
-                <!-- Formulaire -->
-                <form id="calc" class="lg:col-span-3 space-y-10" onsubmit="return false">
+            <!-- Étape 1 : choix du service -->
+            <section aria-labelledby="step1">
+                <h2 id="step1" class="text-lg font-bold mb-4">
+                    <span class="text-brandPrimary">Étape 1</span> · Que souhaitez-vous ?
+                </h2>
+                <div id="svc" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+            </section>
 
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-4">Type de photographie</legend>
-                        <div id="g-type" class="grid sm:grid-cols-2 gap-3"></div>
-                    </fieldset>
+            <!-- Étape 2 : questions + résumé -->
+            <section id="details" class="hidden mt-16 scroll-mt-28" aria-labelledby="step2">
+                <h2 id="step2" class="text-lg font-bold mb-2">
+                    <span class="text-brandPrimary">Étape 2</span> · Précisez votre projet
+                </h2>
+                <p id="svc-intro" class="text-sm text-gray-400 mb-8 max-w-2xl"></p>
 
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-4">Durée de la séance</legend>
-                        <div class="flex items-center gap-4">
-                            <button type="button" class="step-btn" data-step="hours" data-d="-0.5" aria-label="Retirer 30 minutes">−</button>
-                            <div class="min-w-[110px] text-center">
-                                <span id="hours-val" class="font-editorial text-4xl font-bold">2</span>
-                                <span class="text-gray-400 text-sm"> h</span>
+                <div class="grid lg:grid-cols-5 gap-10 items-start">
+                    <form id="calc" class="lg:col-span-3" onsubmit="return false">
+                        <div id="form-body" class="space-y-10"></div>
+                    </form>
+
+                    <aside class="lg:col-span-2 lg:sticky lg:top-28">
+                        <div class="bg-brandLight text-brandDark p-7 rounded-3xl shadow-2xl">
+                            <h3 class="font-editorial text-2xl font-bold text-brandSecondary mb-1">Votre estimation</h3>
+                            <p id="svc-name" class="text-xs text-gray-500 mb-5"></p>
+
+                            <p class="font-editorial text-4xl md:text-5xl font-bold text-brandPrimary leading-none" id="range">—</p>
+                            <p class="text-sm text-gray-600 mt-2" id="total-tax"></p>
+
+                            <ul id="lines" class="mt-6 pt-5 border-t border-gray-300 space-y-2 text-sm"></ul>
+
+                            <div class="mt-7 flex flex-col gap-3">
+                                <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank"
+                                    class="text-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary transition-all">
+                                    Réserver une consultation
+                                </a>
+                                <button type="button" id="copy"
+                                    class="px-6 py-3 border border-brandSecondary/30 text-brandSecondary font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary hover:text-white transition-all">
+                                    Copier mon estimation
+                                </button>
                             </div>
-                            <button type="button" class="step-btn" data-step="hours" data-d="0.5" aria-label="Ajouter 30 minutes">+</button>
-                            <span class="text-xs text-gray-500">Minimum 1 h, par tranches de 30 min</span>
+                            <p class="text-xs text-gray-500 mt-4">Les taxes (TPS/TVQ) s’ajoutent si applicables. Cette estimation ne constitue pas une soumission officielle.</p>
                         </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-1">Photos numériques à livrer</legend>
-                        <p id="photos-hint" class="text-xs text-gray-500 mb-4"></p>
-                        <div class="flex items-center gap-4">
-                            <button type="button" class="step-btn" data-step="photos" data-d="-5" aria-label="Retirer 5 photos">−</button>
-                            <div class="min-w-[110px] text-center">
-                                <span id="photos-val" class="font-editorial text-4xl font-bold">20</span>
-                                <span class="text-gray-400 text-sm"> photos</span>
-                            </div>
-                            <button type="button" class="step-btn" data-step="photos" data-d="5" aria-label="Ajouter 5 photos">+</button>
-                        </div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-4">Lieu de la séance</legend>
-                        <div id="g-lieu" class="grid sm:grid-cols-3 gap-3"></div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-4">Déplacement</legend>
-                        <div id="g-depl" class="grid sm:grid-cols-3 gap-3"></div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-4">Retouche</legend>
-                        <div id="g-retouche" class="grid sm:grid-cols-3 gap-3"></div>
-                    </fieldset>
-
-                    <fieldset>
-                        <legend class="text-lg font-bold mb-4">Options</legend>
-                        <div id="g-options" class="grid sm:grid-cols-2 gap-3"></div>
-                    </fieldset>
-                </form>
-
-                <!-- Résumé -->
-                <aside class="lg:col-span-2 lg:sticky lg:top-28">
-                    <div class="bg-brandLight text-brandDark p-7 rounded-3xl shadow-2xl">
-                        <h2 class="font-editorial text-2xl font-bold text-brandSecondary mb-1">Votre estimation</h2>
-                        <p class="text-xs text-gray-500 mb-5">Avant taxes</p>
-
-                        <p class="font-editorial text-4xl md:text-5xl font-bold text-brandPrimary leading-none" id="range">—</p>
-                        <p class="text-sm text-gray-600 mt-2" id="total-tax"></p>
-
-                        <ul id="lines" class="mt-6 pt-5 border-t border-gray-300 space-y-2 text-sm"></ul>
-
-                        <div class="mt-7 flex flex-col gap-3">
-                            <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank"
-                                class="text-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary transition-all">
-                                Réserver une consultation
-                            </a>
-                            <button type="button" id="copy"
-                                class="px-6 py-3 border border-brandSecondary/30 text-brandSecondary font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary hover:text-white transition-all">
-                                Copier mon estimation
-                            </button>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-4">Les taxes (TPS/TVQ) s’ajoutent si applicables. Cette estimation ne constitue pas une soumission officielle.</p>
-                    </div>
-                </aside>
-            </div>
+                    </aside>
+                </div>
+            </section>
 
             <!-- Rappel : estimation seulement -->
             <div class="mt-16 border border-white/10 bg-white/5 rounded-3xl p-8 md:p-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -203,118 +172,383 @@
     /* ============================================================
        TARIFS : modifiez ces valeurs pour ajuster les prix
        (tous les montants sont en $ CAD, avant taxes)
-       Les clés (portraitSeul, produit, etc.) ne doivent contenir
-       ni espace ni accent.
+
+       - Les clés (portraitSeul, logo, etc.) ne doivent contenir
+         ni espace ni accent.
+       - rate     = prix à l'heure
+       - base     = prix de départ du choix
+       - price    = montant fixe ajouté
+       - perPhoto / perVideo / perPage = montant par unité
+       - pct      = pourcentage ajouté au total (0.35 = +35 %)
        ============================================================ */
+
+    /* ---------- Choix partagés (photo + vidéo) ---------- */
+    const LIEU = {
+        interieur: { label: "Intérieur", note: "Chez vous ou un endroit réservé", price: 10 },
+        exterieur: { label: "Extérieur", note: "Parc, rue, nature", price: 20 },
+        studio:    { label: "Studio",    note: "Location de studio", price: 80 }
+    };
+    const DEPL = {
+        mtl:    { label: "Montréal",       note: "Île de Montréal", price: 20 },
+        proche: { label: "Grand Montréal", note: "Laval, Rive-Sud, etc.", price: 80 },
+        loin:   { label: "Plus loin",      note: "Sur devis", price: 100 }
+    };
+    const RUSH    = { label: "Livraison express (48 h)", note: "+35 % sur le total", pct: 0.35 };
+    const LICENCE = { label: "Usage commercial étendu",  note: "+60 % sur le total", pct: 0.60 };
+
     const CONFIG = {
-        minHours: 1, maxHours: 18,
-        photosPerHourIncluded: 5,   // photos livrées incluses par heure
-        extraPhotoPrice: 5,         // prix par photo au-delà des photos incluses
-        rangeLow: 0.10,             // fourchette : -10 %
-        rangeHigh: 0.35,            // fourchette : +35 %
-        type: {
-            portraitSeul:   { label: "Portrait seul",   note: "Individuel", rate: 82 },
-            portraitGroupe: { label: "Portrait groupe", note: "Couple, famille, groupe", rate: 102 },
-            produit:        { label: "Produits",        note: "Boutique, catalogue, e-commerce", rate: 126 },
-            evenement:      { label: "Événement",       note: "Ouverture, fête, conférence", rate: 148 },
-            mannequin:      { label: "Mode",            note: "Book, lookbook, agence", rate: 122 }
-        },
-        lieu: {
-            interieur: { label: "Intérieur",  note: "Chez vous ou un endroit réservé", price: 10 },
-            exterieur: { label: "Extérieur",  note: "Parc, rue, nature", price: 20 },
-            studio:    { label: "Studio",     note: "Location de studio", price: 80 }
-        },
-        depl: {
-            mtl:    { label: "Montréal",       note: "Île de Montréal", price: 20 },
-            proche: { label: "Grand Montréal", note: "Laval, Rive-Sud, etc.", price: 80 },
-            loin:   { label: "Plus loin",      note: "Sur devis", price: 100 }
-        },
-        retouche: {
-            rien:     { label: "Aucune",   note: "Photos livrées sans modification", perPhoto: 0 },
-            standard: { label: "Standard", note: "Couleurs, exposition, recadrage", perPhoto: 2 },
-            avancee:  { label: "Avancée",  note: "Peau, retrait d’éléments, détails", perPhoto: 8 }
-        },
-        options: {
-            rush:    { label: "Livraison express (48 h)", note: "+35 % sur le total", pct: 0.35 },
-            licence: { label: "Usage commercial étendu",  note: "+60 % sur le total", pct: 0.60 }
+        rangeLow: 0.10,      // fourchette : -10 %
+        rangeHigh: 0.35,     // fourchette : +35 %
+        taxRate: 1.14975,    // TPS + TVQ
+
+        services: {
+
+            /* ===================== PHOTOGRAPHIE ===================== */
+            photo: {
+                label: "Photographie",
+                note: "Portrait, produits, événements, mode",
+                intro: "Portrait, produits, événements ou mode : choisissez les options de votre séance.",
+                photosPerHourIncluded: 5,   // photos livrées incluses par heure
+                extraPhotoPrice: 5,         // prix par photo au-delà des photos incluses
+                q: {
+                    type: { title: "Type de photographie", kind: "choice", cols: 2, def: "portraitSeul", items: {
+                        portraitSeul:   { label: "Portrait seul",   note: "Individuel", rate: 82 },
+                        portraitGroupe: { label: "Portrait groupe", note: "Couple, famille, groupe", rate: 102 },
+                        produit:        { label: "Produits",        note: "Boutique, catalogue, e-commerce", rate: 126 },
+                        evenement:      { label: "Événement",       note: "Ouverture, fête, conférence", rate: 148 },
+                        mannequin:      { label: "Mode",            note: "Book, lookbook, agence", rate: 122 }
+                    }},
+                    hours: { title: "Durée de la séance", kind: "stepper", step: 0.5, min: 1, max: 18, def: 2, unit: "h",
+                        hint: "Minimum 1 h, par tranches de 30 min." },
+                    photos: { title: "Photos numériques à livrer", kind: "stepper", step: 5, min: 0, max: 300, def: 20, unit: "photos",
+                        hint: (v, S) => `${Math.round(v.hours * S.photosPerHourIncluded)} photos sont incluses pour ${fmt(v.hours)} h; ensuite ${S.extraPhotoPrice} $ par photo.` },
+                    lieu:  { title: "Lieu de la séance", kind: "choice", cols: 3, def: "interieur", items: LIEU },
+                    depl:  { title: "Déplacement",       kind: "choice", cols: 3, def: "mtl",       items: DEPL },
+                    retouche: { title: "Retouche", kind: "choice", cols: 3, def: "standard", items: {
+                        rien:     { label: "Aucune",   note: "Photos livrées sans modification" },
+                        standard: { label: "Standard", note: "Couleurs, exposition, recadrage", perPhoto: 2 },
+                        avancee:  { label: "Avancée",  note: "Peau, retrait d’éléments, détails", perPhoto: 8 }
+                    }},
+                    options: { title: "Options", kind: "multi", cols: 2, items: { rush: RUSH, licence: LICENCE } }
+                },
+                calc: (v, S) => {
+                    const t = pick(S, "type", v), l = pick(S, "lieu", v), d = pick(S, "depl", v), r = pick(S, "retouche", v);
+                    const extra = Math.max(0, v.photos - Math.round(v.hours * S.photosPerHourIncluded));
+                    return [
+                        [`Séance ${t.label.toLowerCase()} (${fmt(v.hours)} h × ${t.rate} $)`, v.hours * t.rate],
+                        [`Photos supplémentaires (${extra} × ${S.extraPhotoPrice} $)`, extra * S.extraPhotoPrice],
+                        [`Lieu : ${l.label.toLowerCase()}`, l.price],
+                        [`Déplacement : ${d.label}`, d.price],
+                        [`Retouche : ${r.label.toLowerCase()}`, (r.perPhoto || 0) * v.photos]
+                    ];
+                }
+            },
+
+            /* ===================== VIDÉOGRAPHIE ===================== */
+            video: {
+                label: "Vidéographie",
+                note: "Vidéos tournées au téléphone, montées et prêtes à publier",
+                intro: "Vidéos tournées au téléphone, montées et prêtes à publier sur vos réseaux ou votre site.",
+                montagePerVideo: 50,        // montage de base par vidéo finale
+                q: {
+                    type: { title: "Type de vidéo", kind: "choice", cols: 2, def: "reel", items: {
+                        reel:      { label: "Vidéo courte",           note: "Reel, TikTok, Shorts", rate: 70 },
+                        promo:     { label: "Vidéo promotionnelle",   note: "Entreprise, service, marque", rate: 85 },
+                        evenement: { label: "Captation d’événement",  note: "Résumé ou vidéo souvenir", rate: 90 },
+                        produit:   { label: "Vidéo produit",          note: "Démonstration ou publicité", rate: 80 }
+                    }},
+                    hours: { title: "Temps de tournage", kind: "stepper", step: 0.5, min: 1, max: 12, def: 1, unit: "h",
+                        hint: "Durée du tournage sur place. Minimum 1 h." },
+                    videos: { title: "Nombre de vidéos finales", kind: "stepper", step: 1, min: 1, max: 20, def: 1, unit: "vidéo(s)",
+                        hint: (v, S) => `Le montage coûte ${S.montagePerVideo} $ par vidéo finale.` },
+                    duree: { title: "Durée de chaque vidéo", kind: "choice", cols: 3, def: "court", items: {
+                        court: { label: "Moins de 1 min", note: "Format réseaux sociaux" },
+                        moyen: { label: "1 à 3 min",      note: "Format présentation", perVideo: 40 },
+                        long:  { label: "3 à 5 min",      note: "Format détaillé", perVideo: 90 }
+                    }},
+                    montage: { title: "Style de montage", kind: "choice", cols: 2, def: "simple", items: {
+                        simple:    { label: "Simple",    note: "Coupes, musique, titres" },
+                        dynamique: { label: "Dynamique", note: "Sous-titres, transitions, effets", perVideo: 35 }
+                    }},
+                    lieu: { title: "Lieu du tournage", kind: "choice", cols: 3, def: "interieur", items: LIEU },
+                    depl: { title: "Déplacement",      kind: "choice", cols: 3, def: "mtl",       items: DEPL },
+                    options: { title: "Options", kind: "multi", cols: 2, items: {
+                        formats: { label: "Plusieurs formats", note: "Vertical et horizontal : +15 % sur le total", pct: 0.15 },
+                        rush: RUSH,
+                        licence: LICENCE
+                    }}
+                },
+                calc: (v, S) => {
+                    const t = pick(S, "type", v), du = pick(S, "duree", v), m = pick(S, "montage", v);
+                    const l = pick(S, "lieu", v), d = pick(S, "depl", v);
+                    return [
+                        [`Tournage ${t.label.toLowerCase()} (${fmt(v.hours)} h × ${t.rate} $)`, v.hours * t.rate],
+                        [`Montage (${v.videos} × ${S.montagePerVideo} $)`, v.videos * S.montagePerVideo],
+                        [`Durée : ${du.label.toLowerCase()} (${v.videos} × ${du.perVideo || 0} $)`, v.videos * (du.perVideo || 0)],
+                        [`Montage ${m.label.toLowerCase()} (${v.videos} × ${m.perVideo || 0} $)`, v.videos * (m.perVideo || 0)],
+                        [`Lieu : ${l.label.toLowerCase()}`, l.price],
+                        [`Déplacement : ${d.label}`, d.price]
+                    ];
+                }
+            },
+
+            /* ===================== INFOGRAPHIE ===================== */
+            info: {
+                label: "Infographie",
+                note: "Logo, identité visuelle, image de marque complète",
+                intro: "Logo, identité visuelle ou image de marque complète : composez votre forfait.",
+                visuelPrice: 35,            // prix par visuel (affiche, publication, bannière)
+                q: {
+                    forfait: { title: "Forfait de départ", kind: "choice", cols: 2, def: "identite", items: {
+                        aucun:    { label: "Aucun logo",                note: "Visuels et supports seulement", base: 0 },
+                        logo:     { label: "Logo seul",                 note: "Logo et fichiers prêts à l’emploi", base: 220 },
+                        identite: { label: "Logo + identité visuelle",  note: "Logo, couleurs et typographies", base: 420 },
+                        complete: { label: "Image de marque complète",  note: "Logo, identité, charte graphique et déclinaisons", base: 750 }
+                    }},
+                    concepts: { title: "Concepts de logo proposés", kind: "choice", cols: 3, def: "c1",
+                        showIf: v => v.forfait !== "aucun", items: {
+                        c1: { label: "1 concept",  note: "Un seul concept raffiné" },
+                        c2: { label: "2 concepts", note: "Deux directions au choix", price: 70 },
+                        c3: { label: "3 concepts", note: "Trois directions au choix", price: 130 }
+                    }},
+                    revisions: { title: "Rondes de révisions", kind: "choice", cols: 2, def: "r2", items: {
+                        r2: { label: "2 rondes", note: "Incluses dans le prix" },
+                        r4: { label: "4 rondes", note: "Pour les projets plus complexes", price: 60 }
+                    }},
+                    visuels: { title: "Visuels à créer", kind: "stepper", step: 1, min: 0, max: 30, def: 0, unit: "visuels",
+                        hint: (v, S) => `Affiches, publications, bannières : ${S.visuelPrice} $ chacun.` },
+                    extras: { title: "Ajouts", kind: "multi", cols: 2, items: {
+                        cartes:    { label: "Cartes d’affaires",            note: "Recto-verso, prêtes à imprimer", price: 80 },
+                        signature: { label: "Signature courriel",           note: "Prête à installer", price: 40 },
+                        reseaux:   { label: "Kit réseaux sociaux",          note: "Photo de profil, bannière, 5 gabarits", price: 150 },
+                        mockups:   { label: "Mockups et supports imprimés", note: "Affiche, flyer, emballage", price: 120 },
+                        atelier:   { label: "Atelier créatif (1 h)",        note: "Définir votre direction visuelle", price: 80 },
+                        rush: RUSH
+                    }}
+                },
+                calc: (v, S) => {
+                    const f = pick(S, "forfait", v), c = pick(S, "concepts", v), r = pick(S, "revisions", v);
+                    const L = [[f.label, f.base]];
+                    if (v.forfait !== "aucun") L.push([`Concepts de logo : ${c.label.toLowerCase()}`, c.price || 0]);
+                    L.push([`Révisions : ${r.label.toLowerCase()}`, r.price || 0]);
+                    L.push([`Visuels (${v.visuels} × ${S.visuelPrice} $)`, v.visuels * S.visuelPrice]);
+                    return L;
+                }
+            },
+
+            /* ======================= SITE WEB ======================= */
+            web: {
+                label: "Site web",
+                note: "Site statique publié avec GitHub Pages",
+                intro: "Site web statique publié gratuitement avec GitHub Pages : rapide, sécurisé et sans frais d’hébergement.",
+                pagePrice: 90,              // prix par page supplémentaire
+                q: {
+                    type: { title: "Type de site", kind: "choice", cols: 2, def: "vitrine", items: {
+                        landing:   { label: "Page unique",  note: "Une page : idéal pour un service ou un événement", base: 350, pages: 1 },
+                        vitrine:   { label: "Site vitrine", note: "Jusqu’à 5 pages", base: 750, pages: 5 },
+                        portfolio: { label: "Portfolio",    note: "Jusqu’à 3 pages avec galerie", base: 600, pages: 3 }
+                    }},
+                    extraPages: { title: "Pages supplémentaires", kind: "stepper", step: 1, min: 0, max: 15, def: 0, unit: "page(s)",
+                        hint: (v, S) => `Chaque page en plus : ${S.pagePrice} $.` },
+                    design: { title: "Design", kind: "choice", cols: 2, def: "gabarit", items: {
+                        gabarit:   { label: "Gabarit personnalisé", note: "Modèle adapté à votre marque" },
+                        surmesure: { label: "Design sur mesure",    note: "Conçu à partir de zéro", price: 300 }
+                    }},
+                    contenu: { title: "Contenu du site", kind: "choice", cols: 2, def: "fourni", items: {
+                        fourni:    { label: "Vous fournissez le contenu", note: "Textes et images" },
+                        redaction: { label: "Rédaction par nos soins",    note: "Textes écrits pour vous", perPage: 60 }
+                    }},
+                    extras: { title: "Ajouts", kind: "multi", cols: 2, items: {
+                        seo:        { label: "SEO de base",                        note: "Balises, vitesse, indexation", price: 150 },
+                        contact:    { label: "Formulaire / bouton de réservation", note: "Contact ou prise de rendez-vous", price: 80 },
+                        animations: { label: "Animations",                         note: "Apparitions et effets au défilement", price: 120 },
+                        bilingue:   { label: "Version bilingue (FR/EN)",           note: "Deux langues", price: 200 },
+                        domaine:    { label: "Nom de domaine personnalisé",        note: "Configuration (le domaine s’achète à part)", price: 60 },
+                        entretien:  { label: "Entretien du 1er mois",              note: "Petites modifications après la mise en ligne", price: 50 },
+                        rush: RUSH
+                    }}
+                },
+                calc: (v, S) => {
+                    const t = pick(S, "type", v), d = pick(S, "design", v), c = pick(S, "contenu", v);
+                    const total = t.pages + v.extraPages;
+                    return [
+                        [`${t.label} (${t.pages} page${t.pages > 1 ? "s" : ""} incluse${t.pages > 1 ? "s" : ""})`, t.base],
+                        [`Pages supplémentaires (${v.extraPages} × ${S.pagePrice} $)`, v.extraPages * S.pagePrice],
+                        [`Design : ${d.label.toLowerCase()}`, d.price || 0],
+                        [`Rédaction du contenu (${total} × ${c.perPage || 0} $)`, total * (c.perPage || 0)]
+                    ];
+                }
+            }
         }
     };
 
-    const state = { type: "portraitSeul", hours: 2, photos: 20, lieu: "interieur", depl: "mtl", retouche: "standard", rush: false, licence: false };
+    /* ============================================================
+       MOTEUR (pas besoin de modifier en dessous)
+       ============================================================ */
     const $ = id => document.getElementById(id);
+    const fmt = n => String(n).replace(".", ",");
     const money = n => Math.round(n).toLocaleString("fr-CA") + " $";
+    const pick = (S, id, v) => S.q[id].items[v[id]];
+    const cur = () => CONFIG.services[state.service];
 
-    function radioGroup(containerId, name, items, extra) {
-        $(containerId).innerHTML = Object.entries(items).map(([key, it]) => `
-            <label class="opt relative block">
-                <input type="radio" name="${name}" value="${key}" ${state[name] === key ? "checked" : ""}>
-                <span class="card"><strong class="block text-sm">${it.label}</strong><small class="text-gray-400 text-xs">${it.note}${extra ? extra(it) : ""}</small></span>
-            </label>`).join("");
-        $(containerId).addEventListener("change", e => { state[name] = e.target.value; render(); });
+    const GRID = { 2: "sm:grid-cols-2", 3: "sm:grid-cols-3" };
+
+    function extraInfo(it) {
+        if (it.rate) return `${it.rate} $/h`;
+        if (it.base) return `${it.base} $`;
+        if (it.perPhoto) return `+${it.perPhoto} $/photo`;
+        if (it.perVideo) return `+${it.perVideo} $/vidéo`;
+        if (it.perPage) return `+${it.perPage} $/page`;
+        if (it.price) return `+${it.price} $`;
+        return "";
+    }
+    const info = it => [it.note, extraInfo(it)].filter(Boolean).join(" · ");
+
+    /* État : une valeur par question et par service */
+    const state = { service: null, v: {} };
+    Object.entries(CONFIG.services).forEach(([key, S]) => {
+        const v = {};
+        Object.entries(S.q).forEach(([id, q]) => { v[id] = q.kind === "multi" ? {} : q.def; });
+        state.v[key] = v;
+    });
+
+    /* Étape 1 : cartes de services */
+    $("svc").innerHTML = Object.entries(CONFIG.services).map(([k, S], i) => `
+        <label class="opt relative block">
+            <input type="radio" name="service" value="${k}">
+            <span class="card">
+                <span class="num font-editorial text-3xl font-bold text-brandPrimary block mb-2">0${i + 1}</span>
+                <strong class="block text-base">${S.label}</strong>
+                <small class="text-gray-400 text-xs">${S.note}</small>
+            </span>
+        </label>`).join("");
+
+    $("svc").addEventListener("change", e => {
+        state.service = e.target.value;
+        const S = cur();
+        $("svc-intro").textContent = S.intro;
+        $("svc-name").textContent = S.label + " · avant taxes";
+        renderForm();
+        const d = $("details");
+        d.classList.remove("hidden", "rise");
+        void d.offsetWidth;
+        d.classList.add("rise");
+        refresh();
+        d.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    /* Étape 2 : formulaire propre au service choisi */
+    function renderForm() {
+        const S = cur(), v = state.v[state.service];
+        $("form-body").innerHTML = Object.entries(S.q).map(([id, q]) => {
+            let body;
+            if (q.kind === "stepper") {
+                body = `
+                    <div class="flex items-center gap-4">
+                        <button type="button" class="step-btn" data-q="${id}" data-d="${-q.step}" aria-label="Diminuer">−</button>
+                        <div class="min-w-[110px] text-center">
+                            <span id="val-${id}" class="font-editorial text-4xl font-bold"></span>
+                            <span class="text-gray-400 text-sm"> ${q.unit}</span>
+                        </div>
+                        <button type="button" class="step-btn" data-q="${id}" data-d="${q.step}" aria-label="Augmenter">+</button>
+                    </div>
+                    <p id="hint-${id}" class="text-xs text-gray-500 mt-3"></p>`;
+            } else {
+                const type = q.kind === "choice" ? "radio" : "checkbox";
+                body = `<div class="grid ${GRID[q.cols || 2]} gap-3">` + Object.entries(q.items).map(([k, it]) => {
+                    const checked = q.kind === "choice" ? v[id] === k : !!v[id][k];
+                    return `
+                        <label class="opt relative block">
+                            <input type="${type}" name="${id}" value="${k}" data-q="${id}" ${checked ? "checked" : ""}>
+                            <span class="card"><strong class="block text-sm">${it.label}</strong><small class="text-gray-400 text-xs">${info(it)}</small></span>
+                        </label>`;
+                }).join("") + `</div>`;
+            }
+            return `<fieldset data-block="${id}"><legend class="text-lg font-bold mb-4">${q.title}</legend>${body}</fieldset>`;
+        }).join("");
     }
 
-    radioGroup("g-type", "type", CONFIG.type, it => ` · ${it.rate} $/h`);
-    radioGroup("g-lieu", "lieu", CONFIG.lieu, it => it.price ? ` · +${it.price} $` : "");
-    radioGroup("g-depl", "depl", CONFIG.depl, it => it.price ? ` · +${it.price} $` : "");
-    radioGroup("g-retouche", "retouche", CONFIG.retouche, it => it.perPhoto ? ` · +${it.perPhoto} $/photo` : "");
+    $("form-body").addEventListener("change", e => {
+        const t = e.target;
+        if (!t.dataset.q) return;
+        const v = state.v[state.service];
+        if (t.type === "radio") v[t.dataset.q] = t.value;
+        else v[t.dataset.q][t.value] = t.checked;
+        refresh();
+    });
 
-    $("g-options").innerHTML = Object.entries(CONFIG.options).map(([key, it]) => `
-        <label class="opt relative block">
-            <input type="checkbox" name="${key}">
-            <span class="card"><strong class="block text-sm">${it.label}</strong><small class="text-gray-400 text-xs">${it.note}</small></span>
-        </label>`).join("");
-    $("g-options").addEventListener("change", e => { state[e.target.name] = e.target.checked; render(); });
+    $("form-body").addEventListener("click", e => {
+        const b = e.target.closest(".step-btn");
+        if (!b) return;
+        const q = cur().q[b.dataset.q], v = state.v[state.service];
+        v[b.dataset.q] = Math.min(q.max, Math.max(q.min, v[b.dataset.q] + parseFloat(b.dataset.d)));
+        refresh();
+    });
 
-    document.querySelectorAll(".step-btn").forEach(btn => btn.addEventListener("click", () => {
-        const d = parseFloat(btn.dataset.d);
-        if (btn.dataset.step === "hours") state.hours = Math.min(CONFIG.maxHours, Math.max(CONFIG.minHours, state.hours + d));
-        else state.photos = Math.max(0, state.photos + d);
-        render();
-    }));
-
+    /* Calcul */
     function compute() {
-        const t = CONFIG.type[state.type];
-        const included = Math.round(state.hours * CONFIG.photosPerHourIncluded);
-        const extra = Math.max(0, state.photos - included);
-        const lines = [
-            [`Séance ${t.label.toLowerCase()} (${state.hours} h × ${t.rate} $)`, state.hours * t.rate],
-            [`Photos supplémentaires (${extra} × ${CONFIG.extraPhotoPrice} $)`, extra * CONFIG.extraPhotoPrice],
-            [`Lieu : ${CONFIG.lieu[state.lieu].label.toLowerCase()}`, CONFIG.lieu[state.lieu].price],
-            [`Déplacement : ${CONFIG.depl[state.depl].label}`, CONFIG.depl[state.depl].price],
-            [`Retouche : ${CONFIG.retouche[state.retouche].label.toLowerCase()}`, CONFIG.retouche[state.retouche].perPhoto * state.photos]
-        ];
+        const S = cur(), v = state.v[state.service];
+        const lines = S.calc(v, S);
         let subtotal = lines.reduce((s, l) => s + l[1], 0);
-        Object.entries(CONFIG.options).forEach(([key, o]) => {
-            if (state[key]) { const add = subtotal * o.pct; lines.push([o.label, add]); subtotal += add; }
+        const pcts = [];
+        Object.entries(S.q).forEach(([id, q]) => {
+            if (q.kind !== "multi") return;
+            Object.entries(q.items).forEach(([k, it]) => {
+                if (!v[id][k]) return;
+                if (it.pct) pcts.push(it);
+                else if (it.price) { lines.push([it.label, it.price]); subtotal += it.price; }
+            });
         });
-        return { lines: lines.filter(l => l[1] > 0), subtotal, included };
+        pcts.forEach(it => { const add = subtotal * it.pct; lines.push([it.label, add]); subtotal += add; });
+        return { lines: lines.filter(l => l[1] > 0), subtotal };
+    }
+
+    function summaryText(S, v) {
+        return Object.entries(S.q).map(([id, q]) => {
+            if (q.showIf && !q.showIf(v)) return null;
+            if (q.kind === "choice") return `${q.title} : ${q.items[v[id]].label}`;
+            if (q.kind === "stepper") return `${q.title} : ${fmt(v[id])} ${q.unit}`;
+            const sel = Object.keys(q.items).filter(k => v[id][k]).map(k => q.items[k].label);
+            return sel.length ? `${q.title} : ${sel.join(", ")}` : null;
+        }).filter(Boolean).join("\n");
     }
 
     let lastText = "";
-    function render() {
-        const { lines, subtotal, included } = compute();
-        const low = subtotal * (1 - CONFIG.rangeLow), high = subtotal * (1 + CONFIG.rangeHigh);
-        $("hours-val").textContent = String(state.hours).replace(".", ",");
-        $("photos-val").textContent = state.photos;
-        $("photos-hint").textContent = `${included} photos sont incluses pour ${String(state.hours).replace(".", ",")} h; ensuite ${CONFIG.extraPhotoPrice} $ par photo.`;
-        $("range").textContent = `${money(low)} – ${money(high)}`;
-        $("total-tax").textContent = `Montant de base : ${money(subtotal)} (environ ${money(subtotal * 1.14975)} avec taxes)`;
+    function refresh() {
+        const S = cur(), v = state.v[state.service];
+        Object.entries(S.q).forEach(([id, q]) => {
+            const block = document.querySelector(`[data-block="${id}"]`);
+            if (!block) return;
+            if (q.showIf) block.hidden = !q.showIf(v);
+            if (q.kind === "stepper") {
+                $("val-" + id).textContent = fmt(v[id]);
+                if (q.hint) $("hint-" + id).textContent = typeof q.hint === "function" ? q.hint(v, S) : q.hint;
+            }
+        });
+
+        const { lines, subtotal } = compute();
+        if (subtotal > 0) {
+            const low = subtotal * (1 - CONFIG.rangeLow), high = subtotal * (1 + CONFIG.rangeHigh);
+            $("range").textContent = `${money(low)} – ${money(high)}`;
+            $("total-tax").textContent = `Montant de base : ${money(subtotal)} (environ ${money(subtotal * CONFIG.taxRate)} avec taxes)`;
+            lastText = `Estimation RoMEDIA – ${S.label} : ${money(low)} à ${money(high)} (avant taxes)\n` +
+                summaryText(S, v) +
+                `\nEstimation à titre indicatif seulement : contactez RoMEDIA pour un prix exact.`;
+        } else {
+            $("range").textContent = "—";
+            $("total-tax").textContent = "Ajoutez au moins un élément pour voir une estimation.";
+            lastText = "";
+        }
         $("lines").innerHTML = lines.map(l => `<li class="flex justify-between gap-4"><span class="text-gray-600">${l[0]}</span><span class="font-semibold whitespace-nowrap">${money(l[1])}</span></li>`).join("");
-        lastText = `Estimation RoMEDIA : ${money(low)} à ${money(high)} (avant taxes)\n` +
-            `Type : ${CONFIG.type[state.type].label} | Durée : ${state.hours} h | Photos : ${state.photos}\n` +
-            `Lieu : ${CONFIG.lieu[state.lieu].label} | Déplacement : ${CONFIG.depl[state.depl].label} | Retouche : ${CONFIG.retouche[state.retouche].label}` +
-            (state.rush ? " | Express 48 h" : "") + (state.licence ? " | Usage commercial étendu" : "") +
-            `\nEstimation à titre indicatif seulement : contactez RoMEDIA pour un prix exact.`;
     }
 
     $("copy").addEventListener("click", async () => {
         const btn = $("copy"), old = btn.textContent;
+        if (!lastText) return;
         try { await navigator.clipboard.writeText(lastText); btn.textContent = "Estimation copiée"; }
         catch (e) { btn.textContent = "Copie impossible"; }
         setTimeout(() => btn.textContent = old, 1800);
     });
-
-    render();
     </script>
 </body>
 </html>
