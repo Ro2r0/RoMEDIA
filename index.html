@@ -265,6 +265,81 @@
             </div>
         </div>
     </section>
+        <section id="avis" class="py-24 bg-brandLight text-brandDark relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-14">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Avis clients</span>
+                <h2 class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary mb-6">Ils nous ont fait confiance</h2>
+                <div id="avis-stars" class="text-4xl md:text-6xl text-brandPrimary flex justify-center gap-2 md:gap-3" aria-hidden="true"></div>
+                <p id="avis-summary" class="mt-4 text-gray-600 text-sm"></p>
+            </div>
+
+            <div id="avis-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+            <div class="text-center mt-10">
+                <button type="button" id="avis-more"
+                    class="hidden px-8 py-3 border-2 border-brandSecondary text-brandSecondary font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary hover:text-white transition-all">
+                    Voir plus d’avis
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+    (function () {
+        /* =====================================================================
+           ZONE À MODIFIER : collez ici les VRAIS avis de vos clients.
+           Pour ajouter un avis : copiez une ligne, collez-la dans la liste et changez les valeurs.
+           nom     = prénom et initiale (ex. "Marie D."), avec la permission du client
+           service = "Photographie", "Vidéographie", "Infographie" ou "Site web"
+           note    = de 1 à 5
+           texte   = l'avis du client, tel qu'il l'a écrit
+           date    = (facultatif) ex. "Octobre 2026"
+           Tant que la liste est vide, cette section reste cachée sur le site.
+           ===================================================================== */
+        const REVIEWS = [
+            // { nom: "Prénom N.", service: "Photographie", note: 5, texte: "Collez ici l'avis réel du client.", date: "Mois 2026" },
+        ];
+
+        const grid = document.getElementById("avis-grid");
+        const more = document.getElementById("avis-more");
+        const section = document.getElementById("avis");
+        if (!REVIEWS.length) { section.classList.add("hidden"); return; }
+
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        const stars = (n, cls) => Array.from({ length: 5 }, (_, i) =>
+            `<i class="${i < n ? "fas" : "far"} fa-star ${cls || ""}"></i>`).join("");
+        const initials = nom => nom.split(/\s+/).map(w => w[0]).slice(0, 2).join("").toUpperCase();
+
+        const avg = REVIEWS.reduce((s, r) => s + r.note, 0) / REVIEWS.length;
+        document.getElementById("avis-stars").innerHTML = stars(Math.round(avg));
+        document.getElementById("avis-summary").textContent =
+            `${avg.toFixed(1).replace(".", ",")} / 5 · ${REVIEWS.length} avis`;
+
+        const PAGE = 6;
+        let shown = 0;
+        function showMore() {
+            REVIEWS.slice(shown, shown + PAGE).forEach(r => {
+                grid.insertAdjacentHTML("beforeend", `
+                    <article class="bg-white p-7 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
+                        <div class="text-brandPrimary text-sm mb-4" aria-label="Note : ${r.note} sur 5">${stars(r.note)}</div>
+                        <p class="text-gray-600 text-sm leading-relaxed flex-grow">« ${esc(r.texte)} »</p>
+                        <div class="flex items-center gap-3 mt-6 pt-5 border-t border-gray-100">
+                            <span class="w-10 h-10 rounded-full bg-brandSecondary text-white flex items-center justify-center text-xs font-bold">${esc(initials(r.nom))}</span>
+                            <div>
+                                <p class="text-sm font-bold text-brandSecondary">${esc(r.nom)}</p>
+                                <p class="text-xs text-gray-500"><span class="text-brandPrimary font-semibold">${esc(r.service || "")}</span>${r.date ? " · " + esc(r.date) : ""}</p>
+                            </div>
+                        </div>
+                    </article>`);
+            });
+            shown = Math.min(REVIEWS.length, shown + PAGE);
+            more.classList.toggle("hidden", shown >= REVIEWS.length);
+        }
+        more.addEventListener("click", showMore);
+        showMore();
+    })();
+    </script>
 
     <section id="portfolio" class="py-24 bg-brandDark text-white relative">
         <div class="max-w-7xl mx-auto px-6">
