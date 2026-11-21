@@ -1,352 +1,628 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarifs Officiels | RoMEDIA</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- GSAP & ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    
+    <title>Tarifs | RoMEDIA</title>
+    <meta name="description" content="Liste de prix de RoMEDIA, photographe à Montréal : portrait, nouveau-né, boudoir, événements, produits, mode. Prix clairs et expliqués.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPrimary: '#e26137',   // Orange vibrant
+                        brandSecondary: '#0f3066', // Bleu profond
+                        brandDark: '#0a0a0c',      // Fond sombre premium
+                        brandLight: '#f4f0eb'      // Fond clair éditorial
+                    },
+                    fontFamily: {
+                        editorial: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="icon" type="image/png" href="images/RoMedia-Changer-Just-logo-blue-donw.png">
+
     <style>
-        :root {
-            --romedia-orange: #e26137;
-            --romedia-blue: #0f3066;
-        }
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #faf8f5;
-            color: #1a1a1a;
-            overflow-x: hidden;
-        }
-        /* Style pour l'effet de révélation de gauche à droite */
-        .reveal-card {
-            clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%);
-            opacity: 0;
-            transform: translateX(-20px);
-        }
-        .orange-accent { color: var(--romedia-orange); }
-        .blue-bg { background-color: var(--romedia-blue); }
-        .orange-bg { background-color: var(--romedia-orange); }
-        .border-blue { border-color: var(--romedia-blue); }
+        body { background-color: #0a0a0c; color: #f4f0eb; overflow-x: hidden; }
+
+        /* Lignes de forfaits : une colonne sur mobile, un tableau sur ordinateur */
+        .row-grid { display: grid; grid-template-columns: 1fr; gap: 6px 16px; align-items: center; }
+        @media (min-width: 768px) { .row-grid { grid-template-columns: var(--cols); } }
+
+        .cat-card:focus-visible { outline: 2px solid #f4f0eb; outline-offset: 3px; }
+        .cat-card.is-open { box-shadow: 0 0 0 2px #e26137, 0 20px 50px rgba(226, 97, 55, .25); }
+        .cat-card.is-open .chev { transform: rotate(180deg); background-color: #e26137; }
+
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
     </style>
 </head>
-<body class="py-12 px-4 md:px-12 lg:px-24">
+<body class="font-sans">
 
-    <!-- SECTION PRICING PRINCIPALE -->
-    <main class="max-w-7xl mx-auto space-y-20">
-        
-        <!-- Titre d'introduction discret (Pas de header complet) -->
-        <div class="text-center max-w-2xl mx-auto space-y-4">
-            <span class="text-sm font-bold uppercase tracking-widest" 
-                style="color: #e26137;">Tarification Transparente</span>
-            <h1 class="text-4xl font-extrabold tracking-tight md:text-5xl" 
-                style="color: #0f3066;">Nos Solutions & Grilles Tarifaires</h1>
-            <p class="text-gray-600 text-lg">Sélectionnez l'offre adaptée à vos ambitions.</p> 
-            <p class="text-gray-400 text-lg">Tous nos prix sont affichés en CAD, 
-                hors taxes (<em>TPS/TVQ applicables au Québec</em>).</p>
-        </div>
-
-        <!-- CATEGORIE 1 : PHOTOGRAPHIE -->
-        <section class="space-y-8 category-section">
-            <div class="border-b pb-4 flex items-baseline justify-between">
-                <h2 class="text-2xl font-bold tracking-tight flex items-center gap-3" 
-                    style="color: #0f3066;">
-                    <span class="w-3 h-6 block rounded-sm" style="background-color: #e26137;"></span> 
-                   Photographie Professionnelle
-                </h2>
-                <span class="text-xs font-semibold uppercase tracking-wider 
-                    text-gray-400">Portrait, Produit & Événement</span>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-                <!-- Carte 1 -->
-                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 
-                    shadow-xs flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Portraits & Corporation</h3>
-                        <p class="text-gray-500 
-                            text-sm mt-1">Idéal pour entrepreneurs, professionnels et réseaux.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black 
-                                tracking-tight" style="color: #0f3066;">260 $</span>
-                            <span class="text-gray-400 text-sm">/ session</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center 
-                                gap-2">✓ Session de 1h en studio ou extérieur</li>
-                            <li class="flex items-center 
-                                gap-2">✓ 10 photos haute résolution retouchées</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Droits d'utilisation commerciale inclus</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Déplacement dans Montréal inclus</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Carte 2 (Vedette) -->
-                <div class="reveal-card bg-white rounded-xl p-8 border-2 shadow-sm flex 
-                    flex-col justify-between relative overflow-hidden" style="border-color: #e26137;">
-                    <div class="absolute top-0 right-0 px-3 py-1 text-xs 
-                        font-bold text-white uppercase tracking-wider 
-                        rounded-bl-lg" style="background-color: #e26137;">Populaire</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Produits & Emballages</h3>
-                        <p class="text-gray-500 text-sm mt-1">Optimisé pour les boutiques e-commerce 
-                            et catalogues.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" 
-                                style="color: #0f3066;">450 $</span>
-                            <span class="text-gray-400 text-sm">/ projet</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center 
-                                gap-2">✓ Jusqu'à 5 produits distincts</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Arrière-plan épuré (blanc/transparent)</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Retouches avancées pour e-commerce</li>
-                            <li class="flex items-center 
-                                gap-2">✓ 1 heure de prise de vue</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Carte 3 -->
-                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 
-                    shadow-xs flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Événementiel & Reportage</h3>
-                        <p class="text-gray-500 text-sm mt-1">Couverture de lancements, 
-                            galas et soirées d'affaires.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" 
-                                style="color: #0f3066;">160 $</span>
-                            <span class="text-gray-400 text-sm">/ heure</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center 
-                                gap-2">✓ Minimum de 2 heures de présence</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Galerie en ligne privée pour vos invités</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Toutes les photos triées et colorimétrées</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Aucune édition majeure </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CATEGORIE 2 : INFOGRAPHIE & BRANDING -->
-        <section class="space-y-8 category-section">
-            <div class="border-b pb-4 flex items-baseline justify-between">
-                <h2 class="text-2xl font-bold tracking-tight flex items-center 
-                    gap-3" style="color: #0f3066;">
-                    <span class="w-3 h-6 block rounded-sm" 
-                        style="background-color: #e26137;"></span> 
-                    Infographie & Identité Visuelle
-                </h2>
-                <span class="text-xs font-semibold uppercase 
-                    tracking-wider text-gray-400">Design Stratégique</span>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-                <!-- Carte 1 -->
-                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 
-                    shadow-xs flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Logo Unique</h3>
-                        <p class="text-gray-500 
-                            text-sm mt-1">Idéal pour le lancement d'un nouveau projet autonome.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" 
-                                style="color: #0f3066;">350 $</span>
-                            <span class="text-gray-400 text-sm">/ forfait</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center 
-                                gap-2">✓ 2 propositions initiales distinctes</li>
-                            <li class="flex items-center 
-                                gap-2">✓ 1 vague de révisions incluse</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Fichiers vectoriels complets</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Carte 2 (Vedette) -->
-                <div class="reveal-card bg-white rounded-xl p-8 border-2 
-                    shadow-sm flex flex-col justify-between relative overflow-hidden" 
-                    style="border-color: #0f3066;">
-                    <div class="absolute top-0 right-0 px-3 py-1 text-xs 
-                        font-bold text-white uppercase tracking-wider 
-                        rounded-bl-lg" style="background-color: #0f3066;">Complet</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Identité de Marque</h3>
-                        <p class="text-gray-500 text-sm 
-                            mt-1">Une charte graphique cohérente pour s'imposer sur le marché.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" 
-                                style="color: #0f3066;">750 $</span>
-                            <span class="text-gray-400 text-sm">/ forfait</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center 
-                                gap-2">✓ Logo principal, secondaire et sous-marque</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Palette de couleurs (HEX/CMYK) & Typographies</li>
-                            <li class="flex items-center 
-                                gap-2">✓ Mini-guide de marque (Brandbook PDF)</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Carte 3 -->
-                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Supports Publicitaires</h3>
-                        <p class="text-gray-500 text-sm mt-1">Matériel visuel sur demande pour vos campagnes.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">65 $</span>
-                            <span class="text-gray-400 text-sm">/ heure</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center gap-2">✓ Design de brochures, cartes pro ou bannières</li>
-                            <li class="flex items-center gap-2">✓ Visuels pour vos réseaux sociaux</li>
-                            <li class="flex items-center gap-2">✓ Estimation précise avant démarrage</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CATEGORIE 3 : SITE WEB STATIQUE -->
-        <section class="space-y-8 category-section">
-            <div class="border-b pb-4 flex items-baseline justify-between">
-                <h2 class="text-2xl font-bold tracking-tight flex items-center gap-3" style="color: #0f3066;">
-                    <span class="w-3 h-6 block rounded-sm" style="background-color: #e26137;"></span> 
-                    03. Développement Web Statique
-                </h2>
-                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400">Performant, Léger & Moderne</span>
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-                <!-- Carte 1 -->
-                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Landing Page / Portfolio</h3>
-                        <p class="text-gray-500 text-sm mt-1">Parfait pour une vitrine percutante sur une seule page.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">1 200 $</span>
-                            <span class="text-gray-400 text-sm">/ projet</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center gap-2">✓ Architecture Single-Page ultra-rapide</li>
-                            <li class="flex items-center gap-2">✓ Formulaire Formspree intégré</li>
-                            <li class="flex items-center gap-2">✓ Hébergement gratuit à vie (GitHub Pages)</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Carte 2 (Vedette) -->
-                <div class="reveal-card bg-white rounded-xl p-8 border-2 shadow-sm flex flex-col justify-between relative overflow-hidden" style="border-color: #e26137;">
-                    <div class="absolute top-0 right-0 px-3 py-1 text-xs font-bold text-white uppercase tracking-wider rounded-bl-lg" style="background-color: #e26137;">Premium</div>
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Vitrine Multi-Pages</h3>
-                        <p class="text-gray-500 text-sm mt-1">Idéal pour présenter des services complets de PME.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">2 500 $</span>
-                            <span class="text-gray-400 text-sm">/ projet</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center gap-2">✓ Jusqu'à 5 pages de contenu stylisées</li>
-                            <li class="flex items-center gap-2">✓ Intégrations Stripe & Bouton de réservation</li>
-                            <li class="flex items-center gap-2">✓ Animations éditoriales uniques (GSAP)</li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Carte 3 (Ajout Stratégique : Consultation) -->
-                <div class="reveal-card bg-white rounded-xl p-8 border border-gray-100 shadow-xs flex flex-col justify-between relative overflow-hidden">
-                    <div>
-                        <h3 class="text-xl font-bold text-gray-900">Maintenance & Évolution</h3>
-                        <p class="text-gray-500 text-sm mt-1">Pour les mises à jour et le support technique continu.</p>
-                        <div class="my-6">
-                            <span class="text-4xl font-black tracking-tight" style="color: #0f3066;">60 $</span>
-                            <span class="text-gray-400 text-sm">/ heure</span>
-                        </div>
-                        <ul class="space-y-3 text-sm text-gray-600">
-                            <li class="flex items-center gap-2">✓ Ajout de contenu ou nouvelles sections</li>
-                            <li class="flex items-center gap-2">✓ Optimisation des performances SEO</li>
-                            <li class="flex items-center gap-2">✓ Sans engagement de durée</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- AJOUTS STRATÉGIQUES : INFORMATIONS CLIENTS INDISPENSABLES -->
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 bg-slate-100 p-8 rounded-2xl border border-slate-200/60">
-            <div class="space-y-3">
-                <h4 class="font-bold text-lg" style="color: #0f3066;">Informations importantes</h4>
-                <ul class="space-y-2 text-sm text-gray-600">
-                    <li>• <strong>Taxes :</strong> Les taxes en vigueur (TPS et TVQ) s'ajouteront au montant final pour les clients du Québec.</li>
-                    <li>• <strong>Modalités de paiement :</strong> Un acompte de 40% est exigé au démarrage de tout forfait fixe, le solde à la livraison.</li>
-                    <li>• <strong>Validité :</strong> Les prix affichés ici font foi d'estimation标准 et restent valides pour l'année en cours.</li>
-                </ul>
-            </div>
-            <div class="space-y-3 flex flex-col justify-between">
-                <div>
-                    <h4 class="font-bold text-lg" style="color: #0f3066;">Prêt à collaborer ?</h4>
-                    <p class="text-sm text-gray-600">Vous souhaitez un devis personnalisé ajusté précisément à vos besoins ? Cliquez ci-dessous pour initier votre projet.</p>
-                </div>
-                <a href="https://formspree.io/f/mrewzvjz" class="inline-block text-center text-white text-sm font-bold py-3 px-6 rounded-lg transition-transform hover:scale-105" style="background-color: #e26137;">
-                    Demander une soumission personnalisée
-                </a>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- BAS DE PAGE COPIÉ + LIEN RETOUR -->
-    <footer class="mt-24 border-t pt-12 pb-6 text-center space-y-6">
-        <div>
-            <!-- Bouton Retour à la page principale inséré stratégiquement -->
-            <a href="index.html" class="inline-flex items-center gap-2 text-sm font-bold transition-colors hover:opacity-80" style="color: #0f3066;">
-                ← Retour à la page principale
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
+                Ro<span class="text-brandPrimary">MEDIA</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
+                <a href="index.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
+                <a href="folio.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Folio</a>
+                <a href="estimateur.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Estimateur</a>
+            </nav>
+            <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" rel="noopener"
+                class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-brandPrimary/20">
+                Consultation
             </a>
         </div>
-        <div class="text-xs text-gray-400 space-y-2">
-            <p>© 2026 RoMEDIA. Tous droits réservés. Enregistré au Québec.</p>
-            <p>Design graphique, Photographie & Sites Web Statiques haute performance.</p>
+    </header>
+
+    <main>
+        <!-- Introduction -->
+        <section id="intro" class="pt-32 pb-12 bg-brandDark">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="max-w-3xl">
+                    <span class="reveal text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Tarifs · Photographie</span>
+                    <h1 class="reveal text-4xl md:text-6xl font-editorial font-light leading-tight text-white mb-6">
+                        Des prix clairs, <span class="font-bold italic text-brandLight">expliqués</span>.
+                    </h1>
+                    <p class="reveal text-gray-400 text-base md:text-lg border-l-2 border-brandSecondary pl-4">
+                        Photographe de tout ce qui est humain, à Montréal : portrait, nouveau-né et maternité, boudoir et nu artistique,
+                        événements, produits, mode et portfolio d’artiste. Choisissez une catégorie pour voir ses forfaits,
+                        et surtout pourquoi chaque prix est ce qu’il est.
+                    </p>
+                </div>
+                <div id="info-chips" class="reveal grid md:grid-cols-3 gap-4 mt-10"></div>
+            </div>
+        </section>
+
+        <!-- Catégories -->
+        <section id="categories" class="pb-24 bg-brandDark">
+            <div class="max-w-7xl mx-auto px-6">
+                <p class="text-gray-500 text-xs uppercase tracking-widest mb-6">Cliquez sur une catégorie pour l’ouvrir · cliquez de nouveau pour la fermer</p>
+                <div id="cat-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- Comment nos prix sont établis -->
+        <section id="methode" class="py-24 bg-brandLight text-brandDark">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-12">
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Transparence</span>
+                    <h2 class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary">Comment nos prix sont établis</h2>
+                </div>
+                <div id="reasons" class="grid md:grid-cols-2 lg:grid-cols-5 gap-5"></div>
+            </div>
+        </section>
+
+        <!-- Lieu, déplacement, options -->
+        <section id="options" class="py-24 bg-brandDark">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-10">
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Ajouts</span>
+                    <h2 class="text-3xl md:text-5xl font-editorial text-white mb-3">Lieu, déplacement et options</h2>
+                    <p class="text-gray-400 text-sm max-w-2xl">Ces frais s’ajoutent au forfait choisi. Ils sont les mêmes pour toutes les catégories.</p>
+                </div>
+                <div id="options-list" class="space-y-3"></div>
+            </div>
+        </section>
+
+        <!-- Communautaire + conditions -->
+        <section id="communaute" class="py-24 bg-brandLight text-brandDark">
+            <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12">
+                <div>
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Pour la communauté</span>
+                    <h2 id="comm-title" class="text-3xl md:text-4xl font-editorial font-bold text-brandSecondary mb-5"></h2>
+                    <div id="comm-text" class="bg-white rounded-2xl border border-gray-100 border-l-4 border-l-brandPrimary p-6 text-sm text-gray-600 leading-relaxed"></div>
+                </div>
+                <div>
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Bon à savoir</span>
+                    <h2 class="text-3xl md:text-4xl font-editorial font-bold text-brandSecondary mb-5">Réservation et conditions</h2>
+                    <div id="conditions" class="bg-white rounded-2xl border border-gray-100 divide-y divide-gray-100"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appel à l'action -->
+        <section class="py-24 bg-brandDark border-t border-white/5">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-5xl font-editorial text-white mb-4">Un projet en tête ?</h2>
+                <p class="text-gray-400 text-sm md:text-base mb-8">Estimez-le en quelques clics, ou réservez une consultation d’une heure pour en parler.</p>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="https://book.stripe.com/fZucN67Lda924843BBcfK02" target="_blank" rel="noopener"
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold rounded-full hover:bg-white hover:text-brandDark transition-all transform hover:scale-105 shadow-xl shadow-brandPrimary/20">
+                        Planifier mon heure de conseil
+                    </a>
+                    <a href="estimateur.html"
+                        class="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-bold rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all">
+                        Estimer le prix de mon projet
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brandDark border-t border-white/5 py-10 text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center gap-8">
+            <a href="index.html" class="inline-flex items-center justify-center px-6 py-3 border border-white/20 rounded-full text-sm font-semibold tracking-wide text-white hover:text-brandPrimary hover:border-brandPrimary transition-all duration-300 transform hover:scale-105 shadow-lg bg-white/5">
+                <i class="fas fa-arrow-left mr-3 text-xs"></i> Retour à la page principale
+            </a>
+
+            <div class="w-full flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center space-x-4">
+                    <img src="images/RoMedia-Changer.png" alt="RoMedia Logo" class="h-12 w-auto object-contain">
+                    <div>
+                        <p>2026 &copy; RoMEDIA. Tous droits réservés. Changer pour évoluer.</p>
+                    </div>
+                </div>
+                <div class="flex space-x-6 items-center">
+                    <a href="legal.html" class="hover:text-brandPrimary transition-colors underline decoration-brandPrimary/40 underline-offset-4">Mentions Légales & Confidentialité</a>
+                    <a href="http://instagram.com/romedia.mtl" target="_blank" rel="noopener" aria-label="Instagram"
+                        class="hover:text-white transition-colors"><i class="fab fa-instagram text-base"></i></a>
+                    <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener" aria-label="Facebook"
+                        class="hover:text-white transition-colors"><i class="fab fa-facebook text-base"></i></a>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- SCRIPT D'ANIMATION DE GAUCHE À DROITE (GSAP) -->
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            gsap.registerPlugin(ScrollTrigger);
+        /* =====================================================================
+           ZONE À MODIFIER : c'est ici que vous changez les prix et les textes.
+           Vous n'avez rien d'autre à toucher dans la page.
+           (Évitez les guillemets droits " à l'intérieur des textes : utilisez ’ ou « ».)
+           ===================================================================== */
 
-            // Animer chaque catégorie de cartes de manière séquentielle lors du scroll
-            document.querySelectorAll('.category-section').forEach((section) => {
-                const cards = section.querySelectorAll('.reveal-card');
-                
-                gsap.to(cards, {
-                    scrollTrigger: {
-                        trigger: section,
-                        start: "top 80%", // Déclenche l'animation quand la section entre à l'écran
-                        toggleActions: "play none none none"
-                    },
-                    clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", // Effet d'ouverture de fenêtre gauche->droite
-                    opacity: 1,
-                    x: 0,
-                    duration: 1.2,
-                    ease: "power3.out",
-                    stagger: 0.25 // Décale l'apparition de chaque carte sur la ligne
-                });
+        // ---------- 1. Réglages généraux ----------
+        const SETTINGS = {
+            afficherTaxes: true,          // true = affiche la colonne « Taxes comprises ». false = prix sans taxes ajoutées.
+            tps: 5,                       // TPS en %
+            tvq: 9.975,                   // TVQ en %
+            rabaisCommunautaire: 35,      // rabais du tarif communautaire en %
+            lienReservation: "https://book.stripe.com/fZucN67Lda924843BBcfK02"
+        };
+
+        // ---------- 2. Catégories et forfaits ----------
+        // Pour changer un prix : modifiez le nombre après « prix: ». Les taxes, le tarif communautaire
+        // et le « dès X $ » de la carte se calculent tout seuls.
+        //
+        //   num         = numéro affiché sur la carte
+        //   titre       = nom de la catégorie
+        //   resume      = petite phrase sur la carte
+        //   cover       = (facultatif) image de la carte. Sans cover, la carte utilise « photo ».
+        //   photo       = LA photo d'exemple affichée quand la catégorie est ouverte
+        //                 (mettez "images/nom.jpg". Laissez "" pour afficher « Photo d'exemple à venir »)
+        //   styles      = liste des styles possibles
+        //   lieux       = liste de { label, texte } (intérieur, extérieur, etc.)
+        //   communaute  = true si le tarif communautaire s'applique à cette catégorie
+        //   forfaits    = liste de { nom, duree, livrables, prix }
+        //   note        = (facultatif) petite note sous les forfaits
+        //   pourquoi    = texte « Pourquoi ce prix ? »
+        //
+        // POUR AJOUTER UNE CATÉGORIE : copiez un bloc complet { ... } et collez-le dans la liste.
+        // POUR AJOUTER UN FORFAIT : copiez une ligne { nom: ... } dans la liste forfaits.
+        // IMPORTANT : chaque bloc et chaque ligne se termine par une virgule, sauf le dernier.
+        const CATEGORIES = [
+            {
+                num: "01", titre: "Portrait",
+                resume: "Seul(e), duo, famille, groupe, portrait professionnel",
+                photo: "images/RNP_4768-1.jpg",
+                cover: "",
+                styles: ["Seul(e)", "Duo ou couple", "Famille", "Groupe ou équipe", "Portrait professionnel"],
+                lieux: [
+                    { label: "Intérieur", texte: "en studio · chez vous ou à l’endroit de votre choix" },
+                    { label: "Extérieur", texte: "lieu choisi par RoMEDIA · lieu choisi par vous" }
+                ],
+                communaute: true,
+                forfaits: [
+                    { nom: "Seul(e)", duree: "1 h", livrables: "15 photos retouchées", prix: 290 },
+                    { nom: "Duo ou couple", duree: "1 h", livrables: "25 photos retouchées", prix: 340 },
+                    { nom: "Famille, jusqu’à 6 personnes", duree: "1 h", livrables: "40 photos retouchées", prix: 390 },
+                    { nom: "Groupe ou équipe, jusqu’à 15 personnes", duree: "1 h 30", livrables: "60 photos retouchées", prix: 740 },
+                    { nom: "Portrait professionnel (profil, LinkedIn)", duree: "30 min", livrables: "5 photos retouchées", prix: 140 }
+                ],
+                note: "Personne supplémentaire au-delà du forfait : 10 $ par personne.",
+                pourquoi: "Votre prix couvre la consultation avant la séance, la prise de vue, l’éclairage et le matériel, puis le tri et la retouche de chaque photo livrée, la galerie en ligne privée et les droits d’usage personnel. Plus il y a de personnes, plus il faut de temps de pose, de photos à trier et de retouches : c’est pourquoi le prix augmente avec le nombre de personnes."
+            },
+            {
+                num: "02", titre: "Nouveau-né et maternité",
+                resume: "Nouveau-né, grossesse, famille, combo",
+                photo: "",
+                cover: "",
+                styles: ["Nouveau-né", "Maternité (grossesse)", "Famille avec nouveau-né", "Combo maternité + nouveau-né"],
+                lieux: [
+                    { label: "Intérieur", texte: "chez vous (le plus confortable pour bébé) · en studio" },
+                    { label: "Extérieur", texte: "maternité seulement, lieu choisi par vous ou par RoMEDIA" }
+                ],
+                communaute: false,
+                forfaits: [
+                    { nom: "Nouveau-né (idéalement 7 à 14 jours)", duree: "2 h", livrables: "25 photos retouchées", prix: 489 },
+                    { nom: "Maternité (grossesse)", duree: "1 h 30", livrables: "25 photos retouchées", prix: 489 },
+                    { nom: "Famille avec nouveau-né", duree: "2 h 30", livrables: "35 photos retouchées", prix: 589 },
+                    { nom: "Combo maternité + nouveau-né", duree: "2 séances", livrables: "50 photos retouchées", prix: 889 }
+                ],
+                note: "",
+                pourquoi: "Une séance avec un nouveau-né suit le rythme de bébé : pauses pour boire, bercer et rassurer. Le prix couvre ce temps réservé sans pression, la préparation (consultation et plan de séance), puis le tri et la retouche douce de chaque photo."
+            },
+            {
+                num: "03", titre: "Boudoir et nu artistique",
+                resume: "Séances privées, 18 ans et plus",
+                photo: "",
+                cover: "",
+                styles: ["Boudoir", "Nu artistique (fine art)"],
+                lieux: [
+                    { label: "Intérieur", texte: "studio privé · chez vous" },
+                    { label: "Extérieur", texte: "lieu privé choisi avec vous" }
+                ],
+                communaute: false,
+                forfaits: [
+                    { nom: "Boudoir", duree: "1 h 30", livrables: "20 photos retouchées", prix: 390 },
+                    { nom: "Nu artistique (fine art)", duree: "2 h", livrables: "25 photos retouchées", prix: 440 }
+                ],
+                note: "Réservé aux personnes de 18 ans et plus. Formulaire de consentement signé. Une personne de confiance peut vous accompagner.",
+                pourquoi: "Ces séances demandent plus de préparation et de confiance : consultation préalable, direction de pose, retouche soignée et confidentialité totale (galerie privée, aucune diffusion sans autorisation écrite)."
+            },
+            {
+                num: "04", titre: "Événements",
+                resume: "Corporatif, célébration, culturel, communautaire",
+                photo: "images/RNP_8961-1.jpg",
+                cover: "",
+                styles: ["Corporatif (conférence, réseautage, lancement)", "Célébration (anniversaire, ouverture)", "Culturel et artistique (spectacle, vernissage)", "Communautaire et OBNL"],
+                lieux: [
+                    { label: "Intérieur ou extérieur", texte: "l’endroit de votre événement. Déplacement fixe en sus." }
+                ],
+                communaute: true,
+                forfaits: [
+                    { nom: "Couverture de 2 h (minimum)", duree: "2 h", livrables: "environ 60 photos", prix: 280 },
+                    { nom: "Demi-journée", duree: "4 h", livrables: "environ 120 photos", prix: 520 },
+                    { nom: "Journée complète", duree: "8 h", livrables: "environ 240 photos", prix: 1000 },
+                    { nom: "Heure supplémentaire", duree: "1 h", livrables: "environ 30 photos", prix: 140 }
+                ],
+                note: "",
+                pourquoi: "Vous payez le temps de présence, le matériel adapté à la lumière et au mouvement, puis la sélection et la retouche des images. Plus la couverture est longue, plus le tarif horaire baisse : 140 $ de l’heure pour 2 h, 130 $ pour 4 h et 125 $ pour 8 h."
+            },
+            {
+                num: "05", titre: "Produits",
+                resume: "Fond blanc, mise en scène, avec modèle",
+                photo: "images/RNP_7120-1.jpg",
+                cover: "",
+                styles: ["Fond blanc (e-commerce)", "Mise en scène (lifestyle)", "Avec modèle humain"],
+                lieux: [
+                    { label: "Intérieur", texte: "en studio · chez vous ou dans votre local" }
+                ],
+                communaute: true,
+                forfaits: [
+                    { nom: "Fond blanc, 5 photos", duree: "—", livrables: "5 photos retouchées", prix: 125 },
+                    { nom: "Fond blanc, 10 photos", duree: "—", livrables: "10 photos retouchées", prix: 240 },
+                    { nom: "Fond blanc, 20 photos", duree: "—", livrables: "20 photos retouchées", prix: 460 },
+                    { nom: "Mise en scène (lifestyle), 3 photos", duree: "—", livrables: "3 photos retouchées", prix: 135 },
+                    { nom: "Mise en scène (lifestyle), 6 photos", duree: "—", livrables: "6 photos retouchées", prix: 260 },
+                    { nom: "Avec modèle, 3 photos", duree: "—", livrables: "3 photos retouchées", prix: 210 },
+                    { nom: "Avec modèle, 6 photos", duree: "—", livrables: "6 photos retouchées", prix: 400 }
+                ],
+                note: "Prise de vue en une seule séance. Le cachet d’un modèle n’est pas inclus.",
+                pourquoi: "Le prix par photo comprend l’installation de l’éclairage, la mise en place de chaque produit, la prise de vue et la retouche (nettoyage, couleurs, fond). Plus le pack est grand, plus le prix par photo baisse (fond blanc : 25 $, 24 $, puis 23 $ la photo)."
+            },
+            {
+                num: "06", titre: "Mode et portfolio d’artiste",
+                resume: "Book, portfolio, lookbook, visuels promo",
+                photo: "images/58668_03.jpg",
+                cover: "",
+                styles: ["Book de mannequin", "Portfolio d’artiste (musique, danse, théâtre)", "Lookbook de marque", "Visuel promo"],
+                lieux: [
+                    { label: "Intérieur", texte: "en studio · lieu de votre choix" },
+                    { label: "Extérieur", texte: "lieu choisi par RoMEDIA · lieu choisi par vous" }
+                ],
+                communaute: true,
+                forfaits: [
+                    { nom: "Book de mannequin ou portfolio d’artiste", duree: "2 h", livrables: "30 photos retouchées", prix: 390 },
+                    { nom: "Séance créative (mode, direction artistique)", duree: "3 h", livrables: "45 photos retouchées", prix: 560 },
+                    { nom: "Lookbook ou visuels de marque", duree: "4 h", livrables: "60 photos retouchées", prix: 720 }
+                ],
+                note: "",
+                pourquoi: "Les changements de tenue, la direction créative et les mises en scène demandent du temps. Le prix couvre la préparation (planche d’inspiration), la séance, le tri et la retouche. Les artistes de la relève sont admissibles au tarif communautaire."
+            }
+        ];
+
+        // ---------- 3. Comment nos prix sont établis ----------
+        const REASONS = [
+            { titre: "Le temps de séance", texte: "Photographe, matériel, éclairage et assurance pendant la prise de vue." },
+            { titre: "Le travail en coulisses", texte: "Consultation, préparation, tri et retouche professionnelle de chaque photo livrée. Une heure de séance représente en moyenne de 2 à 3 heures de travail avant et après." },
+            { titre: "Le lieu", texte: "Studio loué à l’heure (frais indiqués) ou endroit de votre choix. Un montant fixe couvre tous les déplacements, peu importe l’endroit." },
+            { titre: "La livraison", texte: "Galerie en ligne privée, fichiers haute résolution et droits d’usage personnel." },
+            { titre: "Un prix accessible", texte: "Nos forfaits sont comparés chaque année aux tarifs publics de photographes montréalais pour rester accessibles, et le tarif communautaire réduit encore la facture." }
+        ];
+
+        // ---------- 4. Lieu, déplacement et options ----------
+        // « prix » est un texte libre : écrivez-le comme vous voulez qu'il s'affiche.
+        const OPTIONS = [
+            { nom: "Déplacement (montant fixe)", prix: "30 $", texte: "Un seul montant pour tous les déplacements, peu importe l’endroit : chez vous, lieu de votre choix ou lieu choisi par RoMEDIA. Pas de déplacement pour les séances en studio." },
+            { nom: "Studio (location à l’heure)", prix: "60 $ / h", texte: "Coût de location du studio, sans majoration. On réserve la durée de la séance plus 30 min d’installation : séance de 1 h = 90 $ · 1 h 30 = 120 $ · 2 h = 150 $ · 3 h = 210 $." },
+            { nom: "Extérieur : lieu choisi par RoMEDIA", prix: "Inclus", texte: "Repérage et choix d’un lieu adapté à votre style, gratuitement." },
+            { nom: "Extérieur : lieu choisi par vous", prix: "Inclus", texte: "Nous validons le lieu avec vous. Permis ou frais d’entrée éventuels à votre charge. Report météo gratuit, une fois." },
+            { nom: "Photo supplémentaire retouchée", prix: "5 $ / photo", texte: "Photos retouchées en plus de celles du forfait." },
+            { nom: "Retouche avancée", prix: "8 $ / photo", texte: "Peau détaillée, retrait d’éléments, compositions." },
+            { nom: "Livraison express (48 h)", prix: "+ 35 %", texte: "Galerie livrée en 48 h au lieu de 7 à 10 jours ouvrables." },
+            { nom: "Usage commercial étendu", prix: "+ 60 %", texte: "Publicité, vente de produits, réseaux d’une entreprise. L’usage personnel est toujours inclus." },
+            { nom: "Maquillage et coiffure", prix: "Au coût réel", texte: "Professionnel·le partenaire, sans majoration. Soumission avant la réservation." }
+        ];
+
+        // ---------- 5. Tarif communautaire (le pourcentage vient de SETTINGS) ----------
+        const COMMUNAUTE_TEXTE = "Pour les organismes à but non lucratif, les organismes jeunesse, les étudiant·e·s, les artistes de la relève et les projets à impact social. Il s’applique aux forfaits marqués d’un tarif communautaire (Portrait, Événements, Produits, Mode et portfolio). Limité à 12 projets par année, avec priorité aux organismes jeunesse. Une preuve d’admissibilité est demandée. En échange, RoMEDIA peut documenter le projet (avec votre permission) et y associer des artistes en formation.";
+
+        // ---------- 6. Réservation et conditions ----------
+        const CONDITIONS = [
+            { titre: "Choisir son forfait", texte: "Estimez votre projet avec l’estimateur du site ou réservez une consultation d’une heure." },
+            { titre: "Acompte", texte: "30 % du total à la réservation pour bloquer la date, déduit du total. Solde à la livraison des photos. Paiement par carte de crédit ou de débit." },
+            { titre: "Livraison", texte: "Galerie en ligne privée livrée en 7 à 10 jours ouvrables (48 h en option express)." },
+            { titre: "Changement de date", texte: "Préavis de 48 h pour déplacer la séance sans frais." },
+            { titre: "Confidentialité", texte: "Aucune photo n’est publiée sans votre autorisation écrite." }
+        ];
+
+        /* =====================================================================
+           FIN DE LA ZONE À MODIFIER : le reste fait fonctionner la page.
+           ===================================================================== */
+
+        const $ = id => document.getElementById(id);
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const NB = "\u00a0";
+
+        /* ---------- Calculs ---------- */
+        function fmt(n) {
+            const whole = Math.abs(n - Math.round(n)) < 1e-9;
+            return n.toLocaleString("fr-CA", { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 }) + NB + "$";
+        }
+        function withTax(p) {
+            const cents = Math.round(p * (100 + SETTINGS.tps + SETTINGS.tvq) + 1e-7);
+            return cents / 100;
+        }
+        function communityPrice(p) {
+            return Math.round(p * (100 - SETTINGS.rabaisCommunautaire) / 100);
+        }
+        const minPrice = c => Math.min(...c.forfaits.map(f => f.prix));
+        const taxPct = (SETTINGS.tps + SETTINGS.tvq).toLocaleString("fr-CA", { maximumFractionDigits: 3 });
+
+        /* ---------- Introduction : 3 pastilles ---------- */
+        const chips = [
+            { t: "Prix avant taxes", d: SETTINGS.afficherTaxes
+                ? "Le prix en orange est le prix du forfait avant taxes. Chaque forfait indique aussi le total taxes comprises."
+                : "Les prix indiqués sont les prix du forfait." },
+            { t: "Taxes au Québec", d: SETTINGS.afficherTaxes
+                ? `TPS ${SETTINGS.tps} % + TVQ ${String(SETTINGS.tvq).replace(".", ",")} % = ${taxPct} % du prix avant taxes.`
+                : "Aucune taxe de vente n’est ajoutée à ces prix." },
+            { t: "Tarif communautaire", d: `${SETTINGS.rabaisCommunautaire} % de rabais pour les organismes à but non lucratif, les organismes jeunesse, les étudiant·e·s et les artistes de la relève.` }
+        ];
+        $("info-chips").innerHTML = chips.map(c => `
+            <div class="bg-white/5 border border-white/10 border-t-2 border-t-brandPrimary rounded-2xl p-5">
+                <p class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs mb-2">${esc(c.t)}</p>
+                <p class="text-gray-400 text-sm leading-relaxed">${esc(c.d)}</p>
+            </div>`).join("");
+
+        /* ---------- Cartes de catégories ---------- */
+        const grid = $("cat-grid");
+        grid.innerHTML = CATEGORIES.map((c, i) => {
+            const cover = c.cover || c.photo;
+            return `
+            <button type="button" class="cat-card group relative overflow-hidden rounded-3xl text-left h-72 md:h-80 border border-white/10 bg-gradient-to-br from-brandSecondary to-brandDark transition-shadow duration-500"
+                data-i="${i}" aria-expanded="false" aria-controls="panel-${i}">
+                ${cover ? `<div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105" style="background-image:url('${esc(cover)}')"></div>` : ""}
+                <div class="absolute inset-0 bg-gradient-to-t from-brandDark via-brandDark/60 to-brandDark/10"></div>
+                <div class="relative h-full p-6 flex flex-col justify-between">
+                    <div class="flex items-start justify-between">
+                        <span class="font-editorial text-4xl font-bold text-brandPrimary">${esc(c.num)}</span>
+                        <span class="chev w-10 h-10 rounded-full bg-white/10 backdrop-blur flex items-center justify-center text-white transition-all duration-500">
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <h3 class="font-editorial text-2xl text-white mb-1">${esc(c.titre)}</h3>
+                        <p class="text-gray-300 text-xs mb-3">${esc(c.resume)}</p>
+                        <span class="inline-block text-xs font-bold uppercase tracking-wider bg-brandPrimary text-white rounded-full px-3 py-1">Dès ${fmt(minPrice(c))}</span>
+                    </div>
+                </div>
+            </button>`;
+        }).join("");
+
+        /* ---------- Panneau d'une catégorie ---------- */
+        const COLS = SETTINGS.afficherTaxes ? "1.7fr .6fr 1.1fr .8fr .9fr .9fr" : "1.8fr .6fr 1.2fr .9fr .9fr";
+
+        function rowHTML(f, c) {
+            const cell = (label, value, cls) => `
+                <div class="flex justify-between gap-3 md:block md:text-right ${cls || ""}">
+                    <span class="md:hidden text-xs text-gray-500">${label}</span>
+                    <span>${value}</span>
+                </div>`;
+            return `
+            <div class="row-grid bg-white rounded-xl border border-gray-100 px-4 py-3" style="--cols:${COLS}">
+                <div class="font-bold text-brandSecondary text-sm">${esc(f.nom)}</div>
+                <div class="flex justify-between gap-3 md:block text-xs text-gray-600"><span class="md:hidden text-gray-500">Durée</span><span>${esc(f.duree)}</span></div>
+                <div class="flex justify-between gap-3 md:block text-xs text-gray-600"><span class="md:hidden text-gray-500">Livrables</span><span>${esc(f.livrables)}</span></div>
+                ${cell("Avant taxes", `<b class="text-brandPrimary text-base">${fmt(f.prix)}</b>`)}
+                ${SETTINGS.afficherTaxes ? cell("Taxes comprises", `<span class="text-xs text-gray-600">${fmt(withTax(f.prix))}</span>`) : ""}
+                ${cell("Tarif communautaire", `<span class="text-xs text-gray-600">${c.communaute ? fmt(communityPrice(f.prix)) : "—"}</span>`)}
+            </div>`;
+        }
+
+        function panelHTML(c, i) {
+            const photo = c.photo
+                ? `<img src="${esc(c.photo)}" alt="Exemple de photo : ${esc(c.titre)}" class="w-full h-full object-cover">`
+                : `<div class="w-full h-full flex flex-col items-center justify-center text-center text-gray-400 p-6">
+                       <i class="fas fa-camera text-3xl mb-3"></i><p class="text-sm">Photo d’exemple à venir</p>
+                   </div>`;
+            const head = `
+                <div class="hidden md:grid px-4 text-[10px] uppercase tracking-widest text-gray-500 font-bold row-grid" style="--cols:${COLS}">
+                    <div>Forfait</div><div>Durée</div><div>Livrables</div>
+                    <div class="text-right">Avant taxes</div>
+                    ${SETTINGS.afficherTaxes ? `<div class="text-right">Taxes comprises</div>` : ""}
+                    <div class="text-right">Communautaire</div>
+                </div>`;
+            return `
+            <div class="bg-brandLight text-brandDark rounded-3xl p-6 md:p-10 lg:grid lg:grid-cols-5 lg:gap-10">
+                <figure class="lg:col-span-2 lg:self-start lg:sticky lg:top-28 mb-8 lg:mb-0 rounded-2xl overflow-hidden bg-gray-200 aspect-[4/5] shadow-lg">${photo}</figure>
+                <div class="lg:col-span-3">
+                    <div class="flex items-center gap-4 mb-5 pb-4 border-b-2 border-brandPrimary">
+                        <span class="font-editorial text-4xl font-bold text-brandPrimary">${esc(c.num)}</span>
+                        <h3 class="font-editorial text-3xl font-bold text-brandSecondary">${esc(c.titre)}</h3>
+                    </div>
+
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-2">Styles possibles</p>
+                    <div class="flex flex-wrap gap-2 mb-5">
+                        ${c.styles.map(s => `<span class="text-xs font-semibold bg-brandSecondary/10 text-brandSecondary rounded-full px-3 py-1">${esc(s)}</span>`).join("")}
+                    </div>
+
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-2">Lieu</p>
+                    <ul class="text-sm text-gray-600 space-y-1 mb-6">
+                        ${c.lieux.map(l => `<li><b class="text-brandSecondary">${esc(l.label)} :</b> ${esc(l.texte)}</li>`).join("")}
+                    </ul>
+
+                    <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-3">Forfaits</p>
+                    <div class="space-y-2">
+                        ${head}
+                        ${c.forfaits.map(f => rowHTML(f, c)).join("")}
+                    </div>
+                    ${c.note ? `<p class="text-xs text-gray-500 mt-3">${esc(c.note)}</p>` : ""}
+
+                    <div class="mt-6 bg-white rounded-2xl border border-gray-100 border-l-4 border-l-brandSecondary p-5">
+                        <p class="text-brandSecondary font-bold text-sm mb-1">Pourquoi ce prix ?</p>
+                        <p class="text-sm text-gray-600 leading-relaxed">${esc(c.pourquoi)}</p>
+                    </div>
+
+                    <div class="mt-6 flex flex-wrap gap-3">
+                        <a href="estimateur.html?service=photo"
+                            class="inline-flex items-center justify-center px-6 py-3 border-2 border-brandSecondary text-brandSecondary font-bold text-xs uppercase tracking-wider rounded-full hover:bg-brandSecondary hover:text-white transition-all">
+                            Estimer mon projet
+                        </a>
+                        <a href="${esc(SETTINGS.lienReservation)}" target="_blank" rel="noopener"
+                            class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold text-xs uppercase tracking-wider rounded-full hover:bg-brandSecondary transition-all">
+                            Réserver une consultation
+                        </a>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        /* ---------- Ouvrir / fermer (une seule catégorie à la fois) ---------- */
+        let openIndex = -1, busy = false;
+        const cards = () => [...grid.querySelectorAll(".cat-card")];
+
+        function updateCards() {
+            cards().forEach((b, i) => {
+                const on = i === openIndex;
+                b.classList.toggle("is-open", on);
+                b.setAttribute("aria-expanded", on);
             });
+        }
+
+        function insertPanel(i) {
+            const list = cards();
+            const cols = getComputedStyle(grid).gridTemplateColumns.split(" ").length;
+            const end = Math.min((Math.floor(i / cols) + 1) * cols - 1, list.length - 1);
+            const p = document.createElement("div");
+            p.id = "panel-" + i;
+            p.className = "cat-panel col-span-full overflow-hidden";
+            p.setAttribute("role", "region");
+            p.setAttribute("aria-label", CATEGORIES[i].titre);
+            p.innerHTML = panelHTML(CATEGORIES[i], i);
+            list[end].after(p);
+            return p;
+        }
+
+        function closePanel(done) {
+            const p = grid.querySelector(".cat-panel");
+            if (!p) { if (done) done(); return; }
+            gsap.to(p, {
+                height: 0, opacity: 0, duration: reduceMotion ? 0.01 : 0.45, ease: "power2.inOut",
+                onComplete: () => { p.remove(); if (done) done(); }
+            });
+        }
+
+        function openPanel(i) {
+            const p = insertPanel(i);
+            gsap.fromTo(p, { height: 0, opacity: 0 }, {
+                height: "auto", opacity: 1, duration: reduceMotion ? 0.01 : 0.7, ease: "power3.out",
+                clearProps: "height,opacity",
+                onComplete: () => { busy = false; }
+            });
+            requestAnimationFrame(() => {
+                const top = cards()[i].getBoundingClientRect().top + window.scrollY - 100;
+                window.scrollTo({ top, behavior: reduceMotion ? "auto" : "smooth" });
+            });
+        }
+
+        grid.addEventListener("click", e => {
+            const b = e.target.closest(".cat-card");
+            if (!b || busy) return;
+            const i = Number(b.dataset.i);
+            busy = true;
+            if (openIndex === i) {
+                openIndex = -1;
+                updateCards();
+                closePanel(() => { busy = false; });
+                return;
+            }
+            const hadOpen = openIndex >= 0;
+            openIndex = i;
+            updateCards();
+            if (hadOpen) closePanel(() => openPanel(i));
+            else openPanel(i);
         });
+
+        document.addEventListener("keydown", e => {
+            if (e.key === "Escape" && openIndex >= 0 && !busy) {
+                openIndex = -1;
+                updateCards();
+                busy = true;
+                closePanel(() => { busy = false; });
+            }
+        });
+
+        /* Si la taille de l'écran change, le panneau est replacé sous la bonne rangée */
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (openIndex < 0 || busy) return;
+                const old = grid.querySelector(".cat-panel");
+                if (old) old.remove();
+                insertPanel(openIndex);
+            }, 150);
+        });
+
+        /* ---------- Sections du bas ---------- */
+        $("reasons").innerHTML = REASONS.map((r, i) => `
+            <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                <span class="font-editorial text-3xl font-bold text-brandPrimary">${i + 1}</span>
+                <h3 class="text-brandSecondary font-bold mt-2 mb-2">${esc(r.titre)}</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">${esc(r.texte)}</p>
+            </div>`).join("");
+
+        $("options-list").innerHTML = OPTIONS.map(o => `
+            <div class="bg-white/5 border border-white/10 rounded-2xl px-6 py-4 grid md:grid-cols-12 gap-2 md:gap-6 items-center">
+                <p class="md:col-span-3 font-bold text-white text-sm">${esc(o.nom)}</p>
+                <p class="md:col-span-2 font-bold text-brandPrimary">${esc(o.prix)}</p>
+                <p class="md:col-span-7 text-gray-400 text-sm leading-relaxed">${esc(o.texte)}</p>
+            </div>`).join("");
+
+        $("comm-title").textContent = `${SETTINGS.rabaisCommunautaire} % de rabais pour la communauté`;
+        $("comm-text").textContent = COMMUNAUTE_TEXTE;
+
+        $("conditions").innerHTML = CONDITIONS.map(c => `
+            <div class="px-6 py-4 grid sm:grid-cols-4 gap-1 sm:gap-4">
+                <p class="font-bold text-brandSecondary text-sm">${esc(c.titre)}</p>
+                <p class="sm:col-span-3 text-gray-600 text-sm leading-relaxed">${esc(c.texte)}</p>
+            </div>`).join("");
+
+        /* ---------- Animations d'arrivée ---------- */
+        if (!reduceMotion) {
+            gsap.from(".reveal", { y: 40, opacity: 0, duration: 1, stagger: 0.15, ease: "power4.out" });
+            gsap.from(".cat-card", { y: 60, opacity: 0, duration: 0.9, stagger: 0.1, delay: 0.3, ease: "power3.out", clearProps: "transform,opacity" });
+        }
     </script>
 </body>
 </html>
