@@ -28,8 +28,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link rel="icon" type="image/png" href="images/RoMedia-Changer-Just-logo-blue-donw.png">
-        <!-- Aperçu lors du partage (Facebook, Instagram, LinkedIn, WhatsApp, iMessage…) -->
-    <meta name="description" content="RoMEDIA : photographie, vidéographie, infographie et sites web statique. Changer pour évoluer.">
+
+    <!-- Aperçu lors du partage (Facebook, Instagram, LinkedIn, WhatsApp, iMessage…) -->
+    <meta name="description" content="RoMEDIA : photographie, vidéographie, infographie et sites web statiques. Changer pour évoluer.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="RoMEDIA">
     <meta property="og:locale" content="fr_CA">
@@ -43,7 +44,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="RoMEDIA, Changer pour évoluer">
     <meta name="twitter:card" content="summary_large_image">
-    
+
     <style>
         body {
             background-color: #0a0a0c;
@@ -92,6 +93,7 @@
             <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
                 <a href="#accueil" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
                 <a href="#services" class="hover:text-brandPrimary transition-colors text-sm uppercase">Services</a>
+                <a href="#tarifs" class="hover:text-brandPrimary transition-colors text-sm uppercase">Tarifs</a>
                 <a href="#portfolio" class="hover:text-brandPrimary transition-colors text-sm uppercase">Folio</a>
             </nav>
 
@@ -140,44 +142,6 @@
             </div>
         </div>
 
-        <section id="tarifs" class="relative py-28 overflow-hidden text-white">
-        <!-- Photo d'arrière-plan : changez le chemin dans url('...') -->
-        <div class="absolute inset-0 bg-cover bg-center"
-            style="background-image: url('images/RNP_0598-2.jpg');"></div>
-        <!-- Voile sombre pour que le texte reste lisible -->
-        <div class="absolute inset-0 bg-gradient-to-r from-brandDark via-brandDark/85 to-brandDark/40"></div>
-
-        <div class="relative max-w-7xl mx-auto px-6">
-            <div class="max-w-2xl">
-                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Tarifs · Photographie</span>
-                <h2 class="text-3xl md:text-5xl font-editorial font-light leading-tight mb-6">
-                    Des prix clairs, <span class="font-bold italic text-brandLight">expliqués</span>.
-                </h2>
-                <p class="text-gray-300 text-base md:text-lg mb-8">
-                    Portrait, nouveau-né, boudoir, événements, produits, mode : choisissez une catégorie
-                    et voyez tous les forfaits, et surtout pourquoi chaque prix est ce qu’il est.
-                </p>
-
-                <ul class="space-y-3 mb-10 text-sm text-gray-200">
-                    <li class="flex items-start gap-3"><i class="fas fa-check text-brandPrimary mt-1"></i> Six catégories, des forfaits détaillés</li>
-                    <li class="flex items-start gap-3"><i class="fas fa-check text-brandPrimary mt-1"></i> Prix avant et après taxes</li>
-                    <li class="flex items-start gap-3"><i class="fas fa-check text-brandPrimary mt-1"></i> Tarif communautaire pour les organismes, les étudiant·e·s et la relève</li>
-                </ul>
-
-                <div class="flex flex-wrap gap-4">
-                    <a href="tarifs.html"
-                        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all transform hover:scale-105 shadow-xl shadow-brandPrimary/20">
-                        Voir la liste de prix <i class="fas fa-arrow-right ml-3 text-xs"></i>
-                    </a>
-                    <a href="estimateur.html"
-                        class="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-bold text-sm uppercase tracking-wider rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all">
-                        Estimer mon projet
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
-
         <div class="w-full lg:w-1/2 relative bg-brandSecondary/30 min-h-[500px] lg:min-h-screen flex items-center 
             justify-center p-8 overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-tr from-brandSecondary/50 to-brandDark mix-blend-multiply 
@@ -188,7 +152,7 @@
                 <div id="heroStack" data-hover role="button" tabindex="0" aria-label="Afficher la photo suivante"
                     class="relative w-full h-[500px] cursor-pointer outline-none"></div>
                 <p class="mt-6 text-center text-xs uppercase tracking-widest text-white/60">
-                    Créer par RoMEDIA · <span id="stackCount"></span>
+                    Créé par RoMEDIA · <span id="stackCount"></span>
                 </p>
             </div>
         </div>
@@ -304,7 +268,47 @@
             </div>
         </div>
     </section>
-        <section id="avis" class="py-24 bg-brandLight text-brandDark relative">
+
+    <!-- Tarifs : photo en arrière-plan, mène à tarifs.html -->
+    <section id="tarifs" class="relative py-28 overflow-hidden text-white">
+        <!-- Photo d'arrière-plan : changez le chemin dans url('...') -->
+        <div class="absolute inset-0 bg-cover bg-center"
+            style="background-image: url('images/RNP_0598-2.jpg');"></div>
+        <!-- Voile sombre pour que le texte reste lisible -->
+        <div class="absolute inset-0 bg-gradient-to-r from-brandDark via-brandDark/85 to-brandDark/40"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Tarifs · Photographie</span>
+                <h2 class="text-3xl md:text-5xl font-editorial font-light leading-tight mb-6">
+                    Des prix clairs, <span class="font-bold italic text-brandLight">expliqués</span>.
+                </h2>
+                <p class="text-gray-300 text-base md:text-lg mb-8">
+                    Portrait, nouveau-né, boudoir, événements, produits, mode : choisissez une catégorie
+                    et voyez tous les forfaits, et surtout pourquoi chaque prix est ce qu’il est.
+                </p>
+
+                <ul class="space-y-3 mb-10 text-sm text-gray-200">
+                    <li class="flex items-start gap-3"><i class="fas fa-check text-brandPrimary mt-1"></i> Six catégories, des forfaits détaillés</li>
+                    <li class="flex items-start gap-3"><i class="fas fa-check text-brandPrimary mt-1"></i> Prix avant et après taxes</li>
+                    <li class="flex items-start gap-3"><i class="fas fa-check text-brandPrimary mt-1"></i> Tarif communautaire pour les organismes, les étudiant·e·s et la relève</li>
+                </ul>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="tarifs.html"
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all transform hover:scale-105 shadow-xl shadow-brandPrimary/20">
+                        Voir la liste de prix <i class="fas fa-arrow-right ml-3 text-xs"></i>
+                    </a>
+                    <a href="estimateur.html"
+                        class="inline-flex items-center justify-center px-8 py-4 border border-white/30 text-white font-bold text-sm uppercase tracking-wider rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all">
+                        Estimer mon projet
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="avis" class="py-24 bg-brandLight text-brandDark relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-14">
                 <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Avis clients</span>
@@ -506,8 +510,8 @@
                 font-extrabold text-xs block mb-2">Paiement</span>
             <h2 class="text-3xl md:text-5xl font-editorial text-white mb-6">Régler votre facture ou votre acompte</h2>
             <p class="text-gray-400 max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed">
-                Payez en quelques clics par carte de crédit ou de débit, Samsung ou Apple pay, sans virement Interac.
-                Sur la page de paiement, vous entrez simplement le montant à régler et les informations necessaires.
+                Payez en quelques clics par carte de crédit ou de débit, Samsung Pay ou Apple Pay, sans virement Interac.
+                Sur la page de paiement, vous entrez simplement le montant à régler et les informations nécessaires.
             </p>
 
             <div class="flex flex-wrap items-center justify-center gap-4">
@@ -529,7 +533,7 @@
             </p>
         </div>
     </section>
-       
+
     <div class="bg-brandDark py-12 flex justify-center">
         <a href="https://share.google/QvBFvEJqOFlPTYVwj" target="_blank" rel="noopener"
             class="inline-flex items-center justify-center px-8 py-4 border-2 border-brandPrimary text-brandPrimary font-bold rounded-full hover:bg-brandPrimary hover:text-white transition-all">
