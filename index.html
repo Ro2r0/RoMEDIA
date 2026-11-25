@@ -157,6 +157,12 @@
             </div>
         </div>
     </section>
+    <div class="bg-brandDark py-12 flex justify-center">
+        <a href="https://share.google/QvBFvEJqOFlPTYVwj" target="_blank" rel="noopener"
+            class="inline-flex items-center justify-center px-8 py-4 border-2 border-brandPrimary text-brandPrimary font-bold rounded-full hover:bg-brandPrimary hover:text-white transition-all">
+            <i class="fab fa-google mr-3"></i> Laisser un avis Google
+        </a>
+    </div>
 
     <section id="services" class="py-24 bg-brandLight text-brandDark relative overflow-hidden">
         <div class="max-w-7xl mx-auto px-6">
@@ -305,6 +311,69 @@
                     </a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    </section>
+    <section id="paiement" class="py-24 bg-brandDark border-t border-white/5 relative">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="w-16 h-16 rounded-full bg-brandPrimary/20 text-brandPrimary 
+                flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-credit-card text-2xl"></i>
+            </div>
+            <span class="text-brandPrimary uppercase tracking-widest 
+                font-extrabold text-xs block mb-2">Paiement</span>
+            <h2 class="text-3xl md:text-5xl font-editorial text-white mb-6">Régler votre facture ou votre acompte</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-8 text-sm md:text-base leading-relaxed">
+                Payez en quelques clics par carte de crédit ou de débit, Samsung Pay ou Apple Pay, sans virement Interac.
+                Sur la page de paiement, vous entrez simplement le montant à régler et les informations nécessaires.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <a href="https://buy.stripe.com/cNi9AU9Tl1Cwaws8VVcfK04" target="_blank" rel="noopener"
+                    class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white 
+                    font-bold rounded-full hover:bg-white hover:text-brandDark transition-all 
+                    transform hover:scale-105 shadow-xl shadow-brandPrimary/20">
+                    <i class="fas fa-lock mr-3 text-sm"></i> Payer maintenant
+                </a>
+                <a href="estimateur.html"
+                    class="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white 
+                    font-bold rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all">
+                    Estimer d’abord mon projet
+                </a>
+            </div>
+                        <div class="mt-10 max-w-md mx-auto bg-white/5 border border-white/10 rounded-2xl p-6 text-left">
+                <p class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs mb-2">Sans frais</p>
+                <h3 class="text-white font-bold mb-2"><i class="fas fa-building-columns mr-2 text-brandPrimary"></i> Virement Interac</h3>
+                <p class="text-gray-400 text-sm mb-4">
+                    Envoyez votre virement à l’adresse ci-dessous (dépôt automatique, aucune question de sécurité, aucune taxe)
+                    et inscrivez votre nom et le projet dans le message.
+                </p>
+                <div class="flex items-center gap-3">
+                    <code id="etransfer-email" class="flex-1 bg-brandDark border border-white/10 rounded-lg px-3 py-2 text-sm text-white break-all">romedia@wealthsimple.me</code>
+                    <button type="button" id="copy-email"
+                        class="px-4 py-2 border border-white/20 rounded-lg text-xs font-bold uppercase tracking-wider text-white hover:border-brandPrimary hover:text-brandPrimary transition-all">
+                        Copier
+                    </button>
+                </div>
+            </div>
+            <script>
+            (function () {
+                var btn = document.getElementById("copy-email");
+                btn.addEventListener("click", function () {
+                    var email = document.getElementById("etransfer-email").textContent.trim();
+                    var old = btn.textContent;
+                    (navigator.clipboard ? navigator.clipboard.writeText(email) : Promise.reject())
+                        .then(function () { btn.textContent = "Copié"; })
+                        .catch(function () { btn.textContent = "Copie impossible"; });
+                    setTimeout(function () { btn.textContent = old; }, 1800);
+                });
+            })();
+            </script>
+
+            <p class="text-gray-500 text-xs mt-8 flex items-center justify-center gap-2">
+                <i class="fas fa-shield-halved"></i> Paiement sécurisé par Stripe
+            </p>
         </div>
     </section>
 
