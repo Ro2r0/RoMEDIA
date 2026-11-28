@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agence | RoMEDIA</title>
+    <meta name="description" content="L’agence RoMEDIA : des modèles présentés avec transparence. Chaque silhouette devient un pion de cristal ou de marbre.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandPrimary: '#e26137',   // Orange vibrant
+                        brandSecondary: '#0f3066', // Bleu profond
+                        brandDark: '#0a0a0c',      // Fond sombre premium
+                        brandLight: '#f4f0eb'      // Fond clair éditorial
+                    },
+                    fontFamily: {
+                        editorial: ['Playfair Display', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="icon" type="image/png" href="images/RoMedia-Changer-Just-logo-blue-donw.png">
+
+    <style>
+        body { background-color: #0a0a0c; color: #f4f0eb; overflow-x: hidden; }
+        canvas { display: block; }
+        .rail-dot { transition: all .3s ease; }
+        .rail-dot.active { background: #e26137; transform: scale(1.5); }
+        .gal-item { flex: 0 0 auto; }
+        @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- Barre de progression du défilement -->
+    <div id="progress" class="fixed top-20 left-0 h-[3px] w-full bg-brandPrimary z-40 pointer-events-none" style="transform: scaleX(0); transform-origin: 0 50%;"></div>
+
+    <header class="fixed top-0 left-0 w-full z-50 bg-brandDark/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="text-2xl font-extrabold tracking-wider text-white hover:text-brandPrimary transition-colors">
+                Ro<span class="text-brandPrimary">MEDIA</span>
+            </a>
+            <nav class="hidden md:flex items-center space-x-10 font-semibold tracking-wide">
+                <a href="index.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Accueil</a>
+                <a href="folio.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Folio</a>
+                <a href="tarifs.html" class="hover:text-brandPrimary transition-colors text-sm uppercase">Tarifs</a>
+            </nav>
+            <a id="cta-header" href="#" target="_blank" rel="noopener"
+                class="inline-flex items-center justify-center px-6 py-3 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all duration-300 transform hover:scale-105 shadow-lg shadow-brandPrimary/20">
+                Consultation
+            </a>
+        </div>
+    </header>
+
+    <!-- Navigation latérale entre les modèles -->
+    <nav id="rail" class="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-4" aria-label="Modèles"></nav>
+
+    <main>
+        <!-- ============ HÉROS : le pion prend forme pendant le défilement ============ -->
+        <section id="hero" class="relative h-screen overflow-hidden bg-brandDark">
+            <canvas id="bg-net" class="absolute inset-0 w-full h-full opacity-60"></canvas>
+            <div class="absolute inset-0 bg-gradient-to-r from-brandDark via-brandDark/60 to-transparent"></div>
+
+            <div class="relative z-10 h-full max-w-7xl mx-auto px-6 pt-24 grid lg:grid-cols-2 items-center gap-4">
+                <div>
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-4">Agence · Mannequins et talents</span>
+                    <h1 class="text-4xl md:text-6xl font-editorial font-light leading-tight text-white mb-5">
+                        <span id="hero-t1"></span> <span id="hero-t2" class="font-bold italic text-brandLight"></span><span id="hero-t3"></span>
+                    </h1>
+                    <p id="hero-text" class="text-gray-400 text-base md:text-lg max-w-lg border-l-2 border-brandSecondary pl-4"></p>
+
+                    <div id="hero-steps" class="relative mt-8 h-28 max-w-lg"></div>
+
+                    <div class="mt-4 flex items-center gap-3 text-xs uppercase tracking-widest text-gray-500">
+                        <span>Faites défiler</span><span class="w-px h-8 bg-brandPrimary animate-pulse"></span>
+                    </div>
+                </div>
+                <div class="relative h-[44vh] lg:h-[82vh]">
+                    <canvas id="hero-pawn" class="w-full h-full"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ COMMENT LIRE UNE FICHE ============ -->
+        <section id="lecture" class="py-24 bg-brandLight text-brandDark">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="max-w-2xl mb-14">
+                    <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-2">Transparence</span>
+                    <h2 class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary mb-4">Comment lire une fiche</h2>
+                    <p class="text-gray-600">Chaque modèle est représenté par un pion d’échecs, façonné à partir de ses mensurations. Une façon élégante de présenter une silhouette, sans jamais montrer un faux visage.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6 mb-14">
+                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                        <span class="font-editorial text-3xl font-bold text-brandPrimary">1</span>
+                        <h3 class="text-brandSecondary font-bold mt-2 mb-2">La forme</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">La poitrine ou le torse, le tour de taille et les hanches dessinent le profil du pion. La hauteur en ajuste l’élancement.</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                        <span class="font-editorial text-3xl font-bold text-brandPrimary">2</span>
+                        <h3 class="text-brandSecondary font-bold mt-2 mb-2">La couleur</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">La couleur du pion suit le teint du modèle : un teint noir donne un pion noir, un teint japonais donne un blanc légèrement jaune, et ainsi de suite.</p>
+                    </div>
+                    <div class="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm">
+                        <span class="font-editorial text-3xl font-bold text-brandPrimary">3</span>
+                        <h3 class="text-brandSecondary font-bold mt-2 mb-2">La matière</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">Cristal facetté ou marbre veiné : un choix de présentation, qui n’a aucun lien avec la personne.</p>
+                    </div>
+                </div>
+
+                <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-4">Les teints et leurs couleurs</p>
+                <div id="palette" class="flex flex-wrap gap-6"></div>
+            </div>
+        </section>
+
+        <!-- ============ LES MODÈLES : une section par modèle ============ -->
+        <div id="modeles"></div>
+
+        <!-- ============ APPEL À L'ACTION ============ -->
+        <section id="contact" class="py-28 bg-brandLight text-brandDark">
+            <div class="max-w-3xl mx-auto px-6 text-center">
+                <span class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs block mb-3">Collaborer</span>
+                <h2 id="cta-titre" class="text-3xl md:text-5xl font-editorial font-bold text-brandSecondary mb-5"></h2>
+                <p id="cta-texte" class="text-gray-600 mb-10"></p>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a id="cta-reserver" href="#" target="_blank" rel="noopener"
+                        class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary transition-all transform hover:scale-105 shadow-xl">
+                        Réserver une consultation
+                    </a>
+                    <a id="cta-instagram" href="#" target="_blank" rel="noopener"
+                        class="inline-flex items-center justify-center px-8 py-4 border-2 border-brandSecondary text-brandSecondary font-bold text-sm uppercase tracking-wider rounded-full hover:bg-brandSecondary hover:text-white transition-all">
+                        Écrire sur Instagram
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Agrandissement des photos et vidéos -->
+    <div id="lightbox" class="hidden fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+        <button type="button" id="lightboxClose" aria-label="Fermer"
+            class="absolute top-5 right-5 w-11 h-11 rounded-full bg-white/10 hover:bg-brandPrimary text-white transition-colors">
+            <i class="fas fa-xmark"></i>
+        </button>
+        <div id="lightboxContent" class="max-w-5xl w-full flex flex-col items-center gap-4"></div>
+    </div>
+
+    <footer class="bg-brandDark border-t border-white/5 py-10 text-gray-500 text-xs">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col items-center gap-8">
+            <a href="index.html" class="inline-flex items-center justify-center px-6 py-3 border border-white/20 rounded-full text-sm font-semibold tracking-wide text-white hover:text-brandPrimary hover:border-brandPrimary transition-all duration-300 transform hover:scale-105 shadow-lg bg-white/5">
+                <i class="fas fa-arrow-left mr-3 text-xs"></i> Retour à la page principale
+            </a>
+
+            <div class="w-full flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="flex items-center space-x-4">
+                    <img src="images/RoMedia-Changer.png" alt="RoMedia Logo" class="h-12 w-auto object-contain">
+                    <div>
+                        <p>2026 &copy; RoMEDIA. Tous droits réservés. Changer pour évoluer.</p>
+                    </div>
+                </div>
+                <div class="flex space-x-6 items-center">
+                    <a href="legal.html" class="hover:text-brandPrimary transition-colors underline decoration-brandPrimary/40 underline-offset-4">Mentions Légales & Confidentialité</a>
+                    <a href="http://instagram.com/romedia.mtl" target="_blank" rel="noopener" aria-label="Instagram"
+                        class="hover:text-white transition-colors"><i class="fab fa-instagram text-base"></i></a>
+                    <a href="https://www.facebook.com/romedia.mtl" target="_blank" rel="noopener" aria-label="Facebook"
+                        class="hover:text-white transition-colors"><i class="fab fa-facebook text-base"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        /* =====================================================================
+           ZONE À MODIFIER : c'est ici que vous gérez vos modèles, leurs photos
+           et leurs vidéos. Vous n'avez rien d'autre à toucher dans la page.
+           (Évitez les guillemets droits " dans les textes : utilisez ’ ou « ».)
+           ===================================================================== */
+
+        // ---------- 1. Réglages généraux ----------
+        const SETTINGS = {
+            lienReservation: "https://book.stripe.com/fZucN67Lda924843BBcfK02",
+            lienInstagram: "http://instagram.com/romedia.mtl",
+            heroDebut: "L’agence qui voit",
+            heroMot: "autrement",
+            heroFin: ".",
+            heroTexte: "Des modèles d’ici et d’ailleurs, présentés avec précision et transparence.",
+            ctaTitre: "Vous cherchez le bon visage ?",
+            ctaTexte: "Parlons de votre projet : campagne, catalogue, événement ou défilé. Nous vous proposons les modèles qui lui ressemblent."
+        };
+
+        // ---------- 2. Les quatre étapes du héros (animation au défilement) ----------
+        const ETAPES_HERO = [
+            { titre: "Observer",     texte: "Chaque modèle est mesuré avec précision : hauteur, silhouette, teint." },
+            { titre: "Modéliser",    texte: "Ses mensurations dessinent la forme d’un pion." },
+            { titre: "Cristalliser", texte: "Le pion prend vie, taillé dans le cristal ou le marbre." },
+            { titre: "Révéler",      texte: "Teint, matière, silhouette : une identité sans montrer le visage." }
+        ];
+
+        // ---------- 3. Teints → couleur du pion ----------
+        // Pour AJOUTER un teint : copiez une ligne. « couleur » est un code hexadécimal (#rrggbb).
+        // La clé (à gauche) est ce que vous écrirez dans « teint » d'un modèle.
+        const TEINTS = {
+            noire:        { label: "Peau noire",                      couleur: "#17171c" },
+            brune:        { label: "Peau brune",                      couleur: "#5b3a2a" },
+            metisse:      { label: "Peau métissée",                   couleur: "#a8744d" },
+            sudasiatique: { label: "Peau sud-asiatique",              couleur: "#8e5d3c" },
+            olive:        { label: "Peau olive",                      couleur: "#b9955f" },
+            japonaise:    { label: "Peau japonaise", couleur: "#efe1a8" },
+            asiatique:    { label: "Peau asiatique", couleur: "#ede0ae" },
+            blanche:      { label: "Peau blanche",                    couleur: "#f1eee8" }
+        };
+
+        // ---------- 4. Objets de comparaison (sans marque) ----------
+        // hauteur et largeur en centimètres. « dessin » : "canette", "bouteille", "telephone" ou "porte".
+        // « de » sert à la phrase « Soit 90 % d’une porte standard ». Un objet plus petit que le modèle est empilé jusqu'à sa hauteur ; une porte se place à côté.
+        const OBJETS = {
+            canette:   { nom: "canette",   pluriel: "canettes",   nomLong: "une canette de boisson gazeuse",  de: "d’une canette de boisson gazeuse", hauteur: 12.2, largeur: 6.6,  dessin: "canette" },
+            bouteille: { nom: "bouteille", pluriel: "bouteilles", nomLong: "une bouteille d’eau de 500 ml",   de: "d’une bouteille d’eau de 500 ml", hauteur: 21,   largeur: 6.5,  dessin: "bouteille" },
+            telephone: { nom: "téléphone", pluriel: "téléphones", nomLong: "un téléphone intelligent",        de: "d’un téléphone intelligent", hauteur: 15,   largeur: 7.2,  dessin: "telephone" },
+            porte:     { nom: "porte",     pluriel: "portes",     nomLong: "une porte standard",              de: "d’une porte standard", hauteur: 203,  largeur: 91,   dessin: "porte" }
+        };
+
+        // ---------- 5. Les modèles : UNE SECTION PAR MODÈLE ----------
+        // Pour AJOUTER un modèle : copiez un bloc complet { ... } et collez-le dans la liste.
+        // IMPORTANT : chaque bloc se termine par une virgule, sauf le dernier.
+        //
+        //   id          = nom court sans espace ni accent (sert au lien interne)
+        //   prenom, nom = nom affiché (ex. "Marie", "D.")
+        //   genre       = "femme", "homme" ou "autre"
+        //   exemple     = true affiche « Exemple de mise en page ». Supprimez cette ligne pour un vrai modèle.
+        //   tagline     = phrase courte sous le nom
+        //   categories  = liste de spécialités
+        //   teint       = une clé de TEINTS (noire, brune, metisse, olive, japonaise, blanche, ...)
+        //   couleur     = (facultatif) code hexadécimal pour forcer la couleur du pion
+        //   matiere     = "cristal" ou "marbre"
+        //   hauteur     = hauteur en cm
+        //   poitrine    = tour de poitrine en cm (femmes)   |   torse = tour de torse en cm (hommes)
+        //   tourTaille  = tour de taille en cm
+        //   hanches     = tour de hanches en cm
+        //   pointure, vetements, cheveux, yeux, origine, langues, age = informations (facultatives)
+        //   comparaison = une clé de OBJETS (canette, bouteille, telephone, porte)
+        //   bio         = texte de présentation
+        //   medias      = photos ET vidéos : "images/nom.jpg" ou "videos/nom.mp4"
+        //                 (le type est reconnu par l'extension : .mp4, .webm, .mov)
+        //   reservation = (facultatif) lien propre à ce modèle. Sinon, le lien général est utilisé.
+        //
+        // Pour les vidéos : déposez le fichier dans un dossier « videos » du dépôt GitHub
+        // et gardez-le léger (idéalement sous 25 Mo). Demandez toujours l'autorisation écrite du modèle.
+        const MODELES = [
+            {
+                id: "modele-1", prenom: "Prénom", nom: "Modèle A", genre: "femme", exemple: true,
+                tagline: "Mode, beauté et campagnes commerciales.",
+                categories: ["Mode", "Beauté", "Commercial"],
+                teint: "noire", matiere: "cristal",
+                hauteur: 178, poitrine: 84, tourTaille: 62, hanches: 90,
+                pointure: "9", vetements: "4 / S", cheveux: "Noirs, bouclés", yeux: "Bruns",
+                origine: "Montréal", langues: ["Français", "Anglais"], age: "24 ans",
+                comparaison: "canette",
+                bio: "Texte de présentation à remplacer : parcours, style, expérience, ce qui la distingue. Deux ou trois phrases suffisent.",
+                medias: ["images/58668_03.jpg", "images/RNP_4768-1.jpg", "images/RNP_0598-2.jpg"]
+            },
+            {
+                id: "modele-2", prenom: "Prénom", nom: "Modèle B", genre: "homme", exemple: true,
+                tagline: "Portrait, mode masculine et sport.",
+                categories: ["Mode", "Sport", "Portrait"],
+                teint: "japonaise", matiere: "marbre",
+                hauteur: 183, torse: 102, tourTaille: 80, hanches: 96,
+                pointure: "10,5", vetements: "M", cheveux: "Noirs, courts", yeux: "Bruns foncés",
+                origine: "Montréal", langues: ["Français", "Anglais", "Japonais"], age: "27 ans",
+                comparaison: "porte",
+                bio: "Texte de présentation à remplacer : parcours, style, expérience, ce qui le distingue.",
+                medias: ["images/RNP_4322-1.jpg", "images/IMG_0055-1.jpg", "images/RNP_8961-1.jpg"]
+            },
+            {
+                id: "modele-3", prenom: "Prénom", nom: "Modèle C", genre: "femme", exemple: true,
+                tagline: "Éditorial, lookbook et défilé.",
+                categories: ["Éditorial", "Défilé"],
+                teint: "metisse", matiere: "cristal",
+                hauteur: 172, poitrine: 88, tourTaille: 66, hanches: 94,
+                pointure: "8", vetements: "6 / M", cheveux: "Bruns, ondulés", yeux: "Noisette",
+                origine: "Montréal", langues: ["Français", "Espagnol"], age: "22 ans",
+                comparaison: "bouteille",
+                bio: "Texte de présentation à remplacer.",
+                medias: ["images/IMG_7811-1.jpg", "images/RNP_7120-1.jpg"]
+            },
+            {
+                id: "modele-4", prenom: "Prénom", nom: "Modèle D", genre: "homme", exemple: true,
+                tagline: "Commercial, corporatif et lifestyle.",
+                categories: ["Commercial", "Corporatif", "Lifestyle"],
+                teint: "brune", matiere: "marbre",
+                hauteur: 188, torse: 106, tourTaille: 84, hanches: 100,
+                pointure: "11", vetements: "L", cheveux: "Noirs, rasés", yeux: "Bruns",
+                origine: "Montréal", langues: ["Français", "Anglais"], age: "30 ans",
+                comparaison: "telephone",
+                bio: "Texte de présentation à remplacer.",
+                medias: ["images/RNP_8954-1.jpg", "images/RNP_4690-1.jpg"]
+            }
+        ];
+
+        /* =====================================================================
+           FIN DE LA ZONE À MODIFIER : le reste fait fonctionner la page.
+           ===================================================================== */
+
+        const $ = id => document.getElementById(id);
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+        const isVideo = s => /\.(mp4|webm|mov|m4v)(\?.*)?$/i.test(s);
+        const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const fr = (n, d) => Number(n).toLocaleString("fr-CA", { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
+        const lerp = (a, b, t) => a + (b - a) * t;
+        const clamp01 = v => Math.max(0, Math.min(1, v));
+        const hex2rgb = h => { const n = parseInt(h.replace("#", ""), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; };
+        const lum = c => (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) / 255;
+        const mixRGB = (a, b, t) => [lerp(a[0], b[0], t), lerp(a[1], b[1], t), lerp(a[2], b[2], t)];
+
+        /* ---------------------------------------------------------------------
+           1. LA FORME DU PION : calculée à partir des mensurations
+           --------------------------------------------------------------------- */
+        function pchip(xs, ys) {
+            const n = xs.length, h = [], d = [], m = new Array(n);
+            for (let i = 0; i < n - 1; i++) { h[i] = xs[i + 1] - xs[i]; d[i] = (ys[i + 1] - ys[i]) / h[i]; }
+            m[0] = d[0]; m[n - 1] = d[n - 2];
+            for (let i = 1; i < n - 1; i++) {
+                if (d[i - 1] * d[i] <= 0) m[i] = 0;
+                else {
+                    const w1 = 2 * h[i] + h[i - 1], w2 = h[i] + 2 * h[i - 1];
+                    m[i] = (w1 + w2) / (w1 / d[i - 1] + w2 / d[i]);
+                }
+            }
+            return x => {
+                if (x <= xs[0]) return ys[0];
+                if (x >= xs[n - 1]) return ys[n - 1];
+                let i = 0;
+                while (x > xs[i + 1]) i++;
+                const t = (x - xs[i]) / h[i], t2 = t * t, t3 = t2 * t;
+                return (2 * t3 - 3 * t2 + 1) * ys[i] + (t3 - 2 * t2 + t) * h[i] * m[i] +
+                       (-2 * t3 + 3 * t2) * ys[i + 1] + (t3 - t2) * h[i] * m[i + 1];
+            };
+        }
+
+        // Retourne la liste des anneaux [rayon, hauteur] du pion (hauteur de 0 à 1) et un facteur d'élancement.
+        function buildRings(m) {
+            const def = m.genre === "homme" ? { haut: 100, taille: 82, hanches: 97 } : { haut: 86, taille: 64, hanches: 92 };
+            const haut = Number(m.torse || m.poitrine) || def.haut;
+            const waist = Number(m.tourTaille) || def.taille;
+            const hips = Number(m.hanches) || def.hanches;
+            const K = 0.0027, B = 0.30;
+            const Rh = Math.min(K * hips, 0.285), Rw = K * waist, Rb = Math.min(K * haut, 0.285);
+            const ys = [0, 0.004, 0.045, 0.09, 0.2, 0.38, 0.55, 0.68, 0.75, 0.785];
+            const rs = [0.0001, B, B, B * 0.8, Rh, Rw, Rb, Rb * 0.5, 0.05, 0.075];
+            const f = pchip(ys, rs);
+            const set = new Set(ys);
+            for (let i = 1; i < 28; i++) set.add(+(0.785 * i / 28).toFixed(4));
+            const list = [...set].sort((a, b) => a - b);
+            const pts = list.map(y => [f(y), y]);
+            pts.push([0.115, 0.79], [0.115, 0.805], [0.062, 0.808]);
+            for (let a = -50; a <= 90; a += 14) {
+                const t = a * Math.PI / 180;
+                pts.push([0.095 * Math.cos(t), 0.905 + 0.095 * Math.sin(t)]);
+            }
+            const hf = 0.88 + 0.12 * clamp01(((Number(m.hauteur) || 170) - 150) / 50);
+            return { pts, hf };
+        }
+
+        // Contour 2D du pion pour les dessins SVG (profil gauche + droit).
+        function silhouettePath(rings, Hpx, cx, floorY) {
+            const left = [], right = [];
+            rings.pts.forEach(([r, y]) => {
+                left.push([cx - r * Hpx, floorY - y * Hpx]);
+                right.push([cx + r * Hpx, floorY - y * Hpx]);
+            });
+            const all = left.concat(right.reverse());
+            return "M" + all.map(p => p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" L") + " Z";
+        }
+
+        /* ---------------------------------------------------------------------
+           2. LE MOTEUR DE RENDU : pion en cristal facetté ou en marbre veiné
+           --------------------------------------------------------------------- */
+        function seeded(seed) {
+            let s = 0;
+            for (let i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
+            return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 4294967296; };
+        }
+
+        class Pawn {
+            constructor(canvas, opt) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext("2d");
+                this.rings = opt.rings;
+                this.rgb = hex2rgb(opt.color);
+                this.matiere = opt.matiere || "cristal";
+                this.N = this.matiere === "marbre" ? 40 : 10;
+                this.rot = opt.rot || 0.6;
+                this.target = this.rot;
+                this.reveal = opt.reveal === undefined ? 1 : opt.reveal;
+                this.wire = opt.wire === undefined ? 0 : opt.wire;
+                this.float = !!opt.float;
+                this.visible = false;
+                this.veins = this.matiere === "marbre" ? this.makeVeins(opt.seed || "x") : [];
+                this.computeNormals();
+                this.resize();
+            }
+
+            resize() {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                const w = this.canvas.clientWidth || 300, h = this.canvas.clientHeight || 375;
+                this.w = w; this.h = h; this.dpr = dpr;
+                this.canvas.width = Math.round(w * dpr);
+                this.canvas.height = Math.round(h * dpr);
+            }
+
+            // Normales de chaque bande : plates pour le cristal, adoucies pour le marbre (sauf aux arêtes vives).
+            computeNormals() {
+                const p = this.rings.pts, n = p.length, seg = [];
+                for (let i = 0; i < n - 1; i++) {
+                    const dr = p[i + 1][0] - p[i][0], dy = p[i + 1][1] - p[i][1], len = Math.hypot(dr, dy) || 1;
+                    seg.push([dy / len, -dr / len]);
+                }
+                const dot = (a, b) => a[0] * b[0] + a[1] * b[1];
+                const avg = (a, b) => { const x = a[0] + b[0], y = a[1] + b[1], l = Math.hypot(x, y) || 1; return [x / l, y / l]; };
+                this.flatN = seg;
+                this.softN = seg.map((c, i) => {
+                    const ns = i > 0 && dot(seg[i - 1], c) > 0.84 ? avg(seg[i - 1], c) : c;
+                    const ne = i < seg.length - 1 && dot(c, seg[i + 1]) > 0.84 ? avg(c, seg[i + 1]) : c;
+                    return avg(ns, ne);
+                });
+            }
+
+            makeVeins(seed) {
+                const rnd = seeded(seed), veins = [], n = this.rings.pts.length - 1;
+                for (let k = 0; k < 15; k++) {
+                    let u = rnd() * Math.PI * 2, s = rnd() * n;
+                    const dir = rnd() < 0.5 ? 1 : -1, pts = [], w = 0.5 + rnd() * 1.5;
+                    let du = (rnd() - 0.5) * 0.1;
+                    for (let i = 0; i < 64; i++) {
+                        pts.push([u, Math.max(0, Math.min(n, s))]);
+                        du = du * 0.86 + (rnd() - 0.5) * 0.07;
+                        u += du;
+                        s += dir * (0.1 + rnd() * 0.3);
+                    }
+                    veins.push({ pts, w, a: 0.14 + rnd() * 0.24 });
+                }
+                return veins;
+            }
+
+            ringAt(s) {
+                const p = this.rings.pts, i = Math.min(p.length - 2, Math.floor(s)), f = s - i;
+                return [lerp(p[i][0], p[i + 1][0], f), lerp(p[i][1], p[i + 1][1], f)];
+            }
+
+            draw(time) {
+                const ctx = this.ctx, W = this.w, H = this.h, pts = this.rings.pts, N = this.N;
+                ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+                ctx.clearRect(0, 0, W, H);
+
+                const S = H * 0.74 * this.rings.hf;
+                const cx = W / 2, bob = this.float ? Math.sin((time || 0) / 900) * H * 0.012 : 0;
+                const baseY = H * 0.88 + bob;
+                const tilt = 0.26, ct = Math.cos(tilt), st = Math.sin(tilt);
+                const base = this.rgb, dark = lum(base) < 0.35;
+
+                // lueur de fond
+                const glow = ctx.createRadialGradient(cx, baseY - S * 0.45, 0, cx, baseY - S * 0.45, S * 0.75);
+                glow.addColorStop(0, "rgba(226,97,55,0.16)");
+                glow.addColorStop(1, "rgba(226,97,55,0)");
+                ctx.fillStyle = glow;
+                ctx.fillRect(0, 0, W, H);
+
+                // ombre au sol
+                ctx.save();
+                ctx.translate(cx, baseY + S * 0.015);
+                ctx.scale(1, 0.26);
+                const sh = ctx.createRadialGradient(0, 0, 0, 0, 0, S * 0.42);
+                sh.addColorStop(0, "rgba(0,0,0,0.65)");
+                sh.addColorStop(1, "rgba(0,0,0,0)");
+                ctx.fillStyle = sh;
+                ctx.beginPath(); ctx.arc(0, 0, S * 0.42, 0, Math.PI * 2); ctx.fill();
+                ctx.restore();
+
+                // anneaux projetés
+                const rot = this.rot, V = new Array(pts.length);
+                for (let i = 0; i < pts.length; i++) {
+                    const r = pts[i][0], y = pts[i][1], row = new Array(N);
+                    for (let j = 0; j < N; j++) {
+                        const th = (j / N) * Math.PI * 2 + rot, x = r * Math.cos(th), z = r * Math.sin(th);
+                        row[j] = [cx + x * S, baseY - (y * ct - z * st) * S, z * ct + y * st];
+                    }
+                    V[i] = row;
+                }
+
+                // facettes
+                const L = [-0.5, 0.72, 0.55], ll = Math.hypot(L[0], L[1], L[2]);
+                L[0] /= ll; L[1] /= ll; L[2] /= ll;
+                const Hh = [L[0], L[1], L[2] + 1]; const hl = Math.hypot(Hh[0], Hh[1], Hh[2]);
+                Hh[0] /= hl; Hh[1] /= hl; Hh[2] /= hl;
+                const quads = [];
+                for (let i = 0; i < pts.length - 1; i++) {
+                    const nn = this.matiere === "marbre" ? this.softN[i] : this.flatN[i], nr = nn[0], nv = nn[1];
+                    for (let j = 0; j < N; j++) {
+                        const j1 = (j + 1) % N, thc = ((j + 0.5) / N) * Math.PI * 2 + rot;
+                        const nx = nr * Math.cos(thc), nzw = nr * Math.sin(thc);
+                        const vy = nv * ct - nzw * st, vz = nzw * ct + nv * st;
+                        const a = V[i][j], b = V[i][j1], c = V[i + 1][j1], d = V[i + 1][j];
+                        quads.push({ p: [a, b, c, d], n: [nx, vy, vz], depth: (a[2] + b[2] + c[2] + d[2]) / 4 });
+                    }
+                }
+                quads.sort((q1, q2) => q1.depth - q2.depth);
+
+                const showFacets = this.reveal > 0.01;
+                if (showFacets) {
+                    ctx.lineJoin = "round";
+                    for (const q of quads) {
+                        const front = q.n[2] > 0;
+                        if (this.matiere === "marbre" && !front) continue;
+                        const n = front ? q.n : [-q.n[0], -q.n[1], -q.n[2]];
+                        const diff = Math.max(0, n[0] * L[0] + n[1] * L[1] + n[2] * L[2]);
+                        const spec = Math.pow(Math.max(0, n[0] * Hh[0] + n[1] * Hh[1] + n[2] * Hh[2]), this.matiere === "marbre" ? 24 : 30);
+                        const fres = Math.pow(1 - Math.max(0, n[2]), 2);
+                        const amb = dark ? 20 : 0;
+                        let k = this.matiere === "marbre" ? 0.30 + 0.78 * diff : 0.28 + 0.9 * diff;
+                        let r = base[0] * k + amb + 255 * (spec * (this.matiere === "marbre" ? 0.28 : 0.6) + fres * 0.08);
+                        let g = base[1] * k + amb + 255 * (spec * (this.matiere === "marbre" ? 0.28 : 0.6) + fres * 0.08);
+                        let b = base[2] * k + amb + 255 * (spec * (this.matiere === "marbre" ? 0.28 : 0.6) + fres * 0.10);
+                        r = Math.min(255, r); g = Math.min(255, g); b = Math.min(255, b);
+                        let alpha;
+                        if (this.matiere === "marbre") alpha = 1;
+                        else alpha = front ? Math.min(0.96, 0.46 + 0.42 * diff + 0.3 * spec) : 0.2 + 0.18 * diff;
+                        alpha *= this.reveal;
+                        const col = `rgba(${r | 0},${g | 0},${b | 0},${alpha.toFixed(3)})`;
+                        ctx.beginPath();
+                        ctx.moveTo(q.p[0][0], q.p[0][1]);
+                        for (let t = 1; t < 4; t++) ctx.lineTo(q.p[t][0], q.p[t][1]);
+                        ctx.closePath();
+                        ctx.fillStyle = col;
+                        ctx.fill();
+                        if (this.matiere === "marbre") {
+                            ctx.strokeStyle = col; ctx.lineWidth = 0.7; ctx.stroke();
+                        } else {
+                            ctx.strokeStyle = `rgba(255,255,255,${((front ? 0.12 + 0.3 * spec : 0.05) * this.reveal).toFixed(3)})`;
+                            ctx.lineWidth = 0.8; ctx.stroke();
+                        }
+                    }
+                }
+
+                // veines de marbre
+                if (this.matiere === "marbre" && showFacets) {
+                    const vc = dark ? mixRGB(base, [255, 255, 255], 0.55) : mixRGB(base, [40, 40, 55], 0.5);
+                    ctx.lineCap = "round";
+                    for (const v of this.veins) {
+                        const alpha = v.a * this.reveal;
+                        let open = false;
+                        ctx.beginPath();
+                        for (const [u, s] of v.pts) {
+                            const [r, y] = this.ringAt(s), th = u + rot;
+                            const x = r * Math.cos(th) * 1.004, z = r * Math.sin(th) * 1.004;
+                            if (z < -0.01) { open = false; continue; }
+                            const X = cx + x * S, Y = baseY - (y * ct - z * st) * S;
+                            if (!open) { ctx.moveTo(X, Y); open = true; } else ctx.lineTo(X, Y);
+                        }
+                        ctx.strokeStyle = `rgba(${vc[0] | 0},${vc[1] | 0},${vc[2] | 0},${(alpha * 0.3).toFixed(3)})`;
+                        ctx.lineWidth = v.w * 3.4;
+                        ctx.stroke();
+                        ctx.strokeStyle = `rgba(${vc[0] | 0},${vc[1] | 0},${vc[2] | 0},${alpha.toFixed(3)})`;
+                        ctx.lineWidth = v.w;
+                        ctx.stroke();
+                    }
+                }
+
+                // fil de fer (héros) : le pion se dessine de bas en haut
+                const wireA = 1 - this.reveal * 0.88;
+                if (this.wire > 0.001 && wireA > 0.01) {
+                    ctx.strokeStyle = `rgba(226,97,55,${(0.85 * wireA).toFixed(3)})`;
+                    ctx.lineWidth = 1;
+                    const upto = Math.floor(this.wire * (pts.length - 1));
+                    for (let i = 0; i <= upto; i++) {
+                        ctx.beginPath();
+                        for (let j = 0; j <= N; j++) {
+                            const p = V[i][j % N];
+                            if (j === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+                        }
+                        ctx.stroke();
+                    }
+                    for (let j = 0; j < N; j++) {
+                        ctx.beginPath();
+                        for (let i = 0; i <= upto; i++) {
+                            const p = V[i][j];
+                            if (i === 0) ctx.moveTo(p[0], p[1]); else ctx.lineTo(p[0], p[1]);
+                        }
+                        ctx.stroke();
+                    }
+                    // point lumineux au sommet du tracé
+                    const top = V[upto][0];
+                    ctx.fillStyle = `rgba(255,255,255,${wireA.toFixed(3)})`;
+                    ctx.beginPath(); ctx.arc(top[0], top[1], 3, 0, Math.PI * 2); ctx.fill();
+                }
+            }
+        }
+
+        const pawns = [];   // tous les pions de la page
+        function addPawn(canvas, opt) {
+            const p = new Pawn(canvas, opt);
+            pawns.push(p);
+            return p;
+        }
+
+        /* ---------------------------------------------------------------------
+           3. LE COMPARATIF DE TAILLE (dessin SVG, sans marque)
+           --------------------------------------------------------------------- */
+        function drawObject(type, x, floor, w, h) {
+            const top = floor - h;
+            if (type === "canette") {
+                return `<g><rect x="${x}" y="${top}" width="${w}" height="${h}" rx="${w * 0.14}" fill="#c9ced6"/>
+                    <rect x="${x}" y="${top + h * 0.3}" width="${w}" height="${h * 0.4}" fill="#e26137"/>
+                    <rect x="${x + w * 0.1}" y="${top}" width="${w * 0.8}" height="${h * 0.07}" fill="#eef0f3"/>
+                    <rect x="${x + w * 0.14}" y="${top + h * 0.34}" width="${w * 0.16}" height="${h * 0.32}" fill="rgba(255,255,255,.35)"/></g>`;
+            }
+            if (type === "bouteille") {
+                const nw = w * 0.38, nx = x + (w - nw) / 2;
+                return `<g><rect x="${nx}" y="${top}" width="${nw}" height="${h * 0.16}" rx="${nw * 0.2}" fill="#2e6fb7"/>
+                    <path d="M${nx} ${top + h * 0.16} L${nx + nw} ${top + h * 0.16} C${x + w} ${top + h * 0.3} ${x + w} ${top + h * 0.34} ${x + w} ${top + h * 0.42} L${x + w} ${floor - h * 0.03} Q${x + w} ${floor} ${x + w * 0.85} ${floor} L${x + w * 0.15} ${floor} Q${x} ${floor} ${x} ${floor - h * 0.03} L${x} ${top + h * 0.42} C${x} ${top + h * 0.34} ${x} ${top + h * 0.3} ${nx} ${top + h * 0.16} Z" fill="rgba(180,215,245,.55)" stroke="rgba(255,255,255,.5)" stroke-width="1"/>
+                    <rect x="${x}" y="${top + h * 0.5}" width="${w}" height="${h * 0.22}" fill="rgba(46,111,183,.8)"/></g>`;
+            }
+            if (type === "telephone") {
+                return `<g><rect x="${x}" y="${top}" width="${w}" height="${h}" rx="${w * 0.16}" fill="#1b1c22" stroke="#4a4c57" stroke-width="1"/>
+                    <rect x="${x + w * 0.07}" y="${top + h * 0.04}" width="${w * 0.86}" height="${h * 0.92}" rx="${w * 0.12}" fill="#3a6df0"/>
+                    <rect x="${x + w * 0.34}" y="${top + h * 0.055}" width="${w * 0.32}" height="${h * 0.03}" rx="${w * 0.04}" fill="#1b1c22"/></g>`;
+            }
+            // porte
+            return `<g><rect x="${x}" y="${top}" width="${w}" height="${h}" fill="#7a5233" stroke="#5a3b22" stroke-width="2"/>
+                <rect x="${x + w * 0.14}" y="${top + h * 0.07}" width="${w * 0.72}" height="${h * 0.36}" fill="none" stroke="#5a3b22" stroke-width="2"/>
+                <rect x="${x + w * 0.14}" y="${top + h * 0.5}" width="${w * 0.72}" height="${h * 0.43}" fill="none" stroke="#5a3b22" stroke-width="2"/>
+                <circle cx="${x + w * 0.85}" cy="${top + h * 0.5}" r="${Math.max(3, w * 0.035)}" fill="#d8c07a"/></g>`;
+        }
+
+        function compareSVG(m, rings, color) {
+            const o = OBJETS[m.comparaison] || OBJETS.canette;
+            const H = Number(m.hauteur) || 170;
+            const VW = 440, VH = 380, floor = 350, topPad = 26;
+            const stack = o.hauteur < H * 0.5;
+            const maxCm = stack ? H : Math.max(H, o.hauteur);
+            const sc = (floor - topPad) / maxCm;
+            const modelH = H * sc, cxm = 120, uid = "c" + m.id.replace(/[^a-z0-9]/gi, "");
+            let body = `<defs><clipPath id="${uid}"><rect class="cmp-clip" x="0" y="${floor}" width="${VW}" height="0"/></clipPath></defs>
+                <line x1="20" y1="${floor}" x2="${VW - 20}" y2="${floor}" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
+                <g clip-path="url(#${uid})"><path d="${silhouettePath(rings, modelH, cxm, floor)}" fill="${color}" stroke="rgba(255,255,255,.55)" stroke-width="1.2"/></g>
+                <line class="cmp-line" x1="${cxm - 90}" y1="${floor - modelH}" x2="${VW - 20}" y2="${floor - modelH}" stroke="#e26137" stroke-width="1" stroke-dasharray="5 5" opacity="0"/>
+                <text class="cmp-line" x="${cxm - 90}" y="${floor - modelH - 7}" fill="#e26137" font-size="12" font-weight="700" opacity="0">${fr(H)} cm</text>`;
+            let count = H / o.hauteur;
+            if (stack) {
+                const ow = o.largeur * sc, oh = o.hauteur * sc, ox = 270, full = Math.floor(count), frac = count - full;
+                body += `<g class="cmp-objs">`;
+                for (let i = 0; i < full; i++) body += `<g class="cmp-obj">${drawObject(o.dessin, ox, floor - i * oh, ow, oh)}</g>`;
+                if (frac > 0.04) {
+                    const cid = uid + "p";
+                    body += `<g class="cmp-obj"><clipPath id="${cid}"><rect x="${ox - 2}" y="${floor - full * oh - oh * frac}" width="${ow + 4}" height="${oh * frac}"/></clipPath>
+                        <g clip-path="url(#${cid})">${drawObject(o.dessin, ox, floor - full * oh, ow, oh)}</g></g>`;
+                }
+                body += `</g>`;
+                const zh = 92, zw = o.largeur / o.hauteur * zh, zx = 345;
+                body += `<g class="cmp-line" opacity="0"><text x="300" y="${floor - zh - 9}" fill="#9aa0ad" font-size="11" font-weight="700">1 ${o.nom} = ${fr(o.hauteur, o.hauteur % 1 ? 1 : 0)} cm</text>${drawObject(o.dessin, zx, floor, zw, zh)}</g>`;
+            } else {
+                const ow = o.largeur * sc, oh = o.hauteur * sc;
+                body += `<g class="cmp-objs"><g class="cmp-obj">${drawObject(o.dessin, 270, floor, ow, oh)}</g></g>
+                    <text class="cmp-line" x="${270}" y="${floor - oh - 7}" fill="#9aa0ad" font-size="12" font-weight="700" opacity="0">${fr(o.hauteur)} cm</text>`;
+                count = H / o.hauteur;
+            }
+            const who = m.genre === "homme" ? "Il" : m.genre === "femme" ? "Elle" : "Cette personne";
+            const phrase = stack
+                ? { avant: `${who} mesure environ `, fin: ` ${o.pluriel} empilées.` }
+                : { avant: "Soit ", fin: ` % ${o.de}.` };
+            return { svg: `<svg viewBox="0 0 ${VW} ${VH}" class="w-full h-auto" role="img" aria-label="Comparaison de taille avec ${esc(o.nomLong)}">${body}</svg>`,
+                     value: stack ? count : count * 100, decimals: stack ? 1 : 0, phrase, o, stack };
+        }
+
+        /* ---------------------------------------------------------------------
+           4. CONSTRUCTION DE LA PAGE
+           --------------------------------------------------------------------- */
+        const GENRES = { femme: "Femme", homme: "Homme", autre: "Non-binaire" };
+        const palette = Object.values(TEINTS);
+        const modeles = MODELES.map((m, i) => {
+            const t = TEINTS[m.teint] || TEINTS.blanche;
+            return { m, i, rings: buildRings(m), color: m.couleur || t.couleur, teintLabel: t.label };
+        });
+
+        // en-tête et appels à l'action
+        $("cta-header").href = SETTINGS.lienReservation;
+        $("cta-reserver").href = SETTINGS.lienReservation;
+        $("cta-instagram").href = SETTINGS.lienInstagram;
+        $("cta-titre").textContent = SETTINGS.ctaTitre;
+        $("cta-texte").textContent = SETTINGS.ctaTexte;
+        $("hero-t1").textContent = SETTINGS.heroDebut;
+        $("hero-t2").textContent = SETTINGS.heroMot;
+        $("hero-t3").textContent = SETTINGS.heroFin;
+        $("hero-text").textContent = SETTINGS.heroTexte;
+
+        // étapes du héros
+        $("hero-steps").innerHTML = ETAPES_HERO.map((e, i) => `
+            <div class="hero-step absolute inset-0" style="opacity:${i === 0 ? 1 : 0}">
+                <p class="text-brandPrimary font-editorial text-3xl font-bold mb-1">0${i + 1} <span class="text-white">${esc(e.titre)}</span></p>
+                <p class="text-gray-400 text-sm">${esc(e.texte)}</p>
+            </div>`).join("");
+
+        // palette des teints (petits pions en SVG)
+        const demoRings = buildRings({ genre: "femme" });
+        $("palette").innerHTML = Object.values(TEINTS).map(t => `
+            <div class="flex flex-col items-center gap-2 text-center w-28">
+                <svg viewBox="0 0 80 100" class="w-16 h-20"><path d="${silhouettePath(demoRings, 90, 40, 96)}" fill="${t.couleur}" stroke="rgba(15,48,102,.25)" stroke-width="1"/></svg>
+                <span class="text-xs text-gray-600 leading-tight">${esc(t.label)}</span>
+            </div>`).join("");
+
+        // rail de navigation
+        $("rail").innerHTML = modeles.map(({ m, i }) =>
+            `<a href="#m-${esc(m.id)}" aria-label="${esc(m.prenom + " " + m.nom)}" title="${esc(m.prenom + " " + m.nom)}" data-i="${i}"
+                class="rail-dot block w-2.5 h-2.5 rounded-full bg-white/25 hover:bg-brandPrimary"></a>`).join("");
+
+        // sections de modèles
+        function statHTML(label, value, unit) {
+            return `<div class="rounded-2xl bg-white/5 border border-white/10 p-4">
+                <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-1">${esc(label)}</p>
+                <p class="font-editorial text-3xl text-white"><span class="count" data-v="${value}">0</span><span class="text-sm text-gray-400 ml-1">${unit}</span></p>
+            </div>`;
+        }
+        function infoHTML(label, value) {
+            return value ? `<div class="flex justify-between gap-4 py-2 border-b border-white/10 text-sm"><span class="text-gray-400">${esc(label)}</span><span class="text-white text-right">${esc(value)}</span></div>` : "";
+        }
+        function mediaItemHTML(src, mi, k, m) {
+            const inner = isVideo(src)
+                ? `<video src="${esc(src)}#t=0.1" muted loop playsinline preload="metadata" class="h-full w-auto object-cover"></video>
+                   <span class="absolute top-3 right-3 w-9 h-9 rounded-full bg-brandDark/70 flex items-center justify-center text-white text-xs"><i class="fas fa-play"></i></span>`
+                : `<img src="${esc(src)}" alt="${esc(m.prenom + " " + m.nom)} – photo ${k + 1}" loading="lazy" class="h-full w-auto object-cover transition-transform duration-700 group-hover:scale-105">`;
+            return `<button type="button" data-mi="${mi}" data-k="${k}" class="gal-item group relative h-72 md:h-96 rounded-2xl overflow-hidden border border-white/10 bg-white/5 cursor-pointer">${inner}</button>`;
+        }
+
+        $("modeles").innerHTML = modeles.map(({ m, i, color, teintLabel }) => {
+            const num = String(i + 1).padStart(2, "0");
+            const hautLabel = m.genre === "homme" ? "Torse" : "Poitrine";
+            const hautVal = m.torse || m.poitrine;
+            const cmp = compareSVG(m, modeles[i].rings, color);
+            modeles[i].cmp = cmp;
+            const stats = [
+                m.hauteur ? statHTML("Hauteur", m.hauteur, "cm") : "",
+                hautVal ? statHTML(hautLabel, hautVal, "cm") : "",
+                m.tourTaille ? statHTML("Tour de taille", m.tourTaille, "cm") : "",
+                m.hanches ? statHTML("Hanches", m.hanches, "cm") : ""
+            ].join("");
+            const infos = [
+                infoHTML("Pointure", m.pointure), infoHTML("Taille vêtements", m.vetements),
+                infoHTML("Cheveux", m.cheveux), infoHTML("Yeux", m.yeux), infoHTML("Âge", m.age),
+                infoHTML("Origine", m.origine), infoHTML("Langues", (m.langues || []).join(", "))
+            ].join("");
+            const medias = (m.medias || []).map((s, k) => mediaItemHTML(s, i, k, m)).join("");
+            const link = m.reservation || SETTINGS.lienReservation;
+            return `
+            <section id="m-${esc(m.id)}" class="model relative border-t border-white/5 ${i % 2 ? "bg-[#0d0d12]" : "bg-brandDark"}" data-i="${i}">
+                <div class="max-w-7xl mx-auto px-6 py-24 lg:py-32 lg:grid lg:grid-cols-12 lg:gap-14">
+                    <div class="lg:col-span-5 mb-14 lg:mb-0">
+                        <div class="lg:sticky lg:top-28">
+                            <div class="relative aspect-[4/5] max-w-md mx-auto lg:max-w-none rounded-3xl border border-white/10 bg-gradient-to-b from-white/5 to-transparent overflow-hidden">
+                                <canvas class="pawn-canvas w-full h-full" data-i="${i}"></canvas>
+                                <span class="absolute top-4 left-5 font-editorial text-6xl font-bold text-white/10">${num}</span>
+                            </div>
+                            <div class="mt-5 flex items-center gap-3 text-sm max-w-md mx-auto lg:max-w-none">
+                                <span class="w-5 h-5 rounded-full border border-white/30 flex-shrink-0" style="background:${color}"></span>
+                                <span class="text-gray-300">${esc(teintLabel)} · pion en ${m.matiere === "marbre" ? "marbre" : "cristal"}</span>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2 max-w-md mx-auto lg:max-w-none">Pion stylisé : il traduit la silhouette et le teint, jamais le visage.</p>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-7 space-y-16">
+                        <header class="rv">
+                            <p class="text-brandPrimary uppercase tracking-widest font-extrabold text-xs mb-3">Modèle ${num} · ${GENRES[m.genre] || ""}</p>
+                            <h2 class="font-editorial text-5xl md:text-7xl text-white leading-none">${esc(m.prenom)} <span class="italic font-light text-brandLight">${esc(m.nom)}</span></h2>
+                            <p class="text-gray-300 mt-5 text-lg">${esc(m.tagline || "")}</p>
+                            <div class="flex flex-wrap gap-2 mt-5">
+                                ${(m.categories || []).map(c => `<span class="text-xs font-semibold bg-brandPrimary/15 text-brandPrimary rounded-full px-3 py-1">${esc(c)}</span>`).join("")}
+                                ${m.exemple ? `<span class="text-xs font-semibold bg-white/10 text-gray-300 rounded-full px-3 py-1">Exemple de mise en page</span>` : ""}
+                            </div>
+                        </header>
+
+                        <div class="rv">
+                            <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-4">Mensurations</p>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">${stats}</div>
+                            <div>${infos}</div>
+                        </div>
+
+                        <div class="rv">
+                            <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-4">Sa taille, à l’échelle</p>
+                            <div class="rounded-3xl bg-white/5 border border-white/10 p-6">
+                                <div class="cmp-wrap max-w-lg mx-auto">${cmp.svg}</div>
+                                <p class="text-center text-gray-300 mt-4">${cmp.phrase.avant}<span class="cmp-count font-editorial text-2xl text-white font-bold">0</span>${cmp.phrase.fin}</p>
+                                <p class="text-center text-xs text-gray-500 mt-1">Comparaison avec ${esc(cmp.o.nomLong)} (${fr(cmp.o.hauteur, cmp.o.hauteur % 1 ? 1 : 0)} cm).</p>
+                            </div>
+                        </div>
+
+                        ${m.bio ? `<div class="rv"><p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-3">Présentation</p><p class="text-gray-300 leading-relaxed">${esc(m.bio)}</p></div>` : ""}
+
+                        ${medias ? `<div class="rv">
+                            <p class="text-xs font-extrabold uppercase tracking-widest text-brandPrimary mb-4">Photos et vidéos</p>
+                            <div class="gal-wrap overflow-hidden"><div class="gal-track flex gap-4 w-max">${medias}</div></div>
+                        </div>` : ""}
+
+                        <div class="rv flex flex-wrap gap-3">
+                            <a href="${esc(link)}" target="_blank" rel="noopener"
+                                class="inline-flex items-center justify-center px-8 py-4 bg-brandPrimary text-white font-bold text-sm uppercase tracking-wider rounded-full hover:bg-white hover:text-brandDark transition-all transform hover:scale-105 shadow-xl shadow-brandPrimary/20">
+                                Réserver ${esc(m.prenom)}
+                            </a>
+                            <a href="tarifs.html" class="inline-flex items-center justify-center px-8 py-4 border border-white/20 text-white font-bold text-sm uppercase tracking-wider rounded-full hover:border-brandPrimary hover:text-brandPrimary transition-all">
+                                Voir les tarifs
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>`;
+        }).join("") || `<section class="py-32 text-center text-gray-500">Aucun modèle pour le moment.</section>`;
+
+        /* pions des modèles */
+        document.querySelectorAll(".pawn-canvas").forEach(cv => {
+            const md = modeles[Number(cv.dataset.i)];
+            md.pawn = addPawn(cv, { rings: md.rings, color: md.color, matiere: md.m.matiere, seed: md.m.id, rot: 0.7 + md.i * 0.8 });
+        });
+
+        /* ---------------------------------------------------------------------
+           5. LE HÉROS : un pion qui se dessine, se cristallise puis change de teint
+           --------------------------------------------------------------------- */
+        const heroState = { wire: 0, reveal: 0, tone: 0, rot: 0.5 };
+        const heroPawn = addPawn($("hero-pawn"), { rings: buildRings({ genre: "femme", hauteur: 176, poitrine: 86, tourTaille: 62, hanches: 92 }),
+            color: "#f1eee8", matiere: "cristal", reveal: 0, wire: 0, float: true });
+        heroPawn.visible = true;
+        const toneOrder = ["blanche", "japonaise", "olive", "metisse", "sudasiatique", "brune", "noire"].filter(k => TEINTS[k]).map(k => hex2rgb(TEINTS[k].couleur));
+        function applyHero() {
+            heroPawn.wire = heroState.wire;
+            heroPawn.reveal = heroState.reveal;
+            heroPawn.target = heroState.rot;
+            const t = clamp01(heroState.tone) * (toneOrder.length - 1), i = Math.min(toneOrder.length - 2, Math.floor(t));
+            heroPawn.rgb = toneOrder.length > 1 ? mixRGB(toneOrder[i], toneOrder[i + 1], t - i) : toneOrder[0];
+        }
+
+        /* fond « réseau » : points et lignes en mouvement lent */
+        const net = (() => {
+            const cv = $("bg-net"), ctx = cv.getContext("2d"), dots = [];
+            let w = 0, h = 0;
+            const size = () => {
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                w = cv.clientWidth || 800; h = cv.clientHeight || 600;
+                cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            };
+            size();
+            const rnd = seeded("reseau");
+            for (let i = 0; i < 46; i++) dots.push({ x: rnd(), y: rnd(), vx: (rnd() - 0.5) * 0.00006, vy: (rnd() - 0.5) * 0.00006 });
+            return {
+                size,
+                draw(scroll) {
+                    ctx.clearRect(0, 0, w, h);
+                    const par = scroll * 0.0004;
+                    dots.forEach(d => { d.x = (d.x + d.vx * 16 + 1) % 1; d.y = (d.y + d.vy * 16 + 1) % 1; });
+                    for (let i = 0; i < dots.length; i++) {
+                        const a = dots[i], ax = a.x * w, ay = ((a.y + par) % 1) * h;
+                        ctx.fillStyle = "rgba(226,97,55,0.7)";
+                        ctx.beginPath(); ctx.arc(ax, ay, 1.6, 0, Math.PI * 2); ctx.fill();
+                        for (let j = i + 1; j < dots.length; j++) {
+                            const b = dots[j], bx = b.x * w, by = ((b.y + par) % 1) * h, dd = Math.hypot(ax - bx, ay - by);
+                            if (dd < 150) {
+                                ctx.strokeStyle = `rgba(244,240,235,${(0.16 * (1 - dd / 150)).toFixed(3)})`;
+                                ctx.lineWidth = 0.7;
+                                ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by); ctx.stroke();
+                            }
+                        }
+                    }
+                }
+            };
+        })();
+
+        /* ---------------------------------------------------------------------
+           6. LES ANIMATIONS AU DÉFILEMENT
+           --------------------------------------------------------------------- */
+        gsap.registerPlugin(ScrollTrigger);
+
+        function countUp(el, value, decimals) {
+            const o = { v: 0 };
+            gsap.to(o, { v: value, duration: 1.6, ease: "power2.out", onUpdate: () => { el.textContent = fr(o.v, decimals || 0); } });
+        }
+
+        if (reduceMotion) {
+            heroState.wire = 1; heroState.reveal = 1; applyHero();
+            document.querySelectorAll(".count").forEach(el => { el.textContent = fr(el.dataset.v); });
+            modeles.forEach(md => {
+                const c = document.querySelector(`#m-${md.m.id} .cmp-count`);
+                if (c) c.textContent = fr(md.cmp.value, md.cmp.decimals);
+                const root = document.getElementById("m-" + md.m.id);
+                const clip = root.querySelector(".cmp-clip");
+                if (clip) { clip.setAttribute("y", "0"); clip.setAttribute("height", "400"); }
+                root.querySelectorAll(".cmp-line").forEach(e => e.setAttribute("opacity", "1"));
+            });
+        } else {
+            // progression globale
+            gsap.to("#progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.2 } });
+
+            // héros épinglé : fil de fer -> cristal -> changement de teint
+            const tl = gsap.timeline({ scrollTrigger: { trigger: "#hero", start: "top top", end: "+=320%", pin: true, scrub: 0.7, onUpdate: applyHero } });
+            const steps = gsap.utils.toArray(".hero-step");
+            gsap.to(heroState, { wire: 0.3, duration: 1.6, ease: "power2.out", onUpdate: applyHero });
+            tl.fromTo(heroState, { wire: 0.3 }, { wire: 1, rot: 1.6, duration: 1, ease: "none", immediateRender: false, onUpdate: applyHero })
+              .to(steps[0], { opacity: 0, y: -14, duration: 0.2 }, 0.8)
+              .fromTo(steps[1], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25 }, 0.85)
+              .to(heroState, { reveal: 1, rot: 3.4, duration: 1, ease: "none", onUpdate: applyHero }, 1)
+              .to(steps[1], { opacity: 0, y: -14, duration: 0.2 }, 1.8)
+              .fromTo(steps[2], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25 }, 1.85)
+              .to(heroState, { tone: 1, rot: 6.2, duration: 1.2, ease: "none", onUpdate: applyHero }, 2)
+              .to(steps[2], { opacity: 0, y: -14, duration: 0.2 }, 2.9)
+              .fromTo(steps[3], { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.25 }, 2.95);
+
+            // sections de modèles
+            modeles.forEach(md => {
+                const root = document.getElementById("m-" + md.m.id);
+
+                ScrollTrigger.create({
+                    trigger: root, start: "top bottom", end: "bottom top",
+                    onToggle: self => { md.pawn.visible = self.isActive; },
+                    onUpdate: self => { md.pawn.target = 0.7 + md.i * 0.8 + self.progress * Math.PI * 2.4; }
+                });
+
+                ScrollTrigger.create({
+                    trigger: root, start: "top 50%", end: "bottom 50%",
+                    onToggle: self => {
+                        const dot = document.querySelector(`#rail [data-i="${md.i}"]`);
+                        if (dot) dot.classList.toggle("active", self.isActive);
+                    }
+                });
+
+                root.querySelectorAll(".rv").forEach(el => {
+                    gsap.from(el, { y: 50, opacity: 0, duration: 1, ease: "power3.out",
+                        scrollTrigger: { trigger: el, start: "top 88%", once: true } });
+                });
+
+                root.querySelectorAll(".count").forEach(el => {
+                    ScrollTrigger.create({ trigger: el, start: "top 90%", once: true, onEnter: () => countUp(el, Number(el.dataset.v), 0) });
+                });
+
+                // comparatif : la silhouette se déploie, puis les objets
+                const clip = root.querySelector(".cmp-clip"), wrap = root.querySelector(".cmp-wrap");
+                if (clip && wrap) {
+                    const objs = root.querySelectorAll(".cmp-obj"), lines = root.querySelectorAll(".cmp-line");
+                    const counter = root.querySelector(".cmp-count"), cnt = { v: 0 };
+                    gsap.set(objs, { opacity: 0 });
+                    const cmpTl = gsap.timeline({ scrollTrigger: { trigger: wrap, start: "top 85%", end: "top 25%", scrub: 0.6 } });
+                    cmpTl.to(clip, { attr: { y: 0, height: 400 }, duration: 1, ease: "none" })
+                         .to(objs, { opacity: 1, duration: 0.5, stagger: { each: 0.5 / Math.max(1, objs.length), from: "start" } }, 0.4)
+                         .to(lines, { opacity: 1, duration: 0.3 }, 0.9)
+                         .to(cnt, { v: md.cmp.value, duration: 1, ease: "none", onUpdate: () => { counter.textContent = fr(cnt.v, md.cmp.decimals); } }, 0);
+                }
+
+                // galerie : défilement horizontal lié au défilement vertical
+                const gwrap = root.querySelector(".gal-wrap"), track = root.querySelector(".gal-track");
+                if (gwrap && track) {
+                    gsap.to(track, { x: () => -Math.max(0, track.scrollWidth - gwrap.clientWidth), ease: "none",
+                        scrollTrigger: { trigger: gwrap, start: "top 90%", end: "bottom 20%", scrub: true, invalidateOnRefresh: true } });
+                    // lecture des vidéos quand elles sont visibles
+                    track.querySelectorAll("video").forEach(v => {
+                        ScrollTrigger.create({ trigger: v, start: "top bottom", end: "bottom top",
+                            onToggle: self => { if (self.isActive) v.play().catch(() => {}); else v.pause(); } });
+                    });
+                }
+            });
+            window.addEventListener("load", () => ScrollTrigger.refresh());
+        }
+
+        /* ---------------------------------------------------------------------
+           7. BOUCLE DE DESSIN (seulement pour les pions visibles)
+           --------------------------------------------------------------------- */
+        function frame(time) {
+            const scroll = window.scrollY || 0;
+            net.draw(scroll);
+            for (const p of pawns) {
+                if (!p.visible) continue;
+                p.rot += (p.target - p.rot) * 0.08 + (reduceMotion ? 0 : 0.0016);
+                p.target += reduceMotion ? 0 : 0.0016;
+                p.draw(time);
+            }
+            requestAnimationFrame(frame);
+        }
+        if (!reduceMotion) {
+            requestAnimationFrame(frame);
+        } else {
+            pawns.forEach(p => { p.visible = true; p.draw(0); });
+        }
+
+        let resizeTimer;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => { pawns.forEach(p => p.resize()); net.size(); if (!reduceMotion) ScrollTrigger.refresh(); }, 150);
+        });
+
+        /* ---------------------------------------------------------------------
+           8. AGRANDISSEMENT DES PHOTOS ET VIDÉOS
+           --------------------------------------------------------------------- */
+        function openLightbox(mi, k) {
+            const m = modeles[mi].m, src = m.medias[k];
+            $("lightboxContent").innerHTML = (isVideo(src)
+                ? `<video src="${esc(src)}" controls autoplay playsinline class="max-h-[78vh] max-w-full rounded-2xl"></video>`
+                : `<img src="${esc(src)}" alt="${esc(m.prenom + " " + m.nom)}" class="max-h-[78vh] max-w-full rounded-2xl object-contain">`)
+                + `<p class="text-white/80 text-sm">${esc(m.prenom + " " + m.nom)}</p>`;
+            $("lightbox").classList.remove("hidden");
+            document.body.style.overflow = "hidden";
+        }
+        function closeLightbox() {
+            $("lightboxContent").innerHTML = "";
+            $("lightbox").classList.add("hidden");
+            document.body.style.overflow = "";
+        }
+        $("modeles").addEventListener("click", e => {
+            const b = e.target.closest(".gal-item");
+            if (b) openLightbox(Number(b.dataset.mi), Number(b.dataset.k));
+        });
+        $("lightbox").addEventListener("click", e => { if (e.target === $("lightbox")) closeLightbox(); });
+        $("lightboxClose").addEventListener("click", closeLightbox);
+        document.addEventListener("keydown", e => { if (e.key === "Escape") closeLightbox(); });
+    </script>
+</body>
+</html>
